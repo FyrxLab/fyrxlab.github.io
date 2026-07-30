@@ -15,12 +15,21 @@
   --vp-button-brand-active-bg: var(--vp-c-brand-3);
 }
 
-/* Home hero gradient glow */
-.VPHero .name .clip {
-  background: linear-gradient(135deg, #00c8ff 0%, #00ffd5 50%, #ffcc00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Home hero gradient glow — follows each product's own brand color
+   (set per-route by Layout.vue's theme-* class, see dynamic-colors.css),
+   so every landing page's title reads as that product's own identity. */
+.VPHero .name.clip {
+  background: linear-gradient(120deg, var(--vp-c-brand-1) 0%, var(--vp-c-brand-2) 45%, var(--vp-c-brand-1) 100%) !important;
+  background-size: 200% auto !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  animation: hero-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes hero-shimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 /* Hero tagline */
@@ -28,11 +37,83 @@
   color: var(--vp-c-text-2);
 }
 
-/* Feature icons glow on hover */
+/* Soft brand-colored glow + gentle float behind every hero image —
+   VitePress ships these as unset (--vp-home-hero-image-background-image: none)
+   so no page currently shows anything here. */
+:root {
+  --vp-home-hero-image-background-image: radial-gradient(circle at center, var(--vp-c-brand-1) 0%, transparent 70%);
+  --vp-home-hero-image-filter: blur(56px);
+}
+
+.VPHero .image-src {
+  animation: hero-float 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--vp-c-brand-1) 35%, transparent));
+}
+
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .VPHero .name.clip,
+  .VPHero .image-src {
+    animation: none;
+  }
+}
+
+/* Feature cards on landing pages ship with zero hover/entrance state unless
+   a `link:` is set per-item (VitePress default). Give every card life
+   regardless, tinted with the current page's brand color. */
+.VPFeatures .items .item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: feature-in 0.5s ease forwards;
+}
+.VPFeatures .items .item:nth-child(1) { animation-delay: 0ms; }
+.VPFeatures .items .item:nth-child(2) { animation-delay: 60ms; }
+.VPFeatures .items .item:nth-child(3) { animation-delay: 120ms; }
+.VPFeatures .items .item:nth-child(4) { animation-delay: 180ms; }
+.VPFeatures .items .item:nth-child(5) { animation-delay: 240ms; }
+.VPFeatures .items .item:nth-child(6) { animation-delay: 300ms; }
+.VPFeatures .items .item:nth-child(7) { animation-delay: 360ms; }
+.VPFeatures .items .item:nth-child(8) { animation-delay: 420ms; }
+.VPFeatures .items .item:nth-child(9) { animation-delay: 480ms; }
+
+@keyframes feature-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .VPFeatures .items .item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.VPFeatures .VPFeature {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.VPFeatures .VPFeature:hover {
+  transform: translateY(-3px);
+  border-color: var(--vp-c-brand-1) !important;
+  box-shadow: 0 8px 20px -12px var(--vp-c-brand-1);
+}
+
+.VPFeature .icon {
+  background-color: color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent) !important;
+  color: var(--vp-c-brand-1);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
 .VPFeature:hover .icon {
-  filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.6));
   transform: scale(1.1);
-  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--vp-c-brand-1) 60%, transparent));
 }
 
 /* Code blocks — slightly tinted background */
