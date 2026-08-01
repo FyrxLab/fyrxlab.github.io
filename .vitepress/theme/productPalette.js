@@ -8,7 +8,7 @@ export const PRODUCTS = {
     kind: 'plugin',
     color: '#f1c40f',
     icon: 'fa-server',
-    version: '0.8.0',
+    version: '0.9.1',
     changelog: '/solver/changelog',
     home: '/solver/',
     tagline: {
