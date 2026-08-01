@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.9.1 — Soporte Spigot/CraftBukkit, hasta 1.8.8
+
+> Publicado: 2026
+
+Solver ahora corre en Spigot/CraftBukkit plano, no solo en Paper/Folia — hasta 1.8.8. Todas las features funcionan igual en todos lados, con un respaldo apropiado donde una API exclusiva de Paper no existe.
+
+### Novedades
+
+- **Soporte Spigot/CraftBukkit, desde 1.8.8** — Solver ya no requiere Paper. Moderación de chat, sanciones, el Staff Mode Toolkit y todas las GUIs funcionan igual en Spigot plano.
+- **Requisito de Java más bajo: Java 8 o superior** (antes Java 17).
+
+### Correcciones
+
+- Corregido: el almacenamiento de sanciones (SQLite) podía fallar al inicializarse en algunas instalaciones, por un problema de registro del driver específico de cómo Bukkit carga los jars de plugins.
+
+### Compatibilidad
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia
+- Minecraft 1.8.8 — 1.21.x (1.7.10 está planeado pero todavía no disponible)
+- Java 8+
+
+## v0.9.0 — Backend de FyrxLab, parte 1: Verificación de Build y Escaneo de Malware
+
+> Publicado: Julio 2026
+
+Solver ahora puede verificar su propio jar y escanear plugins con malware conocido. Ambos estáticos, firmados y cacheados — todavía sin backend dinámico.
+
+### Novedades
+
+- **Verificación de integridad del build** — Solver chequea su propio jar contra un hash firmado publicado por FyrxLab. Consultalo en cualquier momento con `/solver integrity`, o forzá un chequeo inmediato con `/solver integrity rescan`.
+- **Escaneo de malware** — cada otro `.jar` en `plugins/` se chequea contra una lista firmada de hashes de malware conocido.
+- **Cruce opcional con Modrinth** para plugins no marcados — puramente informativo, nunca una alerta por sí solo.
+- **Detección de Java agents** — avisa al arrancar si se adjuntó un Java agent a la JVM del servidor, ya que un agent puede parchear clases en memoria sin tocar el archivo jar en disco.
+
+### Correcciones
+
+- `/solver rtp` podía ocasionalmente teletransportar a quien corrió el comando a sí mismo en vez de a otro jugador.
+
 ## v0.8.0 — La Alternativa Completa de Moderación/Staff
 
 > Publicado: Julio 2026

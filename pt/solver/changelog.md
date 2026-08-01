@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.9.1 — Suporte a Spigot/CraftBukkit, até 1.8.8
+
+> Lançado: 2026
+
+O Solver agora roda em Spigot/CraftBukkit puro, não só em Paper/Folia — até a versão 1.8.8. Todo recurso funciona da mesma forma em todo lugar, com um fallback apropriado onde uma API exclusiva do Paper não existe.
+
+### Novidades
+
+- **Suporte a Spigot/CraftBukkit, a partir de 1.8.8** — o Solver não exige mais o Paper. Moderação de chat, sanções, o Staff Mode Toolkit e todas as GUIs funcionam da mesma forma no Spigot puro.
+- **Requisito de Java mais baixo: Java 8 ou superior** (antes Java 17).
+
+### Correções
+
+- Corrigido: o armazenamento de sanções (SQLite) podia falhar ao inicializar em algumas instalações, por um problema de registro do driver específico de como o Bukkit carrega os jars de plugins.
+
+### Compatibilidade
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia
+- Minecraft 1.8.8 — 1.21.x (o suporte a 1.7.10 está planejado mas ainda não disponível)
+- Java 8+
+
+## v0.9.0 — Backend da FyrxLab, parte 1: Verificação de Integridade e Escaneamento de Malware
+
+> Lançado: Julho de 2026
+
+O Solver agora pode verificar seu próprio jar e escanear plugins com malware conhecido. Ambos estáticos, assinados e em cache — ainda sem backend dinâmico.
+
+### Novidades
+
+- **Verificação de integridade do build** — o Solver checa seu próprio jar contra um hash assinado publicado pela FyrxLab. Consulte a qualquer momento com `/solver integrity`, ou force uma checagem imediata com `/solver integrity rescan`.
+- **Escaneamento de malware** — cada outro `.jar` em `plugins/` é checado contra uma lista assinada de hashes de malware conhecido.
+- **Cruzamento opcional com o Modrinth** para plugins não sinalizados — puramente informativo, nunca um alerta por si só.
+- **Detecção de Java agent** — avisa na inicialização se um Java agent foi anexado à JVM do servidor, já que um agent pode alterar classes em memória sem nunca tocar no arquivo jar em disco.
+
+### Correções
+
+- `/solver rtp` podia ocasionalmente teletransportar quem executou o comando para si mesmo em vez de outro jogador.
+
 ## v0.8.0 — A Alternativa Completa de Moderação/Staff
 
 > Lançado: Julho de 2026

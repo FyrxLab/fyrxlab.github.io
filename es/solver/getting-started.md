@@ -6,9 +6,9 @@ Antes de instalar AbsoluteSolver, asegúrate de que tu servidor cumple con los s
 
 | Requisito | Mínimo | Recomendado |
 |-----------|--------|-------------|
-| **Java** | Java 17 | Java 21 |
-| **Software de Servidor** | Spigot | Paper / Purpur |
-| **Versión de Minecraft** | 1.18.x | 1.20.x+ |
+| **Java** | Java 8 | Java 21 |
+| **Software de Servidor** | Spigot / CraftBukkit | Paper / Purpur |
+| **Versión de Minecraft** | 1.8.8 | 1.20.x+ |
 | **API Key** | Anthropic, Google, o un proveedor compatible con OpenAI | — |
 
 ::: tip Cualquier Proveedor de IA Funciona

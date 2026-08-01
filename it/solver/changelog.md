@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.9.1 — Supporto Spigot/CraftBukkit, fino a 1.8.8
+
+> Rilasciato: 2026
+
+Solver ora gira su Spigot/CraftBukkit puro, non solo su Paper/Folia — fino alla 1.8.8. Ogni funzionalità si comporta allo stesso modo ovunque, con un fallback appropriato dove un'API esclusiva di Paper non esiste.
+
+### Novità
+
+- **Supporto Spigot/CraftBukkit, dalla 1.8.8 in su** — Solver non richiede più Paper. Moderazione chat, sanzioni, lo Staff Mode Toolkit e ogni GUI funzionano allo stesso modo su Spigot puro.
+- **Requisito Java più basso: Java 8 o superiore** (prima Java 17).
+
+### Correzioni
+
+- Corretto: lo storage delle sanzioni (SQLite) poteva occasionalmente non inizializzarsi su alcune configurazioni server, per un problema di registrazione del driver specifico di come Bukkit carica i jar dei plugin.
+
+### Compatibilità
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia
+- Minecraft 1.8.8 — 1.21.x (il supporto 1.7.10 è pianificato ma non ancora disponibile)
+- Java 8+
+
+## v0.9.0 — Backend FyrxLab, parte 1: Verifica Integrità Build e Scansione Malware
+
+> Rilasciato: Luglio 2026
+
+Solver ora può verificare il proprio jar e scansionare plugin con malware conosciuto. Entrambi statici, firmati e in cache — ancora nessun backend dinamico coinvolto.
+
+### Novità
+
+- **Verifica dell'integrità del build** — Solver controlla il proprio jar contro un hash firmato pubblicato da FyrxLab. Controlla in qualsiasi momento con `/solver integrity`, o forza un controllo immediato con `/solver integrity rescan`.
+- **Scansione malware** — ogni altro `.jar` in `plugins/` viene controllato contro una lista firmata di hash di malware conosciuti.
+- **Verifica incrociata opzionale con Modrinth** per i plugin non segnalati — puramente informativa, mai un allarme da sola.
+- **Rilevamento Java agent** — avvisa all'avvio se un Java agent è stato collegato alla JVM del server, dato che un agent può modificare le classi in memoria senza mai toccare il file jar su disco.
+
+### Correzioni
+
+- `/solver rtp` poteva occasionalmente teletrasportare chi eseguiva il comando su se stesso invece che su un altro giocatore.
+
 ## v0.8.0 — L'Alternativa Completa per Moderazione e Staff
 
 > Rilasciato: Luglio 2026

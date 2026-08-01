@@ -6,9 +6,9 @@ Before installing AbsoluteSolver, make sure your server meets the following requ
 
 | Requirement | Minimum | Recommended |
 |-------------|---------|-------------|
-| **Java** | Java 17 | Java 21 |
-| **Server Software** | Spigot | Paper / Purpur |
-| **Minecraft Version** | 1.18.x | 1.20.x+ |
+| **Java** | Java 8 | Java 21 |
+| **Server Software** | Spigot / CraftBukkit | Paper / Purpur |
+| **Minecraft Version** | 1.8.8 | 1.20.x+ |
 | **API Key** | Anthropic, Google, or an OpenAI-compatible provider | — |
 
 ::: tip Any AI Provider Works

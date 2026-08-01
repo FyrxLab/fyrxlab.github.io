@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.9.1 — Spigot/CraftBukkit Support, Down to 1.8.8
+
+> Released: 2026
+
+Solver now runs on plain Spigot/CraftBukkit, not just Paper/Folia — all the way back to 1.8.8. Every feature works the same everywhere, with a legacy-appropriate fallback wherever a Paper-only API doesn't exist.
+
+### New Features
+
+- **Spigot/CraftBukkit support, 1.8.8 and up** — Solver no longer requires Paper. Chat moderation, sanctions, the Staff Mode Toolkit, and every GUI now work the same way on plain Spigot.
+- **Lowered Java requirement: Java 8 or higher** (was Java 17).
+
+### Fixes
+
+- Fixed sanctions storage (SQLite) occasionally failing to initialize on some server setups, due to a driver-registration issue specific to how Bukkit loads plugin jars.
+
+### Compatibility
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia
+- Minecraft 1.8.8 — 1.21.x (1.7.10 support is planned but not available yet)
+- Java 8+
+
+## v0.9.0 — FyrxLab Backend, Part 1: Build Integrity & Malware Scanning
+
+> Released: July 2026
+
+Solver can now verify its own jar and scan for known-malware plugins. Both static, signed, and cached — no dynamic backend involved yet.
+
+### New Features
+
+- **Build integrity verification** — Solver checks its own jar against a signed hash published by FyrxLab. Check anytime with `/solver integrity`, or force an immediate check with `/solver integrity rescan`.
+- **Malware scanning** — every other `.jar` in `plugins/` is checked against a signed list of known-malware hashes.
+- **Optional Modrinth cross-check** for unflagged plugins — purely informational, never a red flag on its own.
+- **Java agent detection** — warns at startup if a Java agent was attached to the server's JVM, since an agent can patch classes in memory without ever touching the jar file on disk.
+
+### Fixes
+
+- `/solver rtp` could occasionally teleport the person running the command to themselves instead of another player.
+
 ## v0.8.0 — The Full Moderation/Staff Alternative
 
 > Released: July 2026

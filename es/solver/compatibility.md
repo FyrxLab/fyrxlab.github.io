@@ -6,8 +6,8 @@
 |--------|-----------|-------|
 | **Paper** | ✅ Recomendado | Totalmente compatible. Mejor integración con Log4j. |
 | **Purpur** | ✅ Recomendado | Totalmente compatible y probado. |
-| **Spigot** | ⚠️ Solo diagnóstico | El análisis de crashes, el monitor de consola y el Monitor de Ticks funcionan. La [Moderación de Chat con IA](/es/solver/fyrx-ai) requiere `AsyncChatEvent` de Paper y **no está disponible en Spigot puro** — está en el roadmap. |
-| **Bukkit** | ⚠️ Parcial | Funcionalidad básica únicamente; no soportado oficialmente. |
+| **Spigot** | ✅ Compatible (1.8.8+) | Totalmente compatible, incluyendo la [Moderación de Chat con IA](/es/solver/fyrx-ai) — no hace falta Paper. |
+| **CraftBukkit** | ✅ Compatible (1.8.8+) | Mismo nivel de soporte que Spigot. |
 | **Folia** | ✅ Compatible | El TickMonitor se desactiva automáticamente (Folia tiene su propio watchdog). El resto de funciones funcionan con normalidad. |
 | **Velocity** | ❌ No soportado | Software proxy; usa una API completamente diferente. |
 | **BungeeCord** | ❌ No soportado | Software proxy; usa una API completamente diferente. |
@@ -25,14 +25,14 @@ AbsoluteSolver es **Folia-Aware** (consciente de Folia). Al ejecutarse en un ser
 |---------|--------|-------|
 | 1.21.x | ✅ Compatible | Funciona en Java 21, totalmente compatible. |
 | 1.20.x | ✅ Compatible | Objetivo principal de desarrollo. Totalmente probado. |
-| 1.19.x | ✅ Compatible | |
-| 1.18.x | ✅ Compatible | Versión mínima soportada (primera versión que requiere Java 17). |
-| 1.17.x e inferior | ❌ No soportado | Estas versiones usan Java 8/11; AbsoluteSolver requiere Java 17+. |
+| 1.13.x – 1.19.x | ✅ Compatible | |
+| 1.8.8 – 1.12.x | ✅ Compatible | Versión mínima soportada. Algunas comodidades exclusivas de Paper (ej. ocultar a un jugador vanish del conteo en la lista de servidores) no están disponibles acá — no hay equivalente vanilla — pero el resto de las funciones son idénticas. |
+| 1.7.10 e inferior | ❌ Todavía no soportado | Planeado, pero todavía no compilable/disponible. |
 
 ## Versión de Java
 
-AbsoluteSolver está compilado para **Java 17**. Funcionará en cualquier JVM versión 17 o superior (incluyendo Java 21+).
+Solver está compilado para **Java 8**. Funcionará en cualquier JVM versión 8 o superior (incluyendo Java 17/21).
 
-::: danger Java 17 Requerido
-Si tu servidor usa Java 8 o Java 11, intentar cargar AbsoluteSolver producirá un `UnsupportedClassVersionError`. Debes actualizar tu entorno de Java primero.
+::: tip Java 8 o Superior
+Solver funciona desde Java 8 en adelante — no hace falta actualizar el entorno de Java de tu servidor para usarlo.
 :::
