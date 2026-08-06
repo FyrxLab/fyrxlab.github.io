@@ -18,18 +18,32 @@ hero:
     - theme: alt
       text: English
       link: /en/solvermotd/guide/getting-started
-
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-server"></i>'
-    title: Soporte Multiplataforma
-    details: Funciona a la perfección en Bukkit/Spigot, BungeeCord y Velocity. Un solo plugin para todas las necesidades de tu red.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-image"></i>'
-    title: Banners de Imagen 1.21.9+
-    details: Reemplaza el texto estándar del MOTD con imágenes masivas de 264x16 píxeles para clientes nuevos usando nuestro generador automatizado de skins en MineSkin.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-palette"></i>'
-    title: MiniMessage y Legacy
-    details: Soporta completamente el formato moderno MiniMessage para gradientes avanzados, manteniendo soporte para códigos de color legacy con ampersand.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-image"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Por qué SolverMOTD</span>
+    <h3>Tu entrada en la lista de servidores no tiene que ser texto plano</h3>
+    <p>Reemplaza el MOTD de texto estándar con imágenes masivas de 264×16 píxeles para clientes nuevos, generadas automáticamente con nuestro generador de tiles de MineSkin — sin necesidad de configurar hosting de imágenes.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">También Incluye</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-server"></i>
+    <div><b>Soporte Multiplataforma</b><p>Funciona a la perfección en Bukkit/Spigot, BungeeCord y Velocity — un solo plugin para toda tu red.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-palette"></i>
+    <div><b>MiniMessage y Legacy</b><p>Soporte completo del formato moderno MiniMessage con gradientes y texto clickeable, manteniendo compatibilidad con códigos legacy de ampersand.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

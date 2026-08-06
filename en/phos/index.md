@@ -19,17 +19,32 @@ hero:
       text: Español
       link: /es/phos/features/items
 
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-gem"></i>'
-    title: Precious Materials
-    details: Discover new underground ores to mine Phosphophyllite Dust and Gems, complete with Fortune support and emissive textures.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-khanda"></i>'
-    title: Fragile Weaponry
-    details: Forge incredibly sharp but highly brittle swords and axes that shatter into dust upon breaking.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-magic-sparkles"></i>'
-    title: Crystallization Effect
-    details: A unique status effect that encases targets in crystal, available naturally on Phos weapons or via a custom enchantment.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Why Phosphophyllite</span>
+    <h3>A status effect built around the gem itself</h3>
+    <p>Crystallization encases targets in crystal — a unique status effect available naturally on Phos weapons, or added to any weapon of your choice through a custom enchantment.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">Also Included</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-gem"></i>
+    <div><b>Precious Materials</b><p>New underground ores to mine Phosphophyllite Dust and Gems, complete with Fortune support and emissive textures.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-khanda"></i>
+    <div><b>Fragile Weaponry</b><p>Forge incredibly sharp but highly brittle swords and axes that shatter into dust upon breaking.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

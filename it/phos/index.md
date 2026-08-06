@@ -18,18 +18,32 @@ hero:
     - theme: alt
       text: English
       link: /en/phos/features/items
-
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-gem"></i>'
-    title: Materiali Preziosi
-    details: Scopri nuovi minerali sotterranei per estrarre Polvere e Gemme di Phosphophyllite, con supporto Fortuna e texture emissive.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-khanda"></i>'
-    title: Armi Fragili
-    details: Forgia spade e asce incredibilmente affilate ma molto fragili, che si frantumano in polvere quando si rompono.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-magic-sparkles"></i>'
-    title: Effetto Cristallizzazione
-    details: Un effetto di stato unico che racchiude i bersagli nel cristallo, disponibile naturalmente sulle armi Phos o tramite un incantesimo personalizzato.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Perché Phosphophyllite</span>
+    <h3>Un effetto di stato costruito attorno alla gemma stessa</h3>
+    <p>La Cristallizzazione racchiude i bersagli nel cristallo — un effetto di stato unico disponibile naturalmente sulle armi Phos, o aggiunto a qualsiasi arma tramite un incantesimo personalizzato.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">Incluso Anche</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-gem"></i>
+    <div><b>Materiali Preziosi</b><p>Scopri nuovi minerali sotterranei per estrarre Polvere e Gemme di Phosphophyllite, con supporto Fortuna e texture emissive.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-khanda"></i>
+    <div><b>Armi Fragili</b><p>Forgia spade e asce incredibilmente affilate ma molto fragili, che si frantumano in polvere quando si rompono.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

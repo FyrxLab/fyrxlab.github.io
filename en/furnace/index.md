@@ -19,17 +19,32 @@ hero:
       text: Español
       link: /es/furnace/guide/getting-started
 
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-fire-burner"></i>'
-    title: 18 Dedicated Slots
-    details: Stop waiting for single items to smelt. Absolute Furnace features 6 input slots, 6 energy slots, and 6 output slots.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-bolt"></i>'
-    title: Absolute Energy System
-    details: Converts any standard burnable fuel into Absolute Energy. Each smelted item strictly consumes 2 Absolute Energy.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-gears"></i>'
-    title: Hopper Automation
-    details: Fully compatible with vanilla hoppers and pipes. Input materials from the top, fuel from the sides, and extract outputs from the bottom.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-fire-burner"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Why Absolute Furnace</span>
+    <h3>18 slots, so you stop babysitting one item at a time</h3>
+    <p>6 input slots, 6 energy slots, and 6 output slots — mass-smelting without lining up a wall of vanilla furnaces or writing your own automation from scratch.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">Also Included</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-bolt"></i>
+    <div><b>Absolute Energy System</b><p>Converts any standard burnable fuel into Absolute Energy. Each smelted item strictly consumes 2 Absolute Energy.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-gears"></i>
+    <div><b>Hopper Automation</b><p>Fully compatible with vanilla hoppers and pipes. Input from the top, fuel from the sides, extract outputs from the bottom.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

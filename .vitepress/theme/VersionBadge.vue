@@ -35,9 +35,14 @@ const current = computed(() => {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  background: var(--vp-c-brand-soft);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-1) 22%, transparent), color-mix(in srgb, var(--vp-c-brand-1) 8%, transparent));
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 30%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   color: var(--vp-c-brand-1);
   text-decoration: none;
   white-space: nowrap;
+}
+html.dark .version-badge {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 </style>

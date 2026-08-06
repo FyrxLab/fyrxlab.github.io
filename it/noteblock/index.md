@@ -13,14 +13,17 @@ hero:
       text: English
       link: /en/noteblock/
 
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-music"></i>'
-    title: Nuovi Dischi Musicali
-    details: Aggiunge una serie di dischi originali, ognuno un brano composto interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in canzoni complete.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-compact-disc"></i>'
-    title: Semplicità Totale
-    details: Nessuna configurazione, nessun comando — installalo e i nuovi dischi saranno disponibili da trovare e suonare come qualsiasi disco vanilla.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-music"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Perché Noteblock</span>
+    <h3>Canzoni originali, composte interamente con blocchi nota</h3>
+    <p>Aggiunge una serie di dischi originali, ognuno un brano completo composto interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in vere canzoni invece dei soliti loop ambientali.</p>
+    <p class="spotlight-note">Nessuna configurazione, nessun comando — installalo e i nuovi dischi saranno disponibili da trovare e suonare come qualsiasi disco vanilla.</p>
+  </div>
+</div>
 
 ## Installazione
 

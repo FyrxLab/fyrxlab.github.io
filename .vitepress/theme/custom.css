@@ -1,8 +1,13 @@
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 :root {
-  --vp-c-brand-1: #00c8ff;
-  --vp-c-brand-2: #00a8d8;
-  --vp-c-brand-3: #0088b8;
-  --vp-c-brand-soft: rgba(0, 200, 255, 0.14);
+  --vp-c-brand-1: #4a6bee;
+  --vp-c-brand-2: #2378c2;
+  --vp-c-brand-3: #2f56c9;
+  --vp-c-brand-soft: rgba(74, 107, 238, 0.14);
 
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: #ffffff;
@@ -13,13 +18,65 @@
   --vp-button-brand-active-border: transparent;
   --vp-button-brand-active-text: #ffffff;
   --vp-button-brand-active-bg: var(--vp-c-brand-3);
+
+  /* Terminal-window code blocks stay dark in both themes — code is always
+     "on a screen", never on the page's own paper/glass surface. */
+  --vp-code-block-bg: #0c1428;
+
+  /* The reading column itself was still plain VitePress white — none of the
+     glass elements floating on it (code, callouts) read as part of one
+     surface. Matches the docs preview's --bg/--bg-wash exactly; verified
+     against --vp-c-text-1/2 below, contrast barely moves (10.94:1 -> 10.09:1
+     on the body text, nowhere near the 4.5:1 floor). */
+  --vp-c-bg: #f2f6fc;
+  --vp-c-bg-alt: #e8f0fc;
+
+  /* One shared "glass container" language — code-block header, callouts,
+     and nav all read from these instead of each inventing its own border/
+     shadow values, which is why they used to look like unrelated components. */
+  --glass-header-bg: #eef3fc;
+  --glass-border: rgba(74, 107, 238, 0.10);
+  --glass-shadow: 0 20px 40px -30px rgba(42, 79, 201, 0.22);
+  --glass-radius: 10px;
+}
+html.dark {
+  --vp-code-block-bg: #060a16;
+  /* #4a6bee only clears 3.78:1 on the dark theme's near-black background —
+     brighten brand-1 for dark mode so nav/sidebar active-link text stays AA. */
+  --vp-c-brand-1: #7a94f5;
+
+  --vp-c-bg: #0a0f1c;
+  --vp-c-bg-alt: #0c1426;
+
+  --glass-header-bg: #0d1526;
+  --glass-border: rgba(88, 120, 239, 0.14);
+  --glass-shadow: 0 20px 40px -30px rgba(0, 0, 0, 0.35);
+}
+
+/* VPButton.vue sets background-color via the vars above (scoped style, so it
+   wins over a plain background-color override here) — background (shorthand)
+   is a different property from the cascade's point of view, so it can carry
+   the gradient without fighting that scoped rule. */
+.VPButton.brand {
+  background: linear-gradient(180deg, #6f8ff5, #2fa3f0) !important;
+  border: none !important;
+  box-shadow: 0 10px 24px -10px rgba(47, 163, 240, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.VPButton.brand:hover {
+  background: linear-gradient(180deg, #7d9bf7, #45b0f5) !important;
 }
 
 /* Home hero gradient glow — follows each product's own brand color
    (set per-route by Layout.vue's theme-* class, see dynamic-colors.css),
    so every landing page's title reads as that product's own identity. */
+
+.hero-word {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+}
+
 .VPHero .name.clip {
-  background: linear-gradient(120deg, var(--vp-c-brand-1) 0%, var(--vp-c-brand-2) 45%, var(--vp-c-brand-1) 100%) !important;
+  background: linear-gradient(120deg, var(--product-accent-1, var(--vp-c-brand-1)) 0%, var(--product-accent-2, var(--vp-c-brand-2)) 45%, var(--product-accent-1, var(--vp-c-brand-1)) 100%) !important;
   background-size: 200% auto !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -41,13 +98,13 @@
    VitePress ships these as unset (--vp-home-hero-image-background-image: none)
    so no page currently shows anything here. */
 :root {
-  --vp-home-hero-image-background-image: radial-gradient(circle at center, var(--vp-c-brand-1) 0%, transparent 70%);
+  --vp-home-hero-image-background-image: radial-gradient(circle at center, var(--product-accent-1, var(--vp-c-brand-1)) 0%, transparent 70%);
   --vp-home-hero-image-filter: blur(56px);
 }
 
 .VPHero .image-src {
   animation: hero-float 5s ease-in-out infinite;
-  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--vp-c-brand-1) 35%, transparent));
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 35%, transparent));
 }
 
 /* VitePress centers .image-src with `transform: translate(-50%, -50%)`
@@ -64,6 +121,14 @@
   .VPHero .image-src {
     animation: none;
   }
+}
+
+/* Global override for the main reading column: ensure the background
+   is always the light brand-tinted surface we defined in :root/dark,
+   even if a parent component or theme variable tries to override it.
+   This fixes "white box" issues for pages like 'tutorial.md'. */
+.content-body {
+  background-color: transparent !important;
 }
 
 /* Feature cards on landing pages ship with zero hover/entrance state unless
@@ -101,28 +166,188 @@
 
 .VPFeatures .VPFeature {
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  border-radius: var(--glass-radius) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
 }
 
 .VPFeatures .VPFeature:hover {
   transform: translateY(-3px);
-  border-color: var(--vp-c-brand-1) !important;
-  box-shadow: 0 8px 20px -12px var(--vp-c-brand-1);
+  border-color: var(--product-accent-1, var(--vp-c-brand-1)) !important;
+  box-shadow: 0 8px 20px -12px var(--product-accent-1, var(--vp-c-brand-1));
 }
 
 .VPFeature .icon {
-  background-color: color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent) !important;
-  color: var(--vp-c-brand-1);
+  background-color: color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 16%, transparent) !important;
+  color: var(--product-accent-1, var(--vp-c-brand-1));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .VPFeature:hover .icon {
   transform: scale(1.1);
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--vp-c-brand-1) 60%, transparent));
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 60%, transparent));
 }
 
-/* Code blocks — slightly tinted background */
+/* Code blocks styled as terminal windows — traffic-light dots + title strip,
+   drawn with two pseudo-elements so no markdown-it/Vue changes are needed. */
 .vp-doc div[class*='language-'] {
-  border: 1px solid rgba(0, 200, 255, 0.12);
+  padding-top: 34px;
+  border-radius: var(--glass-radius);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+.vp-doc div[class*='language-'] > pre {
+  padding-top: 10px;
+}
+.vp-doc div[class*='language-']::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 34px;
+  background: var(--glass-header-bg);
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 1;
+}
+.vp-doc div[class*='language-']::after {
+  content: '';
+  position: absolute;
+  top: 14px; left: 14px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 16px 0 0 #ffbd2e, 32px 0 0 #27c93f;
+  z-index: 2;
+}
+.vp-doc div[class*='language-'] > span.lang {
+  top: 10px;
+  z-index: 2;
+}
+.vp-doc div[class*='language-'] > button.copy {
+  top: 4px;
+  z-index: 2;
+}
+
+/* Custom containers (::: tip, ::: warning, etc.) get a glass sheen layered
+   over their existing semantic color — the color itself still carries the
+   meaning, the gloss is just a finish. Same border/shadow tokens as the
+   code-block chrome above, so the two read as one family of container. */
+.vp-doc .custom-block {
+  position: relative;
+  border-radius: var(--glass-radius);
+  background-image: linear-gradient(160deg, rgba(74, 107, 238, 0.12), rgba(74, 107, 238, 0.02));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(3px);
+}
+html.dark .vp-doc .custom-block {
+  background-image: linear-gradient(160deg, rgba(88, 120, 239, 0.16), rgba(88, 120, 239, 0.02));
+}
+
+/* Nav bar — flat like the sidebar (same --vp-c-bg-alt), not its own gradient
+   wash. A strong top-fading gradient on a 64px-tall fixed bar, sampled
+   through backdrop-filter's blur, was flattening into a visibly different
+   solid tone than the page below it — a hard seam at the nav's bottom edge
+   instead of blending in. Flat + blur (for what scrolls underneath) reads
+   as continuous with the sidebar instead. */
+.VPNav {
+  background-color: var(--vp-c-bg-alt);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Product page feature spotlight + grouped mini-grid — one protagonist
+   feature up top, the rest grouped by theme instead of N equal-weight
+   VPFeature cards in a flat wall. Shared across every product page;
+   tinted per-product via --product-accent-1 same as the hero/icons. */
+.spotlight {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  margin: 8px 0 48px;
+  padding: 28px;
+  border-radius: var(--glass-radius);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  background-image: linear-gradient(160deg, color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 10%, transparent), transparent);
+}
+@media (max-width: 640px) { .spotlight { flex-direction: column; } }
+.spotlight-icon {
+  flex-shrink: 0;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 13px;
+  font-size: 22px;
+  background: color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 18%, transparent);
+  color: var(--product-accent-1, var(--vp-c-brand-1));
+}
+.spotlight-eyebrow {
+  display: block;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--product-accent-1, var(--vp-c-brand-1));
+  margin-bottom: 6px;
+}
+.spotlight-body h3 {
+  margin: 0 0 10px !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+  font-size: 22px;
+}
+.spotlight-body p {
+  margin: 0 0 10px;
+  color: var(--vp-c-text-2);
+  line-height: 1.65;
+}
+.spotlight-note {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  opacity: 0.8;
+  margin: 0;
+}
+
+.feature-group { margin: 40px 0; }
+.feature-group-title {
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--vp-c-text-2);
+  opacity: 0.75;
+  margin: 0 0 14px !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+.feature-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+}
+.feature-mini {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 15px 16px;
+  border-radius: var(--glass-radius);
+  border: 1px solid var(--glass-border);
+  background: var(--vp-c-bg-alt);
+  transition: border-color 0.2s ease;
+}
+.feature-mini:hover {
+  border-color: var(--product-accent-1, var(--vp-c-brand-1));
+}
+.feature-mini i {
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 18px;
+  font-size: 15px;
+  color: var(--product-accent-1, var(--vp-c-brand-1));
+}
+.feature-mini b {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--vp-c-text-1);
+  font-size: 14.5px;
+}
+.feature-mini p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
 }
 
 /* LazyMod's playful Dokdo heading font - --vp-heading-font is only set by
@@ -150,9 +375,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 200, 255, 0.3);
+  background: rgba(88, 120, 239, 0.3);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 200, 255, 0.6);
+  background: rgba(88, 120, 239, 0.6);
 }

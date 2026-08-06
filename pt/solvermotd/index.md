@@ -18,22 +18,36 @@ hero:
     - theme: alt
       text: English
       link: /en/solvermotd/guide/getting-started
-
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-server"></i>'
-    title: Suporte Multiplataforma
-    details: Funciona perfeitamente em Bukkit/Spigot, BungeeCord, e proxies Velocity. Um único plugin para todas as necessidades da sua rede.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-image"></i>'
-    title: Banners de Imagem 1.21.9+
-    details: Substitua os MOTDs de texto padrão por imagens enormes de 264x16 pixels para clientes mais novos, usando nosso gerador automático de tiles MineSkin.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-palette"></i>'
-    title: MiniMessage e Legado
-    details: Suporta totalmente a formatação moderna MiniMessage para gradientes avançados e texto clicável, ao mesmo tempo que mantém suporte para códigos de e comercial legados.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-image"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Por que SolverMOTD</span>
+    <h3>Sua entrada na lista de servidores não precisa ser texto puro</h3>
+    <p>Substitua o MOTD de texto padrão por imagens enormes de 264×16 pixels para clientes mais novos, geradas automaticamente com nosso gerador de tiles MineSkin — sem precisar configurar hospedagem de imagens.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">Também Incluído</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-server"></i>
+    <div><b>Suporte Multiplataforma</b><p>Funciona perfeitamente em Bukkit/Spigot, BungeeCord, e proxies Velocity — um único plugin para toda a sua rede.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-palette"></i>
+    <div><b>MiniMessage e Legado</b><p>Suporte total à formatação moderna MiniMessage com gradientes e texto clicável, mantendo compatibilidade com códigos legados de e comercial.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {
-  image-rendering: auto; /* Logo might not be pixel art, so use standard rendering */
+  image-rendering: auto;
   max-width: 320px !important;
   max-height: 320px !important;
   margin: 0 auto;

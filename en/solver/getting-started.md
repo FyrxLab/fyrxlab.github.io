@@ -23,10 +23,10 @@ Download the latest `Solver-<version>.jar` from [Modrinth](https://modrinth.com/
 
 **2. Drop it in your `plugins` folder**
 
-```
+```bash
 your-server/
 └── plugins/
-    └── Solver-<version>.jar  ← here
+    └── Solver-< version >.jar  # ← here
 ```
 
 **3. Start the server once**
@@ -48,7 +48,30 @@ ai-provider:
 
 Restart your server. You should see the AbsoluteSolver ASCII banner in the console and the message:
 
-```
+```yaml
+
+==========================================================================================================
+                                                Solver by FyrxLab
+==========================================================================================================
+                             +                                           
+                           +++++                                                                                
+                         +++++++++                                                                              
+                       ++++++++++++                 **************        **** ********     ****       ***      
+                     ++++++++++++++++               *********** ****     ****  ************  ****    ****       
+                     +++++++  +++++++++             ***          ****   ****   ***      ****   ***  ****        
+                 +++   +++       ++++++++           ***           ***  ****    ***      ****       ****         
+               *++++++            +++++++++         **********        ****     ***     ****      *****          
+                ++++++++          ++++++++          **********       ***       ***********      *******         
+                  ++++++++      ++++++++            ***              ***       ***    ****    ****  ****        
+                    +++++++   ++++++++              ***              ***       ***     ****  ****    *****      
+                      ++++++++++++++                ***              ***       ***      ********       ****     
+                        ++++++++++                                                                                                
+                          +++++++                                                                                                 
+                            ++                                                                                                    
+==========================================================================================================
+
+==========================================================================================================
+
 [Solver] Asistente: Fyrx - Monitoreando errores...
 [Solver] TickMonitor iniciado. Vigilando el rendimiento del servidor...
 ```
@@ -59,13 +82,13 @@ Fyrx is now active and monitoring your server. ✅
 
 You can trigger a safe test error using the built-in crash test command (requires OP):
 
-```
+```bash
 /solver crashme exception
 ```
 
 Or, without affecting the server at all:
 
-```
+```bash
 /solver crashme dry-run
 ```
 

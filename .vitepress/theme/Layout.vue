@@ -8,8 +8,13 @@ const { Layout } = DefaultTheme
 const route = useRoute()
 
 function updateTheme(path) {
+  // Re-enabled: dynamic-colors.css now sets --product-accent-* instead of
+  // --vp-c-brand-1/2/3, so per-product color only reaches the hero gradient
+  // and feature icons (see custom.css) — it can no longer leak into the
+  // shared nav/code/callout/table chrome the way the old --vp-c-brand-1
+  // override did.
   if (typeof document === 'undefined') return;
-  
+
   // Remove existing theme classes
   document.documentElement.classList.forEach(className => {
     if (className.startsWith('theme-')) {

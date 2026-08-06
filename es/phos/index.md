@@ -18,18 +18,32 @@ hero:
     - theme: alt
       text: English
       link: /en/phos/features/items
-
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-gem"></i>'
-    title: Materiales Preciosos
-    details: Descubre nuevas menas subterráneas para extraer polvo y gemas de Fosfofilita, con soporte para Fortuna y texturas emisivas.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-khanda"></i>'
-    title: Armamento Frágil
-    details: Forja espadas y hachas increíblemente afiladas pero altamente quebradizas que se rompen convirtiéndose en polvo.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-magic-sparkles"></i>'
-    title: Efecto de Cristalización
-    details: Un efecto de estado único que encierra a los objetivos en cristal, disponible de forma natural en armas de Phos o mediante un encantamiento.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Por qué Phosphophyllite</span>
+    <h3>Un efecto de estado construido alrededor de la gema misma</h3>
+    <p>La Cristalización encierra a los objetivos en cristal — un efecto de estado único disponible de forma natural en armas de Phos, o añadido a cualquier arma mediante un encantamiento personalizado.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">También Incluye</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-gem"></i>
+    <div><b>Materiales Preciosos</b><p>Nuevas menas subterráneas para extraer polvo y gemas de Fosfofilita, con soporte para Fortuna y texturas emisivas.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-khanda"></i>
+    <div><b>Armamento Frágil</b><p>Forja espadas y hachas increíblemente afiladas pero altamente quebradizas que se rompen convirtiéndose en polvo.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

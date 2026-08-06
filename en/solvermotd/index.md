@@ -19,17 +19,32 @@ hero:
       text: Español
       link: /es/solvermotd/guide/getting-started
 
-features:
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-server"></i>'
-    title: Cross-Platform Support
-    details: Works seamlessly across Bukkit/Spigot, BungeeCord, and Velocity proxies. A single plugin for all your network needs.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-image"></i>'
-    title: 1.21.9+ Image Banners
-    details: Replace standard text MOTDs with massive 264x16 pixel images for newer clients using our automated MineSkin tile generator.
-  - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-palette"></i>'
-    title: MiniMessage & Legacy
-    details: Fully supports modern MiniMessage formatting for advanced gradients and clickable text, while still supporting legacy ampersand codes.
 ---
+
+<div class="spotlight">
+  <div class="spotlight-icon"><i class="fa-solid fa-image"></i></div>
+  <div class="spotlight-body">
+    <span class="spotlight-eyebrow">Why SolverMOTD</span>
+    <h3>Your server list entry doesn't have to be plain text</h3>
+    <p>Replace the standard text MOTD with massive 264×16 pixel images for newer clients, generated automatically with our MineSkin tile generator — no image-hosting setup required.</p>
+  </div>
+</div>
+
+<div class="feature-group">
+<div class="feature-group-title">Also Included</div>
+
+<div class="feature-mini-grid">
+  <div class="feature-mini">
+    <i class="fa-solid fa-server"></i>
+    <div><b>Cross-Platform Support</b><p>Works seamlessly across Bukkit/Spigot, BungeeCord, and Velocity proxies — a single plugin for your whole network.</p></div>
+  </div>
+  <div class="feature-mini">
+    <i class="fa-solid fa-palette"></i>
+    <div><b>MiniMessage &amp; Legacy</b><p>Full support for modern MiniMessage formatting with gradients and clickable text, alongside legacy ampersand codes.</p></div>
+  </div>
+</div>
+
+</div>
 
 <style>
 .VPHero .image-src {

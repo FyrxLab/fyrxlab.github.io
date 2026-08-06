@@ -32,10 +32,14 @@ function run() {
     const brand2 = shade(brand1, 0.2);
     const brand3 = shade(brand1, -0.2);
 
+    // --product-accent-*, not --vp-c-brand-*: the latter cascades into
+    // shared chrome (nav, code blocks, callouts, tables) sitewide, which is
+    // exactly how Solver's gold ended up on every doc page. This only feeds
+    // the hero name gradient and feature icons (see custom.css).
     cssLines.push(`html.theme-${key} {`);
-    cssLines.push(`  --vp-c-brand-1: ${brand1};`);
-    cssLines.push(`  --vp-c-brand-2: ${brand2};`);
-    cssLines.push(`  --vp-c-brand-3: ${brand3};`);
+    cssLines.push(`  --product-accent-1: ${brand1};`);
+    cssLines.push(`  --product-accent-2: ${brand2};`);
+    cssLines.push(`  --product-accent-3: ${brand3};`);
     if (product.font) {
       cssLines.push(`  --vp-heading-font: '${product.font}', cursive;`);
     }

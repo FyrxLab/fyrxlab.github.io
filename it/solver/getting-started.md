@@ -23,10 +23,10 @@ Scarica l'ultimo `Solver-<versione>.jar` da [Modrinth](https://modrinth.com/plug
 
 **2. Inseriscilo nella cartella `plugins`**
 
-```
+```bash
 your-server/
 └── plugins/
-    └── Solver-<versione>.jar  ← qui
+    └── Solver-< versione >.jar  ← qui
 ```
 
 **3. Avvia il server una volta**

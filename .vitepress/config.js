@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
 
 // NOTE: Solver's pages live flat under solver/ (no guide/ or features/ subfolders,
 // unlike Furnace/SolverMOTD/Phos) — links below must match that or they 404.
@@ -354,6 +355,17 @@ export default defineConfig({
   title: 'FyrxLab Documentation',
   description: 'Official documentation for FyrxLab products',
   cleanUrls: true,
+  markdown: {
+    // Code blocks are always rendered on the dark terminal-window background
+    // (see custom.css --vp-code-block-bg) regardless of the site's light/dark
+    // toggle. Shiki's stock 'github-light' theme assumes a white background,
+    // so on our dark one its string color was 1.38:1 contrast — barely
+    // visible. fyrx-code-theme.json is github-dark with brand colors patched
+    // onto comment/tag/string/constant, used for both slots so the syntax
+    // colors never depend on the site theme, only on the (always-dark) code
+    // background.
+    theme: { light: fyrxCodeTheme, dark: fyrxCodeTheme }
+  },
   head: [
     ['link', { rel: 'icon', href: '/logo.svg' }],
     ['meta', { name: 'og:type', content: 'website' }],
@@ -407,8 +419,8 @@ export default defineConfig({
           '/es/phos/': esPhosSidebar
         },
         footer: {
-          message: 'Publicado bajo la Licencia MIT.',
-          copyright: 'Copyright © 2026 FyrxLab by JEAMCube'
+          message: 'Solver: Todos los derechos reservados · Otros productos: Licencia MIT.',
+          copyright: 'Copyright © 2026 FyrxLab'
         }
       }
     },
@@ -448,8 +460,8 @@ export default defineConfig({
           '/it/phos/': itPhosSidebar
         },
         footer: {
-          message: 'Rilasciato sotto la Licenza MIT.',
-          copyright: 'Copyright © 2026 FyrxLab by JEAMCube'
+          message: 'Solver: Tutti i diritti riservati · Altri prodotti: Licenza MIT.',
+          copyright: 'Copyright © 2026 FyrxLab'
         }
       }
     },
@@ -489,8 +501,8 @@ export default defineConfig({
           '/pt/phos/': ptPhosSidebar
         },
         footer: {
-          message: 'Lançado sob a Licença MIT.',
-          copyright: 'Copyright © 2026 FyrxLab by JEAMCube'
+          message: 'Solver: Todos os direitos reservados · Outros produtos: Licença MIT.',
+          copyright: 'Copyright © 2026 FyrxLab'
         }
       }
     }
@@ -538,8 +550,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2026 FyrxLab by JEAMCube'
+      message: 'Solver: All Rights Reserved · Other products: MIT License.',
+      copyright: 'Copyright © 2026 FyrxLab'
     },
 
     search: {

@@ -49,7 +49,7 @@ asynchronous thread using Bukkit.getScheduler().runTaskAsynchronously()
 The Tick Monitor is **automatically disabled** on Folia servers. Folia uses a multi-threaded regional architecture where there is no single "main thread," making TPS monitoring via this method impossible. Folia has its own built-in regional Watchdog that handles freeze detection.
 
 When AbsoluteSolver detects Folia, you will see this message:
-```
+```log
 [AbsoluteSolver] Servidor Folia detectado: TickMonitor deshabilitado.
 ```
 :::
@@ -62,7 +62,7 @@ The default freeze threshold is **15 seconds**. This is intentionally higher tha
 
 You can test the Tick Monitor safely using the built-in crash test command (OP only):
 
-```
+```bash
 /absolutesolver crashme deadlock
 ```
 
