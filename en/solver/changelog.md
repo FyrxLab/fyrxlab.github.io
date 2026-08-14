@@ -34,9 +34,15 @@ Solver can now verify its own jar and scan for known-malware plugins. Both stati
 - **Optional Modrinth cross-check** for unflagged plugins — purely informational, never a red flag on its own.
 - **Java agent detection** — warns at startup if a Java agent was attached to the server's JVM, since an agent can patch classes in memory without ever touching the jar file on disk.
 
+### Changed
+
+- Jar builds aren't byte-for-byte reproducible (the same source rebuilt twice gets a different hash, since the zip container embeds a per-entry build timestamp). Every compiled jar is now published under its own `<version>.AAMMDD.HHMM` key in FyrxLab's manifest, and build verification matches against any hash published for the current version instead of a single exact one.
+
 ### Fixes
 
 - `/solver rtp` could occasionally teleport the person running the command to themselves instead of another player.
+- Build verification could read a blank CDN URL on an upgrading install's first boot after the new `integrity` config section was added, silently disabling the whole feature for that restart. Config merging now runs before any manager reads its own section.
+- Build verification was hashing the wrong file on Paper/Folia versions that remap plugins to `plugins/.paper-remapped/` before loading them — that remapped copy never matches FyrxLab's published hash even on a genuine install. It now locates and hashes the original jar in `plugins/` directly.
 
 ## v0.8.0 — The Full Moderation/Staff Alternative
 
@@ -58,6 +64,8 @@ Solver becomes a full moderation/staff alternative, not just AI chat moderation 
 - **`/solver inspect`/`enderchest`** — view *and confiscate* a player's inventory/enderchest without opening it.
 - **`/solver fly`/`god`/`rtp`** for independent flight, invulnerability, and supervision teleports.
 - **Chat moderation categories are now yours to define** (`tags.yml`), and `chat-moderation.action.tag-overrides` maps any tag straight to a sanction type — the only way to reach an automatic ban from chat moderation.
+- **Cancellable events** — `SolverPunishEvent`/`SolverPostPunishEvent`, `SolverVanishToggleEvent`, `SolverFreezeToggleEvent`, `SolverStaffChatToggleEvent` let other plugins veto or react to any Solver action.
+- **Silent join** — staff with `solver.staffmode.silentjoin` enter already vanished, with no join message at all.
 
 ### Fixes
 
@@ -118,6 +126,13 @@ A real warn/mute/kick/ban system, every player-facing message now yours to custo
 - **`config.yml`/`messages.yml` no longer go stale on update** — new options merge in automatically.
 - **AI Chat Moderation, out of beta** — staff/admins can be exempted, full localization in all 9 languages, and per-category per-offender verdicts instead of a single guessed word.
 - **`/solver crashme dry-run`** — exercises the full crash-diagnosis pipeline with a synthetic report, no real exception/hang/OOM.
+
+### Fixes
+
+- Fixed early-startup error detection loading the entire server log into memory instead of reading it line by line.
+- Fixed kick/mute/message scheduling using the wrong Folia scheduler for per-player actions.
+- Fixed Fyrx ignoring the configured language for exception/crash analysis outside of English.
+- Fixed background threads (chat moderation, tick monitor, console batching) keeping a crashed server's Java process alive forever — all now run as daemon threads.
 
 ### Compatibility
 
