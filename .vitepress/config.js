@@ -351,6 +351,78 @@ const ptPhosSidebar = [
   }
 ]
 
+const enFyrxAISidebar = [
+  {
+    text: 'FyrxAI',
+    items: [
+      { text: 'Home', link: '/en/fyrxai/' },
+    ]
+  },
+  {
+    text: 'Guide',
+    items: [
+      { text: 'Configuration', link: '/en/fyrxai/configuration' },
+      { text: 'AI Providers', link: '/en/fyrxai/providers' },
+      { text: 'Topic Detection', link: '/en/fyrxai/topic-detection' },
+    ]
+  },
+  { text: 'Changelog', link: '/en/fyrxai/changelog' },
+]
+
+const esFyrxAISidebar = [
+  {
+    text: 'FyrxAI',
+    items: [
+      { text: 'Inicio', link: '/es/fyrxai/' },
+    ]
+  },
+  {
+    text: 'Guía',
+    items: [
+      { text: 'Configuración', link: '/es/fyrxai/configuration' },
+      { text: 'Proveedores de IA', link: '/es/fyrxai/providers' },
+      { text: 'Detección de Temas', link: '/es/fyrxai/topic-detection' },
+    ]
+  },
+  { text: 'Changelog', link: '/es/fyrxai/changelog' },
+]
+
+const itFyrxAISidebar = [
+  {
+    text: 'FyrxAI',
+    items: [
+      { text: 'Home', link: '/it/fyrxai/' },
+    ]
+  },
+  {
+    text: 'Guida',
+    items: [
+      { text: 'Configurazione', link: '/it/fyrxai/configuration' },
+      { text: 'Provider IA', link: '/it/fyrxai/providers' },
+      { text: 'Rilevamento Argomenti', link: '/it/fyrxai/topic-detection' },
+    ]
+  },
+  { text: 'Changelog', link: '/it/fyrxai/changelog' },
+]
+
+const ptFyrxAISidebar = [
+  {
+    text: 'FyrxAI',
+    items: [
+      { text: 'Início', link: '/pt/fyrxai/' },
+    ]
+  },
+  {
+    text: 'Guia',
+    items: [
+      { text: 'Configuração', link: '/pt/fyrxai/configuration' },
+      { text: 'Provedores de IA', link: '/pt/fyrxai/providers' },
+      { text: 'Detecção de Tópicos', link: '/pt/fyrxai/topic-detection' },
+    ]
+  },
+  { text: 'Changelog', link: '/pt/fyrxai/changelog' },
+]
+
 export default defineConfig({
   title: 'FyrxLab Documentation',
   description: 'Official documentation for FyrxLab products',
@@ -410,13 +482,15 @@ export default defineConfig({
               }
             ]
           },
+          { text: 'Developer Tools', link: '/es/fyrxai/' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
           '/es/solver/': esAbsoluteSolverSidebar,
           '/es/furnace/': esFurnaceSidebar,
           '/es/solvermotd/': esSolverMOTDSidebar,
-          '/es/phos/': esPhosSidebar
+          '/es/phos/': esPhosSidebar,
+          '/es/fyrxai/': esFyrxAISidebar
         },
         footer: {
           message: 'Solver: Todos los derechos reservados · Otros productos: Licencia MIT.',
@@ -451,13 +525,15 @@ export default defineConfig({
               }
             ]
           },
+          { text: 'Developer Tools', link: '/it/fyrxai/' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
           '/it/solver/': itAbsoluteSolverSidebar,
           '/it/furnace/': itFurnaceSidebar,
           '/it/solvermotd/': itSolverMOTDSidebar,
-          '/it/phos/': itPhosSidebar
+          '/it/phos/': itPhosSidebar,
+          '/it/fyrxai/': itFyrxAISidebar
         },
         footer: {
           message: 'Solver: Tutti i diritti riservati · Altri prodotti: Licenza MIT.',
@@ -492,13 +568,15 @@ export default defineConfig({
               }
             ]
           },
+          { text: 'Developer Tools', link: '/pt/fyrxai/' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
           '/pt/solver/': ptAbsoluteSolverSidebar,
           '/pt/furnace/': ptFurnaceSidebar,
           '/pt/solvermotd/': ptSolverMOTDSidebar,
-          '/pt/phos/': ptPhosSidebar
+          '/pt/phos/': ptPhosSidebar,
+          '/pt/fyrxai/': ptFyrxAISidebar
         },
         footer: {
           message: 'Solver: Todos os direitos reservados · Outros produtos: Licença MIT.',
@@ -534,6 +612,7 @@ export default defineConfig({
           }
         ]
       },
+      { text: 'Developer Tools', link: '/en/fyrxai/' },
       { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
     ],
 
@@ -541,7 +620,8 @@ export default defineConfig({
       '/en/solver/': enAbsoluteSolverSidebar,
       '/en/furnace/': enFurnaceSidebar,
       '/en/solvermotd/': enSolverMOTDSidebar,
-      '/en/phos/': enPhosSidebar
+      '/en/phos/': enPhosSidebar,
+      '/en/fyrxai/': enFyrxAISidebar
     },
 
     socialLinks: [

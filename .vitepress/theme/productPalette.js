@@ -93,7 +93,22 @@ export const PRODUCTS = {
       it: 'Appari già equipaggiato con equipaggiamento assurdamente potente. Salta la macinata.',
       pt: 'Apareça já equipado com equipamento absurdamente poderoso. Pule a repetição.'
     }
+  },
+  fyrxai: {
+    name: 'FyrxAI',
+    kind: 'library',
+    color: '#5865f2',
+    icon: 'fa-robot',
+    version: '1.2.1',
+    changelog: '/fyrxai/changelog',
+    home: '/fyrxai/',
+    tagline: {
+      en: 'Drop-in AI support agent for your own discord.js bot — configured entirely from Discord.',
+      es: 'Agente de soporte con IA para tu propio bot de discord.js — configurado enteramente desde Discord.',
+      it: 'Agente di supporto IA da integrare nel tuo bot discord.js — configurato interamente da Discord.',
+      pt: 'Agente de suporte com IA para seu próprio bot discord.js — configurado inteiramente pelo Discord.'
+    }
   }
 }
 
-export const PRODUCT_ORDER = ['solver', 'solvermotd', 'phos', 'furnace', 'noteblock', 'lazymod']
+export const PRODUCT_ORDER = ['solver', 'solvermotd', 'phos', 'furnace', 'noteblock', 'lazymod', 'fyrxai']
