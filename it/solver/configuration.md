@@ -305,6 +305,28 @@ punishments:
 
 Mostra una riga che punta a `/solver appeal <id> <motivo>` nei messaggi di warn/mute/kick/ban, interamente in gioco — nessun webhook Discord necessario. Lo staff viene notificato immediatamente quando arriva un nuovo ricorso, allo stesso modo di una nuova segnalazione.
 
+## Statistiche di Utilizzo
+
+```yaml
+metrics:
+  enabled: true
+```
+
+Statistiche di utilizzo anonime tramite [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — numero di server, quale provider IA è configurato, quali funzionalità sono attive. Nulla di identificabile per giocatore. Imposta `metrics.enabled: false` per disattivarle, indipendentemente dall'interruttore globale di bStats in `plugins/bStats/config.yml` (che si applica comunque sempre).
+
+## Relay Proxy
+
+::: warning Richiede un plugin separato sul proxy
+Questa sezione configura solo il lato Bukkit. Non fa nulla a meno che non sia installato anche il plugin proxy corrispondente — vedi [Relay Proxy](/it/solver/proxy-relay) per la configurazione completa.
+:::
+
+```yaml
+proxy-relay:
+  enabled: false
+```
+
+Disattivato di default. Quando attivo, inoltra i messaggi di staffchat e gli avvisi di moderazione/integrità allo staff connesso a qualsiasi backend della stessa rete BungeeCord/Waterfall/Velocity, non solo a quello dove è avvenuto l'avviso.
+
 ## Lingue Supportate
 
 | Codice | Lingua |

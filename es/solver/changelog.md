@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.9.2 — Alias de Comandos, Verificaciones de Integridad Más Rápidas, y un Relay entre Servers
+
+> Publicado: 2026
+
+### Novedades
+
+- **Alias de comandos** — alternativas más cortas para comandos comunes, funcionando tanto sin el prefijo `/solver` como con `/solver <alias>`: `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`).
+- **Estadísticas de uso anónimas** vía [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — cantidad de servers y qué features están activas, nada identificable por jugador. Se controla con `metrics.enabled` en `config.yml`, independiente del opt-out global de bStats.
+- **Relay opcional entre servers para redes BungeeCord, Waterfall y Velocity** — los mensajes de staffchat y las alertas de moderación/integridad ahora le llegan al staff conectado en *cualquier* backend de la misma red, no solo al que originó la alerta. Requiere instalar un plugin pequeño y separado en el proxy mismo; ver [Relay de Proxy](/es/solver/proxy-relay). Desactivado por defecto (`proxy-relay.enabled: false`).
+
+### Correcciones
+
+- **Los comandos sin prefijo (`/vanish`, `/inspect`, etc.) ahora sí funcionan.** El log decía que estaban habilitados al arrancar, pero un bug de registro hacía que ninguno respondiera realmente — `/solver <comando>` no se vio afectado y siguió funcionando todo este tiempo.
+- Las verificaciones de integridad ahora reintentan contra el CDN de FyrxLab en cada arranque del server hasta que una verificación tenga éxito, en vez de esperar la ventana de refresco normal — un resultado viejo de "todavía no verificado" ya no persiste hasta 24 horas después de que el hash real fue publicado.
+
+### Cambios
+
+- La salida de consola ahora es en **inglés por defecto**, sin importar el idioma configurado para los jugadores (`localization` en `config.yml`). Los mensajes de cara al jugador (comandos, sanciones, moderación de chat) no se ven afectados y siguen esa configuración.
+
 ## v0.9.1 — Soporte Spigot/CraftBukkit, hasta 1.8.8
 
 > Publicado: 2026

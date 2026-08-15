@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.9.2 — Alias dei Comandi, Controlli di Integrità Più Veloci, e un Relay tra Server
+
+> Rilasciato: 2026
+
+### Novità
+
+- **Alias dei comandi** — alternative più brevi per i comandi più comuni, funzionanti sia senza il prefisso `/solver` sia come `/solver <alias>`: `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`).
+- **Statistiche di utilizzo anonime** tramite [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — numero di server e quali funzionalità sono attive, nulla di identificabile per giocatore. Si controlla con `metrics.enabled` in `config.yml`, indipendente dall'opt-out globale di bStats.
+- **Relay opzionale tra server per reti BungeeCord, Waterfall e Velocity** — i messaggi di staffchat e gli avvisi di moderazione/integrità ora raggiungono lo staff connesso a *qualsiasi* backend della stessa rete, non solo quello dove è avvenuto l'avviso. Richiede l'installazione di un plugin piccolo e separato sul proxy stesso; vedi [Relay Proxy](/it/solver/proxy-relay). Disattivato di default (`proxy-relay.enabled: false`).
+
+### Correzioni
+
+- **I comandi senza prefisso (`/vanish`, `/inspect`, ecc.) ora funzionano davvero.** Il log li elencava come abilitati all'avvio, ma un bug di registrazione impediva a tutti di rispondere realmente — `/solver <comando>` non ne era affetto ed ha continuato a funzionare per tutto questo tempo.
+- I controlli di integrità ora ritentano contro il CDN di FyrxLab ad ogni avvio del server finché un controllo non ha successo, invece di aspettare la normale finestra di aggiornamento — un risultato vecchio di "non ancora verificato" non persiste più fino a 24 ore dopo la pubblicazione dell'hash reale.
+
+### Cambiamenti
+
+- L'output della console è ora in **inglese di default**, indipendentemente dalla lingua configurata per i giocatori (`localization` in `config.yml`). I messaggi rivolti al giocatore (comandi, sanzioni, moderazione chat) non sono interessati e seguono comunque quell'impostazione.
+
 ## v0.9.1 — Supporto Spigot/CraftBukkit, fino a 1.8.8
 
 > Rilasciato: 2026

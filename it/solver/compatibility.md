@@ -9,9 +9,9 @@
 | **Spigot** | ✅ Supportato (1.8.8+) | Pienamente supportato, inclusa la [Moderazione Chat con IA](/it/solver/fyrx-ai) — Paper non è richiesto. |
 | **CraftBukkit** | ✅ Supportato (1.8.8+) | Stesso livello di supporto di Spigot. |
 | **Folia** | ✅ Supportato | Il TickMonitor viene disabilitato automaticamente (Folia gestisce il proprio watchdog). Tutte le altre funzionalità funzionano. |
-| **Velocity** | ❌ Non supportato | Software proxy; usa un'API completamente diversa. |
-| **BungeeCord** | ❌ Non supportato | Software proxy; usa un'API completamente diversa. |
-| **Waterfall** | ❌ Non supportato | Software proxy; usa un'API completamente diversa. |
+| **Velocity** | ⚠️ Parziale (solo relay) | Non è una destinazione d'installazione di Solver — un plugin piccolo e separato inoltra staffchat/avvisi tra i tuoi backend. Vedi [Relay Proxy](/it/solver/proxy-relay). |
+| **BungeeCord** | ⚠️ Parziale (solo relay) | Stesso plugin di relay di Waterfall. Vedi [Relay Proxy](/it/solver/proxy-relay). |
+| **Waterfall** | ⚠️ Parziale (solo relay) | Stesso plugin di relay di BungeeCord. Vedi [Relay Proxy](/it/solver/proxy-relay). |
 | **Forge / Fabric** | ❌ Non supportato | Mod loader; non usano l'API Bukkit. |
 | **Sponge** | ❌ Non supportato | Usa SpongeAPI, non Bukkit. |
 

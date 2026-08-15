@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.9.2 — Command Aliases, Faster Integrity Checks, and a Cross-Server Relay
+
+> Released: 2026
+
+### New Features
+
+- **Command aliases** — shorter alternatives for common commands, working both without the `/solver` prefix and as `/solver <alias>`: `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`).
+- **Anonymous usage statistics** via [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — server count and which features are enabled, nothing player-identifiable. Toggle with `metrics.enabled` in `config.yml`, independent of the global bStats opt-out.
+- **Optional cross-server relay for BungeeCord, Waterfall, and Velocity networks** — staffchat messages and moderation/integrity alerts now reach staff connected to *any* backend server on the same proxy, not just the one where the alert happened. Requires installing a small separate plugin on the proxy itself; see [Proxy Relay](/en/solver/proxy-relay). Off by default (`proxy-relay.enabled: false`).
+
+### Fixed
+
+- **Prefix-less commands (`/vanish`, `/inspect`, etc.) now actually work.** They were listed as enabled at startup, but a registration bug meant none of them ever responded — `/solver <command>` was unaffected and kept working the whole time.
+- Build integrity re-checks now retry against FyrxLab's CDN on every server startup until a check succeeds, instead of waiting for the normal refresh window — a stale "not verified yet" result no longer lingers for up to 24 hours after the real hash was published.
+
+### Changed
+
+- Console log output is now in **English by default**, regardless of the server's configured player-facing language (`localization` in `config.yml`). Player-facing messages (commands, sanctions, chat moderation) are unaffected and still follow that setting.
+
 ## v0.9.1 — Spigot/CraftBukkit Support, Down to 1.8.8
 
 > Released: 2026
