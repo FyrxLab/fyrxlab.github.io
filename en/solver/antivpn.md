@@ -15,7 +15,7 @@ Sources are tried from cheapest to most expensive, and a later one only runs whe
 | `x4bnet-datacenter` | Same project's broader list (VPN + hosting). Off by default — it also flags players on their own VPS. | No |
 | `ipquery` | [IPQuery.io](https://ipquery.io) real-time lookup, only for addresses the list didn't cover. | Yes |
 | `ipapiis` | [ipapi.is](https://ipapi.is), last resort. Without a key it only returns the network (ASN); with a free key it adds VPN/proxy/Tor flags. | Yes |
-| `bad-asn-list` | Known consumer-VPN networks (NordVPN, Mullvad, ExpressVPN...), matched against the ASN the lookups resolved — catches a brand-new range before any list. | No |
+| `bad-asn-list` | Known consumer-VPN networks (NordVPN, Mullvad, ExpressVPN, Proton, Surfshark...), including VPN companies whose network name doesn't say "VPN", matched against the ASN the lookups resolved — catches a brand-new range before any list. | No |
 
 Local and LAN addresses are never looked up. A verdict is cached per IP (`cache-ttl-hours`, default 24); if every real-time lookup fails, nothing is cached and the address is retried on the next login.
 

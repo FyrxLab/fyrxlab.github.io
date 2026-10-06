@@ -20,7 +20,7 @@ Fyrx es compatible con múltiples proveedores. Puedes usar cualquiera de los sig
 |-----------|---------|-------|
 | **Anthropic** | Sonnet, Haiku, Opus | Proveedor por defecto desde esta versión. Razonamiento de alta calidad. |
 | **Google Gemini** | Pro, Flash | Nivel gratuito disponible. |
-| **OpenAI / Compatible** | `gpt-4o`, `gpt-4-turbo`, etc. | Funciona con cualquier endpoint compatible con OpenAI, incluyendo modelos locales. |
+| **OpenAI / Compatible** | `gpt-4o`, `gpt-4-turbo`, etc. | Funciona con cualquier endpoint compatible con OpenAI, incluidos modelos locales (Ollama, LM Studio): pon el endpoint local en `other-url` y deja `other-key` vacía. |
 
 ## Formato de Respuesta
 

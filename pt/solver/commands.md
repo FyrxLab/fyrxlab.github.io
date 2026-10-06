@@ -42,7 +42,7 @@ Veja [AntiVPN](/pt/solver/antivpn) para entender como a detecção funciona.
 
 | Subcomando | Descrição | Permissão |
 |------------|-------------|---------|
-| `warn \| mute \| tempmute \| kick \| ban \| tempban <jogador> [duração] <motivo>` | Aplica a sanção correspondente. `duração` é obrigatória para as variantes temp- (ex.: `30s`, `10m`, `1d`). O motivo também pode ser `#nome`, que se expande em um [modelo de motivo](/pt/solver/configuration#modelos-de-motivo-e-escalonamento-de-avisos) configurado em `config.yml`. | `solver.sanctions.<tipo>` |
+| `warn \| mute \| tempmute \| kick \| ban \| tempban <jogador> [duração] <motivo>` | Aplica a sanção correspondente. `duração` é obrigatória para as variantes temp- (ex.: `30s`, `10m`, `1d`) e opcional para `ban`/`mute`, que então viram `tempban`/`tempmute`. O motivo também pode ser `#nome`, que se expande em um [modelo de motivo](/pt/solver/configuration#modelos-de-motivo-e-escalonamento-de-avisos) configurado em `config.yml`. | `solver.sanctions.<tipo>` |
 | `unban \| unmute \| unwarn <jogador>` | Reverte uma sanção ativa daquele tipo. | `solver.sanctions.<tipo>` |
 | `history <jogador>` | Mostra o histórico completo de sanções de um jogador. | `solver.sanctions.history` |
 | `check <id>` | Mostra o detalhe de uma sanção pelo seu ID. | `solver.sanctions.check` |

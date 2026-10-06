@@ -15,7 +15,7 @@ Le fonti vengono provate dalla più economica alla più costosa, e una successiv
 | `x4bnet-datacenter` | La lista più ampia dello stesso progetto (VPN + hosting). Spenta di default — segnala anche giocatori sul proprio VPS. | No |
 | `ipquery` | Ricerca in tempo reale su [IPQuery.io](https://ipquery.io), solo per indirizzi non coperti dalla lista. | Sì |
 | `ipapiis` | [ipapi.is](https://ipapi.is), ultima risorsa. Senza key restituisce solo la rete (ASN); con una key gratuita aggiunge i flag VPN/proxy/Tor. | Sì |
-| `bad-asn-list` | Reti note di VPN consumer (NordVPN, Mullvad, ExpressVPN...), confrontate con l'ASN risolto dalle ricerche — intercetta un range nuovo prima di qualsiasi lista. | No |
+| `bad-asn-list` | Reti note di VPN consumer (NordVPN, Mullvad, ExpressVPN, Proton, Surfshark...), incluse aziende VPN il cui nome di rete non contiene "VPN", confrontate con l'ASN risolto dalle ricerche — intercetta un range nuovo prima di qualsiasi lista. | No |
 
 Gli indirizzi locali e LAN non vengono mai cercati. Ogni verdetto viene messo in cache per IP (`cache-ttl-hours`, predefinito 24); se tutte le ricerche in tempo reale falliscono, non si mette nulla in cache e l'indirizzo viene ricontrollato al login successivo.
 

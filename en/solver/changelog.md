@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.10.1 — Doing Exactly What It Promises
+
+> Released: October 2026
+
+### New Features
+
+- **`/solver ban` and `/solver mute` accept an optional duration** — `/solver ban <player> 7d <reason>` is now a 7-day ban (recorded as `TEMPBAN`), and `/solver mute <player> 10m <reason>` a 10-minute mute. Without a duration they stay permanent, as before. Previously the duration was silently kept as part of the reason of a permanent sanction.
+- **Local AI models without an API key** — the `other` provider no longer requires `other-key`. Point `other-url` at Ollama, LM Studio, or any OpenAI-compatible endpoint (e.g. `http://localhost:11434/v1/chat/completions`) and leave the key empty; Solver then sends no `Authorization` header.
+- **AntiVPN recognizes more VPN providers** — the `bad-asn-list` check now also includes networks run by VPN companies whose network name doesn't say "VPN": Proton AG, Surfshark, CyberGhost, Windscribe, Private Internet Access, TorGuard, Hide.me, and NordVPN's own networks (PacketHub, Tefincom). 21 → 34 known VPN networks. Generic hosting that VPNs also rent (e.g. Datacamp/CDN77, M247) is deliberately left out to avoid flagging legitimate players.
+
+### Fixed
+
+- In-game alerts for errors caught by the [Console Monitor](/en/solver/console-monitor) now show the actual root cause (e.g. `NullPointerException: Cannot invoke ...`) instead of "check the console for the full detail".
+
 ## v0.10.0 — AntiVPN, One Jar for Proxies, and Command Aliases
 
 > Released: October 2026

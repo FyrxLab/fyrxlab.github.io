@@ -15,7 +15,7 @@ As fontes são tentadas da mais barata à mais cara, e uma posterior só roda se
 | `x4bnet-datacenter` | A lista mais ampla do mesmo projeto (VPN + hospedagem). Desligada por padrão — também marca jogadores no próprio VPS. | Não |
 | `ipquery` | Consulta em tempo real ao [IPQuery.io](https://ipquery.io), só para endereços que a lista não cobriu. | Sim |
 | `ipapiis` | [ipapi.is](https://ipapi.is), último recurso. Sem key só devolve a rede (ASN); com uma key gratuita adiciona flags de VPN/proxy/Tor. | Sim |
-| `bad-asn-list` | Redes conhecidas de VPN de consumo (NordVPN, Mullvad, ExpressVPN...), cruzadas com o ASN que as consultas resolveram — pega uma faixa nova antes de qualquer lista. | Não |
+| `bad-asn-list` | Redes conhecidas de VPN de consumo (NordVPN, Mullvad, ExpressVPN, Proton, Surfshark...), incluindo empresas de VPN cujo nome de rede não diz "VPN", cruzadas com o ASN que as consultas resolveram — pega uma faixa nova antes de qualquer lista. | Não |
 
 Endereços locais e de LAN nunca são consultados. Cada veredito fica em cache por IP (`cache-ttl-hours`, padrão 24); se todas as consultas em tempo real falharem, nada vai para o cache e o endereço é verificado de novo no próximo login.
 

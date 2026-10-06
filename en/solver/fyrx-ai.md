@@ -20,7 +20,7 @@ Fyrx is provider-agnostic. You can use any of the following:
 |----------|--------|-------|
 | **Anthropic** | Sonnet, Haiku, Opus | Default provider as of this release. High-quality reasoning. |
 | **Google Gemini** | Pro, Flash | Free tier available. |
-| **OpenAI / Compatible** | `gpt-4o`, `gpt-4-turbo`, etc. | Works with any OpenAI-compatible endpoint including local models. |
+| **OpenAI / Compatible** | `gpt-4o`, `gpt-4-turbo`, etc. | Works with any OpenAI-compatible endpoint, including local models (Ollama, LM Studio): set `other-url` to the local endpoint and leave `other-key` empty. |
 
 ## Response Format
 
