@@ -22,6 +22,18 @@ Most subcommands are also available as their own standalone command (e.g. `/vani
 | `crashme dry-run` | Sends a synthetic crash report to Fyrx for diagnosis without actually affecting the server. | `solver.diagnostics.crashme` |
 | `moderation status` | Shows chat moderation status: buffer size, tracked players, last verdict, average confidence, next scan countdown. | `solver.diagnostics.moderation` |
 | `moderation test <message>` | Simulates a moderation analysis on an arbitrary message. | `solver.diagnostics.moderation` |
+| `integrity [rescan]` | Shows build verification + known-malware scan status; `rescan` forces an immediate check. | `solver.diagnostics.integrity` |
+
+### AntiVPN
+
+See [AntiVPN](/en/solver/antivpn) for how detection works.
+
+| Subcommand | Description | Permission |
+|------------|-------------|------------|
+| `vpn status` | Active sources, list age, cached verdicts, and calibration progress. | `solver.vpn.check` |
+| `vpn check <player\|ip>` | Checks an address and shows the score breakdown. Doesn't count towards calibration. | `solver.vpn.check` |
+| `vpn whitelist add\|remove\|list <ip\|cidr>` | Addresses that skip every check. Takes effect immediately. | `solver.vpn.whitelist` |
+| `vpn clearcache` | Clears cached verdicts and re-downloads the lists. | `solver.vpn.clearcache` |
 
 ### Sanctions System
 
@@ -159,6 +171,7 @@ Permissions are grouped so you can grant a whole category at once (e.g. via Luck
 | `solver.diagnostics.*` | false | All diagnostics commands (`reload`/`analyze-last`/`crashme`/`moderation`). |
 | `solver.sanctions.*` | false | All sanctions commands, including `checkuser`, `appeal.manage`, and the `sanctions` GUI. |
 | `solver.staffmode.*` | false | All Staff Mode Toolkit commands. |
+| `solver.vpn.*` | false | All AntiVPN commands (`vpn status`/`check`/`whitelist`/`clearcache`). |
 | `solver.reports.*` | false | All Reports commands. |
 | `solver.report` | **true** | Submit a report (`/solver report`). Open to everyone by default. |
 | `solver.sanctions.appeal` | **true** | Submit an appeal on your own sanction (`/solver appeal <id> <reason>`). Open to everyone by default. |

@@ -22,6 +22,18 @@ A maioria dos subcomandos também está disponível como seu próprio comando in
 | `crashme dry-run` | Envia um relatório de crash sintético ao Fyrx para diagnóstico sem realmente afetar o servidor. | `solver.diagnostics.crashme` |
 | `moderation status` | Mostra o status da moderação de chat: tamanho do buffer, jogadores rastreados, último veredicto, confiança média, contagem regressiva para a próxima varredura. | `solver.diagnostics.moderation` |
 | `moderation test <mensagem>` | Simula uma análise de moderação em uma mensagem arbitrária. | `solver.diagnostics.moderation` |
+| `integrity [rescan]` | Mostra o status da verificação do build e do escaneamento de malware; `rescan` força uma verificação imediata. | `solver.diagnostics.integrity` |
+
+### AntiVPN
+
+Veja [AntiVPN](/pt/solver/antivpn) para entender como a detecção funciona.
+
+| Subcomando | Descrição | Permissão |
+|------------|-----------|-----------|
+| `vpn status` | Fontes ativas, idade das listas, vereditos em cache e progresso da calibração. | `solver.vpn.check` |
+| `vpn check <jogador\|ip>` | Verifica um endereço e mostra o detalhamento da pontuação. Não conta para a calibração. | `solver.vpn.check` |
+| `vpn whitelist add\|remove\|list <ip\|cidr>` | Endereços que pulam todas as verificações. Vale na hora. | `solver.vpn.whitelist` |
+| `vpn clearcache` | Limpa o cache de vereditos e baixa as listas de novo. | `solver.vpn.clearcache` |
 
 ### Sistema de Sanções
 
@@ -159,6 +171,7 @@ As permissões são agrupadas para que você possa conceder uma categoria inteir
 | `solver.diagnostics.*` | false | Todos os comandos de diagnóstico (`reload`/`analyze-last`/`crashme`/`moderation`). |
 | `solver.sanctions.*` | false | Todos os comandos de sanções, incluindo `checkuser`, `appeal.manage` e a GUI `sanctions`. |
 | `solver.staffmode.*` | false | Todos os comandos do Staff Mode Toolkit. |
+| `solver.vpn.*` | false | Todos os comandos do AntiVPN (`vpn status`/`check`/`whitelist`/`clearcache`). |
 | `solver.reports.*` | false | Todos os comandos de denúncias. |
 | `solver.report` | **true** | Registrar uma denúncia (`/solver report`). Aberto a todos por padrão. |
 | `solver.sanctions.appeal` | **true** | Recorrer da própria sanção (`/solver appeal <id> <motivo>`). Aberto a todos por padrão. |

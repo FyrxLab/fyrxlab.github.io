@@ -1,18 +1,19 @@
 # Relay Proxy
 
-::: warning Novità nella 0.9.2 — solo relay di chat/log, non supporto proxy completo
-Solver gira solo su singoli server della famiglia Bukkit (Paper, Purpur, Spigot, CraftBukkit, Folia). Un proxy non ha mondi, inventari o giocatori con stato di gioco, quindi sanzioni, vanish e GUI non girano lì — il relay inoltra solo testo di avvisi e staffchat attraverso la tua rete. Sponge non ha alcuna relazione con questa funzionalità e resta non supportato.
+::: tip Aggiornato nella 0.10.0 — un solo jar per tutto
+Solver gira sui server della famiglia Bukkit. Su un proxy, lo stesso jar esegue solo un piccolo relay: un proxy non ha mondi, inventari o giocatori con stato di gioco, quindi sanzioni, vanish e GUI restano sui backend.
 :::
 
-Se gestisci una rete BungeeCord, Waterfall o Velocity con più di un backend potenziato da Solver, il relay proxy fa sì che i messaggi di staffchat e gli avvisi di moderazione/integrità raggiungano lo staff connesso a *qualsiasi* backend, non solo a quello dove è avvenuto l'avviso.
+Se gestisci una rete BungeeCord, Waterfall o Velocity con più di un backend con Solver, il relay fa arrivare i messaggi di staffchat e gli avvisi di moderazione/integrità/VPN allo staff connesso a *qualsiasi* backend, non solo a quello in cui sono nati.
 
 ## Cosa viene inoltrato
 
-- Messaggi di `/solver staffchat` (e la modalità staffchat attivata)
-- Avvisi di moderazione chat (Fyrx IA)
-- Avvisi di integrità — hash del jar non corrispondente, corrispondenza malware, agente Java rilevato
+- Messaggi di `/solver staffchat` (e la modalità staffchat attiva)
+- Avvisi di moderazione della chat (IA Fyrx)
+- Avvisi di integrità — jar non corrispondente, malware rilevato, Java agent rilevato
+- Avvisi di [AntiVPN](/it/solver/antivpn)
 
-Nient'altro. Nessuna sanzione, stato vanish o dato di GUI attraversa la rete — vedi l'avviso sopra per il perché.
+Lo staff del server in cui è nato il messaggio lo vede già localmente, quindi il relay non gli invia una seconda copia. Un avviso generato mentre un backend non ha nessuno online (tipico di AntiVPN, che scatta prima che il giocatore entri) viene trattenuto e consegnato appena qualcuno entra in quel backend.
 
 ## Configurazione
 
@@ -22,39 +23,34 @@ Nel `plugins/Solver/config.yml` di ogni backend:
 
 ```yaml
 proxy-relay:
-  enabled: false   # cambia in true
+  enabled: true
 ```
 
-Disattivato di default — un relay a livello di rete è un vero cambiamento di comportamento, quindi è opt-in.
+Disattivato di default — un relay su tutta la rete è un vero cambio di comportamento, quindi è opzionale.
 
-### 2. Installa il plugin corrispondente sul proxy
+### 2. Installa lo stesso jar sul proxy
 
-Il lato proxy è un **plugin separato e piccolo** — non fa parte del `Solver.jar` che installi sui backend. Scegli quello corrispondente al tuo software proxy:
+Metti **lo stesso `Solver.jar`** dei tuoi backend nella cartella `plugins/` del proxy e riavvia il proxy — non esiste un plugin proxy separato. BungeeCord/Waterfall leggono il suo `bungee.yml` e Velocity il suo `velocity-plugin.json`; nessuno dei due carica codice Bukkit. Nessun file di configurazione proprio.
 
-- **BungeeCord o Waterfall** (condividono la stessa API dei plugin) → `solver-proxy-bungee.jar`
-- **Velocity** → `solver-proxy-velocity.jar`
-
-Metti il jar corrispondente nella cartella `plugins/` del proxy stesso e riavvia il proxy. Non ha un proprio file di configurazione — si attiva non appena un backend connesso ha `proxy-relay.enabled: true` e invia il suo primo messaggio.
-
-### 3. Conferma che sia in esecuzione
+### 3. Verifica che sia attivo
 
 All'avvio del proxy, la console stampa una riga:
 
 ```
-SolverProxy (Bungee/Velocity) enabled - staff permission source: LuckPerms | per-server roster fallback
+SolverProxy (Velocity) enabled - staff permission source: LuckPerms | per-server roster fallback
 ```
 
-## Chi riceve i messaggi inoltrati
+## Chi riceve i messaggi
 
-Il relay raggiunge solo i giocatori con `solver.notify` (per gli avvisi) o `solver.staffmode.staffchat` (per la staffchat) — gli stessi permessi usati localmente su ogni backend. Come il proxy verifica quel permesso dipende da cosa è installato:
+Il relay raggiunge solo i giocatori con `solver.notify` (avvisi) o `solver.staffmode.staffchat` (staffchat) — gli stessi permessi usati localmente su ogni backend. Come il proxy li verifica dipende da cosa è installato:
 
-- **LuckPerms installato sul proxy** — usato direttamente. Se la tua configurazione LuckPerms condivide lo storage su tutta la rete, questo corrisponde già a ciò che ogni backend concede, senz'altro da configurare.
-- **Nessun LuckPerms sul proxy** — ogni backend informa periodicamente il proxy su quali giocatori connessi hanno attualmente `solver.notify`, e il proxy inoltra all'unione di tutti quelli segnalati da qualsiasi backend. Questo è il default se non hai installato LuckPerms lato proxy.
+- **LuckPerms installato sul proxy** — usato direttamente. Se il tuo LuckPerms condivide lo storage su tutta la rete, corrisponde già a ciò che concede ogni backend.
+- **Senza LuckPerms sul proxy** — ogni backend comunica al proxy quali giocatori connessi hanno `solver.notify`, e il proxy inoltra a tutti quelli segnalati da qualsiasi backend. È il comportamento predefinito.
 
 ## Compatibilità
 
-| Proxy | Plugin | Note |
-|-------|--------|------|
-| Velocity | `solver-proxy-velocity.jar` | Richiede Java 11+ sul proxy. |
-| Waterfall | `solver-proxy-bungee.jar` | Waterfall ha raggiunto il fine vita a monte — PaperMC consiglia di migrare a Velocity. Il plugin funziona ancora oggi su di esso. |
-| BungeeCord | `solver-proxy-bungee.jar` | Stesso plugin di Waterfall. |
+| Proxy | Note |
+|-------|-------|
+| Velocity 3.x / 4.x | Richiede Java 11+ sul proxy. |
+| Waterfall | Fine vita upstream — PaperMC consiglia Velocity. Oggi funziona ancora. |
+| BungeeCord | Come Waterfall. |

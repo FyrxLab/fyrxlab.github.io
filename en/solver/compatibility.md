@@ -9,9 +9,9 @@
 | **Spigot** | ✅ Supported (1.8.8+) | Fully supported, including [AI Chat Moderation](/en/solver/fyrx-ai) — no Paper required. |
 | **CraftBukkit** | ✅ Supported (1.8.8+) | Same support level as Spigot. |
 | **Folia** | ✅ Supported | TickMonitor is automatically disabled (Folia handles its own watchdog). All other features work. |
-| **Velocity** | ⚠️ Partial (relay only) | Not a Solver install target — a small separate plugin relays staffchat/alerts across your backends. See [Proxy Relay](/en/solver/proxy-relay). |
-| **BungeeCord** | ⚠️ Partial (relay only) | Same relay plugin as Waterfall. See [Proxy Relay](/en/solver/proxy-relay). |
-| **Waterfall** | ⚠️ Partial (relay only) | Same relay plugin as BungeeCord. See [Proxy Relay](/en/solver/proxy-relay). |
+| **Velocity** | ⚠️ Relay only | Install the same `Solver.jar` on the proxy to relay staffchat/alerts across backends. See [Proxy Relay](/en/solver/proxy-relay). |
+| **BungeeCord** | ⚠️ Relay only | Same jar, same relay. See [Proxy Relay](/en/solver/proxy-relay). |
+| **Waterfall** | ⚠️ Relay only | Same jar, same relay. See [Proxy Relay](/en/solver/proxy-relay). |
 | **Forge / Fabric** | ❌ Not supported | Mod loaders; do not use the Bukkit API. |
 | **Sponge** | ❌ Not supported | Uses the SpongeAPI, not Bukkit. |
 
@@ -23,6 +23,7 @@ AbsoluteSolver is **Folia-Aware**. When running on a Folia server, the plugin au
 
 | Version | Status | Notes |
 |---------|--------|-------|
+| 26.1 – 26.3 | ✅ Supported | Mojang's new version numbering. Tested on Paper 26.3 (Java 25). |
 | 1.21.x | ✅ Supported | Runs on Java 21, fully compatible. |
 | 1.20.x | ✅ Supported | Primary development target. Fully tested. |
 | 1.13.x – 1.19.x | ✅ Supported | |

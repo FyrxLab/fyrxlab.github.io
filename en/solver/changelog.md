@@ -1,23 +1,42 @@
 # Changelog
 
-## v0.9.2 — Command Aliases, Faster Integrity Checks, and a Cross-Server Relay
+## v0.10.0 — AntiVPN, One Jar for Proxies, and Command Aliases
 
-> Released: 2026
+> Released: October 2026
+
+0.9.2 was never published on its own — everything it contained ships here, together with AntiVPN.
 
 ### New Features
 
-- **Command aliases** — shorter alternatives for common commands, working both without the `/solver` prefix and as `/solver <alias>`: `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`).
-- **Anonymous usage statistics** via [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — server count and which features are enabled, nothing player-identifiable. Toggle with `metrics.enabled` in `config.yml`, independent of the global bStats opt-out.
-- **Optional cross-server relay for BungeeCord, Waterfall, and Velocity networks** — staffchat messages and moderation/integrity alerts now reach staff connected to *any* backend server on the same proxy, not just the one where the alert happened. Requires installing a small separate plugin on the proxy itself; see [Proxy Relay](/en/solver/proxy-relay). Off by default (`proxy-relay.enabled: false`).
+- **AntiVPN** — connecting players are checked against known VPN and proxy networks, out of the box with no API key of your own: a static list of known VPN ranges (matched in memory, no network call on a normal login), a real-time lookup only for addresses the list doesn't cover, and a cross-check against known VPN-provider networks that catches a brand-new range before any list does. Optionally add a free ipapi.is key for an extra layer. See [AntiVPN](/en/solver/antivpn).
+- **Explainable reasoning engine** — detections combine into a 0-100 score, and every verdict shows which signal contributed how much. Deterministic, no AI involved. Pick a profile (`conservative`, `balanced`, `strict`) instead of tuning raw numbers.
+- **Calibration window** — AntiVPN never enforces anything until it has seen enough real detections on your server, whatever the configured action mode.
+- **FoxGate always has the final word** — with [FoxGate](https://modrinth.com/plugin/foxgate) installed, Solver never kicks or bans for VPN reasons. `antivpn.foxgate-mode` only picks how Solver steps aside: `addon` (default, keeps alerting) or `off`.
+- **One jar for backends and proxies** — install the same `Solver.jar` on BungeeCord, Waterfall, or Velocity to relay staffchat and moderation/integrity/VPN alerts across every backend. See [Proxy Relay](/en/solver/proxy-relay). Off by default (`proxy-relay.enabled`).
+- **Command aliases** — `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`), working both prefix-less and as `/solver <alias>`.
+- **Anonymous usage statistics** via [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — server count and which features are enabled, nothing player-identifiable. Toggle with `metrics.enabled`.
+- **Build verification now uses Modrinth** — Solver checks its own jar against the official files published on [Modrinth](https://modrinth.com/plugin/solver). A jar that isn't there (e.g. a development build) is only reported, never flagged.
 
 ### Fixed
 
-- **Prefix-less commands (`/vanish`, `/inspect`, etc.) now actually work.** They were listed as enabled at startup, but a registration bug meant none of them ever responded — `/solver <command>` was unaffected and kept working the whole time.
-- Build integrity re-checks now retry against FyrxLab's CDN on every server startup until a check succeeds, instead of waiting for the normal refresh window — a stale "not verified yet" result no longer lingers for up to 24 hours after the real hash was published.
+- **Prefix-less commands (`/vanish`, `/inspect`, etc.) now actually work** — they were listed as enabled at startup but never registered.
+- **Java 8–14:** the known-malware scan needs Ed25519 signature checks, which only exist on Java 15+. On older Java it showed a false "invalid signature / possible compromised CDN" error on every startup; it's now skipped with a clear notice.
+- On a server in a language other than English, a message added by a recent update showed as `[missing some.key]` — it now falls back to English.
+- `/solver integrity` was missing from tab-completion.
 
 ### Changed
 
-- Console log output is now in **English by default**, regardless of the server's configured player-facing language (`localization` in `config.yml`). Player-facing messages (commands, sanctions, chat moderation) are unaffected and still follow that setting.
+- Console log output is now in **English by default**, regardless of the player-facing language.
+
+### Privacy
+
+AntiVPN's two real-time lookups send the connecting player's IP address to a third-party service (IPQuery.io and ipapi.is), only for addresses the static lists and local cache didn't already resolve. The static lists never send anything. Every source can be turned off individually, or AntiVPN as a whole with `antivpn.own_engine.enabled`.
+
+### Compatibility
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia; BungeeCord, Waterfall, Velocity (relay only)
+- Minecraft 1.8.8 — 1.21.x and 26.1 — 26.3
+- Java 8+ (the malware scan needs Java 15+)
 
 ## v0.9.1 — Spigot/CraftBukkit Support, Down to 1.8.8
 

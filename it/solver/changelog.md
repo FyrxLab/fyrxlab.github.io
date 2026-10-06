@@ -1,23 +1,42 @@
 # Changelog
 
-## v0.9.2 — Alias dei Comandi, Controlli di Integrità Più Veloci, e un Relay tra Server
+## v0.10.0 — AntiVPN, un Solo Jar per i Proxy, e Alias dei Comandi
 
-> Rilasciato: 2026
+> Pubblicato: ottobre 2026
+
+La 0.9.2 non è mai stata pubblicata da sola — tutto ciò che conteneva esce qui, insieme ad AntiVPN.
 
 ### Novità
 
-- **Alias dei comandi** — alternative più brevi per i comandi più comuni, funzionanti sia senza il prefisso `/solver` sia come `/solver <alias>`: `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`).
-- **Statistiche di utilizzo anonime** tramite [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — numero di server e quali funzionalità sono attive, nulla di identificabile per giocatore. Si controlla con `metrics.enabled` in `config.yml`, indipendente dall'opt-out globale di bStats.
-- **Relay opzionale tra server per reti BungeeCord, Waterfall e Velocity** — i messaggi di staffchat e gli avvisi di moderazione/integrità ora raggiungono lo staff connesso a *qualsiasi* backend della stessa rete, non solo quello dove è avvenuto l'avviso. Richiede l'installazione di un plugin piccolo e separato sul proxy stesso; vedi [Relay Proxy](/it/solver/proxy-relay). Disattivato di default (`proxy-relay.enabled: false`).
+- **AntiVPN** — i giocatori che si connettono vengono controllati contro reti VPN e proxy note, senza bisogno di una tua API key: una lista statica di range VPN noti (confrontata in memoria, nessuna chiamata di rete in un login normale), una ricerca in tempo reale solo per gli indirizzi non coperti dalla lista, e un confronto con le reti note dei provider VPN che intercetta un range nuovo prima di qualsiasi lista. Facoltativamente, una key gratuita di ipapi.is aggiunge un ulteriore livello. Vedi [AntiVPN](/it/solver/antivpn).
+- **Motore di ragionamento spiegabile** — i rilevamenti si combinano in un punteggio da 0 a 100, e ogni verdetto mostra quanto ha contribuito ogni segnale. Deterministico, nessuna IA. Scegli un profilo (`conservative`, `balanced`, `strict`) invece di regolare numeri grezzi.
+- **Finestra di calibrazione** — AntiVPN non applica nulla finché non ha visto abbastanza rilevamenti reali sul tuo server, qualunque sia la modalità d'azione configurata.
+- **FoxGate ha sempre l'ultima parola** — con [FoxGate](https://modrinth.com/plugin/foxgate) installato, Solver non espelle né banna mai per motivi di VPN. `antivpn.foxgate-mode` sceglie solo come Solver si fa da parte: `addon` (predefinito, continua ad avvisare) o `off`.
+- **Un solo jar per backend e proxy** — installa lo stesso `Solver.jar` su BungeeCord, Waterfall o Velocity per inoltrare staffchat e avvisi di moderazione/integrità/VPN su tutti i backend. Vedi [Relay Proxy](/it/solver/proxy-relay). Disattivato di default (`proxy-relay.enabled`).
+- **Alias dei comandi** — `/invsee` (`inspect`), `/v` (`vanish`), `/sc` (`staffchat`), `/cspy` (`commandspy`), `/tm` (`tempmute`), `/tb` (`tempban`), `/cu` (`checkuser`), `/hist` (`history`), sia senza prefisso sia come `/solver <alias>`.
+- **Statistiche d'uso anonime** tramite [bStats](https://bstats.org/plugin/bukkit/Solver/33362) — numero di server e funzioni attive, nulla di identificabile per giocatore. Si controlla con `metrics.enabled`.
+- **La verifica della build ora usa Modrinth** — Solver confronta il proprio jar con i file ufficiali pubblicati su [Modrinth](https://modrinth.com/plugin/solver). Un jar che non è lì (per esempio una build di sviluppo) viene solo segnalato, mai marcato.
 
 ### Correzioni
 
-- **I comandi senza prefisso (`/vanish`, `/inspect`, ecc.) ora funzionano davvero.** Il log li elencava come abilitati all'avvio, ma un bug di registrazione impediva a tutti di rispondere realmente — `/solver <comando>` non ne era affetto ed ha continuato a funzionare per tutto questo tempo.
-- I controlli di integrità ora ritentano contro il CDN di FyrxLab ad ogni avvio del server finché un controllo non ha successo, invece di aspettare la normale finestra di aggiornamento — un risultato vecchio di "non ancora verificato" non persiste più fino a 24 ore dopo la pubblicazione dell'hash reale.
+- **I comandi senza prefisso (`/vanish`, `/inspect`, ecc.) ora funzionano davvero** — risultavano attivi all'avvio ma non venivano mai registrati.
+- **Java 8–14:** la scansione malware richiede firme Ed25519, disponibili solo da Java 15. Su Java più vecchi mostrava un falso errore di "firma non valida / possibile CDN compromesso" a ogni avvio; ora viene saltata con un avviso chiaro.
+- Su un server in una lingua diversa dall'inglese, un messaggio aggiunto da un aggiornamento recente appariva come `[missing some.key]` — ora ricade sul testo inglese.
+- `/solver integrity` mancava dal completamento automatico.
 
-### Cambiamenti
+### Modifiche
 
-- L'output della console è ora in **inglese di default**, indipendentemente dalla lingua configurata per i giocatori (`localization` in `config.yml`). I messaggi rivolti al giocatore (comandi, sanzioni, moderazione chat) non sono interessati e seguono comunque quell'impostazione.
+- L'output della console ora è in **inglese di default**, indipendentemente dalla lingua configurata per i giocatori.
+
+### Privacy
+
+Le due ricerche in tempo reale di AntiVPN inviano l'IP del giocatore che si connette a un servizio esterno (IPQuery.io e ipapi.is), solo per indirizzi che le liste statiche e la cache locale non hanno già risolto. Le liste statiche non inviano mai nulla. Ogni fonte si può disattivare singolarmente, o AntiVPN per intero con `antivpn.own_engine.enabled`.
+
+### Compatibilità
+
+- Paper, Purpur, Spigot, CraftBukkit, Folia; BungeeCord, Waterfall, Velocity (solo relay)
+- Minecraft 1.8.8 — 1.21.x e 26.1 — 26.3
+- Java 8+ (la scansione malware richiede Java 15+)
 
 ## v0.9.1 — Supporto Spigot/CraftBukkit, fino a 1.8.8
 
