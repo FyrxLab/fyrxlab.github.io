@@ -68,14 +68,14 @@ export const PRODUCTS = {
     kind: 'mod',
     color: '#8b5cf6',
     icon: 'fa-music',
-    version: null,
-    changelog: null,
+    version: '1.2.0',
+    changelog: '/noteblock/changelog',
     home: '/noteblock/',
     tagline: {
-      en: 'A collection of new, handcrafted music discs composed with note blocks.',
-      es: 'Una colección de discos musicales originales compuestos con bloques de nota.',
-      it: 'Una collezione di dischi musicali originali composti con blocchi nota.',
-      pt: 'Uma coleção de discos musicais originais compostos com note blocks.'
+      en: '11 new music discs, each song arranged entirely with note blocks. One jar for Fabric, Forge and NeoForge.',
+      es: '11 discos de música nuevos, cada canción arreglada con bloques de nota. Un solo jar para Fabric, Forge y NeoForge.',
+      it: '11 nuovi dischi musicali, ogni brano arrangiato con blocchi nota. Un solo jar per Fabric, Forge e NeoForge.',
+      pt: '11 novos discos de música, cada faixa arranjada com note blocks. Um único jar para Fabric, Forge e NeoForge.'
     }
   },
   lazymod: {

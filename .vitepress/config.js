@@ -501,7 +501,7 @@ export default defineConfig({
           '/es/fyrxai/': esFyrxAISidebar
         },
         footer: {
-          message: 'Solver: Todos los derechos reservados · Otros productos: Licencia MIT.',
+          message: 'Solver y Noteblock: Todos los derechos reservados · Otros productos: Licencia MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
         }
       }
@@ -544,7 +544,7 @@ export default defineConfig({
           '/it/fyrxai/': itFyrxAISidebar
         },
         footer: {
-          message: 'Solver: Tutti i diritti riservati · Altri prodotti: Licenza MIT.',
+          message: 'Solver e Noteblock: Tutti i diritti riservati · Altri prodotti: Licenza MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
         }
       }
@@ -587,7 +587,7 @@ export default defineConfig({
           '/pt/fyrxai/': ptFyrxAISidebar
         },
         footer: {
-          message: 'Solver: Todos os direitos reservados · Outros produtos: Licença MIT.',
+          message: 'Solver e Noteblock: Todos os direitos reservados · Outros produtos: Licença MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
         }
       }
@@ -638,7 +638,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Solver: All Rights Reserved · Other products: MIT License.',
+      message: 'Solver and Noteblock: All Rights Reserved · Other products: MIT License.',
       copyright: 'Copyright © 2026 FyrxLab'
     },
 

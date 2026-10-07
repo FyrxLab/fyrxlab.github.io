@@ -4,11 +4,14 @@ layout: home
 hero:
   name: "Noteblock"
   text: "Una Sinfonia di Blocchi"
-  tagline: "Una collezione di dischi musicali originali, ciascuno composto interamente con gli iconici blocchi nota di Minecraft."
+  tagline: "Nuovi dischi musicali, ogni brano arrangiato interamente con gli iconici blocchi nota di Minecraft."
   actions:
     - theme: brand
       text: Vedi su Modrinth
       link: https://modrinth.com/mod/noteblock
+    - theme: alt
+      text: Changelog
+      link: /it/noteblock/changelog
     - theme: alt
       text: English
       link: /en/noteblock/
@@ -19,21 +22,43 @@ hero:
   <div class="spotlight-icon"><i class="fa-solid fa-music"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Perché Noteblock</span>
-    <h3>Canzoni originali, composte interamente con blocchi nota</h3>
-    <p>Aggiunge una serie di dischi originali, ognuno un brano completo composto interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in vere canzoni invece dei soliti loop ambientali.</p>
-    <p class="spotlight-note">Nessuna configurazione, nessun comando — installalo e i nuovi dischi saranno disponibili da trovare e suonare come qualsiasi disco vanilla.</p>
+    <h3>Brani completi, suonati interamente da blocchi nota</h3>
+    <p>Aggiunge 11 dischi musicali, ognuno un brano completo arrangiato da JEAMCube interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in vere canzoni invece dei soliti loop ambientali.</p>
+    <p class="spotlight-note">Nessuna configurazione, nessun comando — installalo e i nuovi dischi funzionano come qualsiasi disco vanilla: jukebox, comparatori e creeper uccisi dagli scheletri.</p>
   </div>
 </div>
 
 ## Installazione
 
-1. Scarica l'ultima versione da [Modrinth](https://modrinth.com/mod/noteblock) per il tuo loader (Fabric o Forge).
-2. Inserisci il `.jar` nella cartella `mods/` — sia client che server ne hanno bisogno, poiché aggiunge oggetti e suoni reali.
-3. Avvia il gioco. I nuovi dischi sono pronti da trovare nel mondo o aggiungere tramite comandi/inventario creativo.
+1. Scarica l'ultima versione da [Modrinth](https://modrinth.com/mod/noteblock). Dalla 1.2.0 è **un solo jar per Fabric, Forge e NeoForge**: lo stesso file funziona su tutti e tre.
+2. Inserisci il `.jar` nella cartella `mods/`. Servono sia al client che al server, perché aggiunge oggetti e suoni reali.
+3. Su **Fabric**, installa anche [Fabric API](https://modrinth.com/mod/fabric-api).
+4. Avvia il gioco. I dischi sono nella scheda creativa **Noteblock** e in **Strumenti e utilità**.
+
+## I dischi
+
+| Disco | Durata |
+|------|--------|
+| Howl Moving Castle | 3:27 |
+| Lumiose City | 3:15 |
+| Gravity Falls | 2:28 |
+| The Painful Way | 3:19 |
+| No Escape | 2:30 |
+| Super Mario Maker | 1:47 |
+| Hyrule Castle | 4:58 |
+| Pandora Palace | 3:22 |
+| Attack of the Killer Queen | 4:07 |
+| Studiopolis Zone | 4:31 |
+| Storm Eagle | 2:41 |
+
+I dischi si ottengono come in vanilla: un creeper ucciso da uno scheletro può lasciarne cadere uno qualsiasi.
 
 ## Compatibilità
 
 | Loader | Versioni Minecraft |
 |--------|---------------------|
-| Fabric | 1.12.2, 1.19.2, 1.20.1 |
-| Forge | 1.12.2, 1.19.2, 1.20.1 |
+| Fabric | 1.18 – 26.3 (richiede Fabric API) |
+| Forge | 1.18 – 26.3 |
+| NeoForge | 1.20.1 – 26.3 |
+
+Le versioni precedenti (0.1.x per Forge 1.12.2 e 1.19.2) sono ancora su Modrinth, ma contengono altri brani e non vengono più aggiornate.
