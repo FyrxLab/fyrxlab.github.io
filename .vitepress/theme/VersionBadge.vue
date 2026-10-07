@@ -27,22 +27,28 @@ const current = computed(() => {
 </template>
 
 <style scoped>
+/* Glossy pill in the product's own color (water-drop highlight on top half);
+   dark ink mixed from the accent stays readable on gold through blurple. */
 .version-badge {
+  --b: var(--product-accent-1, var(--vp-c-brand-2));
   display: inline-flex;
   align-items: center;
   margin-left: 12px;
-  padding: 2px 10px;
+  padding: 4px 11px;
   border-radius: 999px;
+  font-family: var(--vp-font-family-mono);
   font-size: 12px;
   font-weight: 600;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-1) 22%, transparent), color-mix(in srgb, var(--vp-c-brand-1) 8%, transparent));
-  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 30%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  color: var(--vp-c-brand-1);
+  line-height: 1;
+  color: color-mix(in srgb, var(--b) 25%, black);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.15) 50%, transparent 50%),
+    linear-gradient(180deg, color-mix(in srgb, var(--b) 60%, white), var(--b) 50%, color-mix(in srgb, var(--b) 80%, black) 50%, var(--b));
+  border: 1px solid color-mix(in srgb, var(--b) 65%, black);
+  box-shadow: 0 4px 10px -4px var(--b);
   text-decoration: none;
   white-space: nowrap;
 }
-html.dark .version-badge {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
+a.version-badge:hover { filter: brightness(1.08); }
 </style>

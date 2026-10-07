@@ -3,11 +3,35 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
 }
 
+/* ==========================================================================
+   Neo-Aero: Frutiger Aero's sky, water, glass and gloss, kept to the frame.
+   - Sky and bubbles live only at the top of a page; the reading surface is
+     near-white paper (night: deep water) and nothing moves behind text.
+   - Full "water drop" gloss only on small pieces (pills, orbs, numbers,
+     buttons). Big surfaces get glass: blur + saturation + a 1px light edge.
+   - Monospace only for data (code, versions, paths, small labels).
+   - Code is always on a dark screen, in both themes.
+   ========================================================================== */
 :root {
-  --vp-c-brand-1: #4a6bee;
-  --vp-c-brand-2: #2378c2;
-  --vp-c-brand-3: #2f56c9;
-  --vp-c-brand-soft: rgba(74, 107, 238, 0.14);
+  --vp-font-family-base: "Segoe UI Variable Text", "Segoe UI", "Istok Web", system-ui, -apple-system, sans-serif;
+
+  /* aqua guides, lime confirms */
+  --vp-c-brand-1: #0a6fa6;
+  --vp-c-brand-2: #1aa3dd;
+  --vp-c-brand-3: #085a88;
+  --vp-c-brand-soft: rgba(26, 163, 221, 0.14);
+  --aero-lime: #4a9a12;
+
+  --vp-c-bg: #f6fbfe;
+  --vp-c-bg-alt: #eaf5fc;
+  --vp-c-bg-soft: #e8f3fa;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-divider: #d6e6f2;
+  --vp-c-gutter: #e3eef7;
+  --vp-c-border: #c6dbea;
+  --vp-c-text-1: #0c2940;
+  --vp-c-text-2: #46637b;
+  --vp-c-text-3: #6f8aa0;
 
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: #ffffff;
@@ -21,60 +45,131 @@ html { scroll-behavior: smooth; }
 
   /* Terminal-window code blocks stay dark in both themes — code is always
      "on a screen", never on the page's own paper/glass surface. */
-  --vp-code-block-bg: #0c1428;
+  --vp-code-block-bg: #06101f;
 
-  /* The reading column itself was still plain VitePress white — none of the
-     glass elements floating on it (code, callouts) read as part of one
-     surface. Matches the docs preview's --bg/--bg-wash exactly; verified
-     against --vp-c-text-1/2 below, contrast barely moves (10.94:1 -> 10.09:1
-     on the body text, nowhere near the 4.5:1 floor). */
-  --vp-c-bg: #f2f6fc;
-  --vp-c-bg-alt: #e8f0fc;
+  /* One shared glass language for nav, sidebar pill, callouts, code headers,
+     tables, cards and the landing windows. */
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42));
+  --glass-solid: #f3f9fd;
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-edge: rgba(12, 60, 100, 0.12);
+  --glass-hl: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 18px 40px -26px rgba(10, 70, 120, 0.45);
+  --glass-radius: 14px;
 
-  /* One shared "glass container" language — code-block header, callouts,
-     and nav all read from these instead of each inventing its own border/
-     shadow values, which is why they used to look like unrelated components. */
-  --glass-header-bg: #eef3fc;
-  --glass-border: rgba(74, 107, 238, 0.10);
-  --glass-shadow: 0 20px 40px -30px rgba(42, 79, 201, 0.22);
-  --glass-radius: 10px;
+  /* header sky; the sun takes the current product's color (Layout.vue sets
+     html.theme-<product>, dynamic-colors.css sets --product-accent-1) */
+  --aero-sun: var(--product-accent-1, #1aa3dd);
+  --aero-sky: linear-gradient(180deg, #a6dbf7 0, #d6effc 170px, var(--vp-c-bg) 380px);
+  --aero-sun-glow: radial-gradient(560px 260px at 86% -50px, color-mix(in srgb, var(--aero-sun) 55%, transparent), transparent 70%);
+
+  --vp-nav-bg-color: transparent;
+}
+@media (min-width: 960px) {
+  :root { --vp-sidebar-bg-color: transparent; }
 }
 html.dark {
-  --vp-code-block-bg: #060a16;
-  /* #4a6bee only clears 3.78:1 on the dark theme's near-black background —
-     brighten brand-1 for dark mode so nav/sidebar active-link text stays AA. */
-  --vp-c-brand-1: #7a94f5;
+  --vp-c-brand-1: #5cc8f5;
+  --vp-c-brand-2: #2fb4ee;
+  --vp-c-brand-3: #1a8fc7;
+  --vp-c-brand-soft: rgba(47, 180, 238, 0.16);
+  --aero-lime: #9ade5a;
 
-  --vp-c-bg: #0a0f1c;
-  --vp-c-bg-alt: #0c1426;
+  --vp-c-bg: #081a2b;
+  --vp-c-bg-alt: #0a2236;
+  --vp-c-bg-soft: #0c2438;
+  --vp-c-bg-elv: #0c2236;
+  --vp-c-divider: #1b3a55;
+  --vp-c-gutter: #0e2a42;
+  --vp-c-border: #23466a;
+  --vp-c-text-1: #e3f1fb;
+  --vp-c-text-2: #a3c2d8;
+  --vp-c-text-3: #7c9bb2;
 
-  --glass-header-bg: #0d1526;
-  --glass-border: rgba(88, 120, 239, 0.14);
-  --glass-shadow: 0 20px 40px -30px rgba(0, 0, 0, 0.35);
+  --vp-code-block-bg: #040c16;
+
+  --glass-bg: linear-gradient(180deg, rgba(140, 210, 255, 0.13), rgba(140, 210, 255, 0.05));
+  --glass-solid: #0c2438;
+  --glass-border: rgba(170, 225, 255, 0.22);
+  --glass-edge: rgba(170, 225, 255, 0.14);
+  --glass-hl: rgba(190, 235, 255, 0.22);
+  --glass-shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.8);
+
+  --aero-sky: linear-gradient(180deg, #0b3a5e 0, #0a2944 190px, var(--vp-c-bg) 400px);
+  --aero-sun-glow: radial-gradient(560px 260px at 86% -50px, color-mix(in srgb, var(--aero-sun) 30%, transparent), transparent 70%), radial-gradient(520px 200px at 20% -40px, rgba(80, 230, 170, 0.16), transparent 70%);
 }
 
-/* VPButton.vue sets background-color via the vars above (scoped style, so it
-   wins over a plain background-color override here) — background (shorthand)
-   is a different property from the cascade's point of view, so it can carry
-   the gradient without fighting that scoped rule. */
+/* Light up top, paper below. */
+body {
+  background-color: var(--vp-c-bg);
+  background-image: var(--aero-sun-glow), var(--aero-sky);
+  background-repeat: no-repeat;
+}
+
+/* ---------- buttons: water-drop gloss ---------- */
 .VPButton.brand {
-  background: linear-gradient(180deg, #6f8ff5, #2fa3f0) !important;
-  border: none !important;
-  box-shadow: 0 10px 24px -10px rgba(47, 163, 240, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.08) 46%, transparent 46%),
+    linear-gradient(180deg, #7fd6fb, #1a9bd6 50%, #0877bd 50%, #1a9bd6) !important;
+  border: 1px solid #065f96 !important;
+  text-shadow: 0 1px 2px rgba(0, 40, 80, 0.65);
+  box-shadow: 0 8px 18px -8px #0877bd;
 }
-.VPButton.brand:hover {
-  background: linear-gradient(180deg, #7d9bf7, #45b0f5) !important;
-}
-
-/* Home hero gradient glow — follows each product's own brand color
-   (set per-route by Layout.vue's theme-* class, see dynamic-colors.css),
-   so every landing page's title reads as that product's own identity. */
-
-.hero-word {
-  font-family: 'Montserrat', sans-serif !important;
-  font-weight: 700 !important;
+.VPButton.brand:hover { filter: brightness(1.08) saturate(1.1); }
+.VPButton.alt {
+  background: linear-gradient(180deg, var(--glass-hl), transparent 55%), var(--glass-solid) !important;
+  border: 1px solid var(--glass-edge) !important;
+  color: var(--vp-c-text-1) !important;
 }
 
+/* ---------- nav: floating glass pill ---------- */
+.VPNavBar .divider { display: none; }
+.VPNavBar::before {
+  content: '';
+  position: absolute; inset: 8px 12px; z-index: -1;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  pointer-events: none;
+}
+/* once scrolled, fade the strip around the pill so text doesn't show
+   through its 8px margins */
+.VPNavBar:not(.top) {
+  background-image: linear-gradient(180deg, var(--vp-c-bg) 15%, color-mix(in srgb, var(--vp-c-bg) 0%, transparent));
+}
+.VPNavBar.screen-open { background-color: var(--vp-c-bg) !important; }
+.content-body { background-color: transparent !important; }
+.VPNavBarMenuLink.active { color: var(--vp-c-brand-1) !important; }
+.DocSearch-Button { border-radius: 999px !important; }
+
+/* ---------- sidebar ---------- */
+@media (max-width: 959px) {
+  .VPSidebar { background-color: var(--vp-c-bg-elv); }
+}
+.VPSidebarItem.is-active > .item {
+  margin-inline: -10px;
+  padding-inline: 10px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, var(--glass-hl), transparent), var(--glass-bg);
+  box-shadow: inset 0 0 0 1px var(--glass-border), 0 6px 14px -10px rgba(10, 111, 166, 0.6);
+}
+.VPSidebarItem.is-active > .item > .indicator { display: none; }
+.VPSidebarItem.is-active > .item > .link > .text { color: var(--vp-c-brand-1); font-weight: 600; }
+/* the product's orb heads the first sidebar group */
+.VPSidebar .group:first-of-type .VPSidebarItem.level-0 > .item > .text::before {
+  content: '';
+  display: inline-block; width: 16px; height: 16px; margin-right: 9px; vertical-align: -3px;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--aero-sun) 55%, white), var(--aero-sun) 45%, color-mix(in srgb, var(--aero-sun) 55%, black));
+  box-shadow: 0 2px 6px -1px color-mix(in srgb, var(--aero-sun) 70%, transparent);
+}
+
+/* ---------- product home heroes (VPHero) ---------- */
 .VPHero .name.clip {
   background: linear-gradient(120deg, var(--product-accent-1, var(--vp-c-brand-1)) 0%, var(--product-accent-2, var(--vp-c-brand-2)) 45%, var(--product-accent-1, var(--vp-c-brand-1)) 100%) !important;
   background-size: 200% auto !important;
@@ -83,57 +178,33 @@ html.dark {
   background-clip: text !important;
   animation: hero-shimmer 6s ease-in-out infinite;
 }
-
 @keyframes hero-shimmer {
   0%, 100% { background-position: 0% center; }
   50% { background-position: 100% center; }
 }
+.VPHero .tagline { color: var(--vp-c-text-2); }
 
-/* Hero tagline */
-.VPHero .tagline {
-  color: var(--vp-c-text-2);
-}
-
-/* Soft brand-colored glow + gentle float behind every hero image —
-   VitePress ships these as unset (--vp-home-hero-image-background-image: none)
-   so no page currently shows anything here. */
 :root {
   --vp-home-hero-image-background-image: radial-gradient(circle at center, var(--product-accent-1, var(--vp-c-brand-1)) 0%, transparent 70%);
   --vp-home-hero-image-filter: blur(56px);
 }
-
 .VPHero .image-src {
   animation: hero-float 5s ease-in-out infinite;
   filter: drop-shadow(0 0 20px color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 35%, transparent));
 }
-
 /* VitePress centers .image-src with `transform: translate(-50%, -50%)`
    (see node_modules/vitepress .../VPHero.vue) — the animated `transform`
-   must include that offset too, or the animation replaces it and the
-   image jumps to its unrecentered top/left: 50% anchor. */
+   must include that offset too, or the image jumps off-center. */
 @keyframes hero-float {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
   50% { transform: translate(-50%, -50%) translateY(-10px); }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .VPHero .name.clip,
-  .VPHero .image-src {
-    animation: none;
-  }
+  .VPHero .image-src { animation: none; }
 }
 
-/* Global override for the main reading column: ensure the background
-   is always the light brand-tinted surface we defined in :root/dark,
-   even if a parent component or theme variable tries to override it.
-   This fixes "white box" issues for pages like 'tutorial.md'. */
-.content-body {
-  background-color: transparent !important;
-}
-
-/* Feature cards on landing pages ship with zero hover/entrance state unless
-   a `link:` is set per-item (VitePress default). Give every card life
-   regardless, tinted with the current page's brand color. */
+/* ---------- feature cards on product homes: glass ---------- */
 .VPFeatures .items .item {
   opacity: 0;
   transform: translateY(10px);
@@ -148,116 +219,186 @@ html.dark {
 .VPFeatures .items .item:nth-child(7) { animation-delay: 360ms; }
 .VPFeatures .items .item:nth-child(8) { animation-delay: 420ms; }
 .VPFeatures .items .item:nth-child(9) { animation-delay: 480ms; }
-
-@keyframes feature-in {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+@keyframes feature-in { to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) {
-  .VPFeatures .items .item {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
+  .VPFeatures .items .item { animation: none; opacity: 1; transform: none; }
 }
 
 .VPFeatures .VPFeature {
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  background: var(--glass-bg) !important;
+  border: 1px solid var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
-  border-color: var(--glass-border) !important;
-  box-shadow: var(--glass-shadow);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+  backdrop-filter: blur(14px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-
 .VPFeatures .VPFeature:hover {
   transform: translateY(-3px);
-  border-color: var(--product-accent-1, var(--vp-c-brand-1)) !important;
-  box-shadow: 0 8px 20px -12px var(--product-accent-1, var(--vp-c-brand-1));
+  box-shadow: inset 0 1px 0 var(--glass-hl), 0 14px 28px -16px var(--product-accent-1, var(--vp-c-brand-1));
 }
-
 .VPFeature .icon {
   background-color: color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 16%, transparent) !important;
   color: var(--product-accent-1, var(--vp-c-brand-1));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
-
 .VPFeature:hover .icon {
   transform: scale(1.1);
   filter: drop-shadow(0 0 8px color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 60%, transparent));
 }
 
-/* Code blocks styled as terminal windows — traffic-light dots + title strip,
-   drawn with two pseudo-elements so no markdown-it/Vue changes are needed. */
+/* ---------- reading column ---------- */
+.vp-doc { line-height: 1.75; }
+.vp-doc h1 { font-weight: 700; letter-spacing: -0.02em; }
+/* H2: an aqua droplet instead of the grey divider line */
+.vp-doc h2 { border-top: 0; font-weight: 700; }
+.vp-doc h2::before {
+  content: '';
+  display: inline-block; width: 8px; height: 8px; margin-right: 12px; vertical-align: 0.18em;
+  border-radius: 50%;
+  background: var(--vp-c-brand-2);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vp-c-brand-2) 18%, transparent);
+}
+
+/* ordered lists are real sequences: glossy numbered bubbles */
+.vp-doc ol { list-style: none; counter-reset: aero-step; padding-left: 0; }
+.vp-doc ol > li { counter-increment: aero-step; position: relative; padding-left: 36px; }
+.vp-doc ol > li::before {
+  content: counter(aero-step);
+  position: absolute; left: 0; top: 0.2em;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  font: 700 11.5px/1 var(--vp-font-family-base); color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, #8fe0ff, #1aa3dd 45%, #0a6fa6);
+  box-shadow: 0 2px 6px -1px rgba(26, 163, 221, 0.6);
+}
+
+/* inline code: a drop of water, not a grey chip */
+.vp-doc :not(pre) > code {
+  background: color-mix(in srgb, var(--vp-c-brand-2) 11%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-2) 18%, transparent);
+  color: var(--vp-c-text-1);
+}
+
+/* ---------- code blocks: thin glass header, dark screen ---------- */
 .vp-doc div[class*='language-'] {
-  padding-top: 34px;
-  border-radius: var(--glass-radius);
-  border: 1px solid var(--glass-border);
+  padding-top: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow);
+  overflow: hidden;
 }
-.vp-doc div[class*='language-'] > pre {
-  padding-top: 10px;
-}
+.vp-doc div[class*='language-'] > pre { padding-top: 14px; }
 .vp-doc div[class*='language-']::before {
   content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 34px;
-  background: var(--glass-header-bg);
-  border-bottom: 1px solid var(--glass-border);
-  z-index: 1;
-}
-.vp-doc div[class*='language-']::after {
-  content: '';
-  position: absolute;
-  top: 14px; left: 14px;
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: #ff5f56;
-  box-shadow: 16px 0 0 #ffbd2e, 32px 0 0 #27c93f;
-  z-index: 2;
+  position: absolute; top: 0; left: 0; right: 0; height: 32px; z-index: 1;
+  background: linear-gradient(180deg, var(--glass-hl), transparent 70%), var(--glass-solid);
+  border-bottom: 1px solid var(--glass-edge);
 }
 .vp-doc div[class*='language-'] > span.lang {
-  top: 10px;
-  z-index: 2;
+  top: 7px; left: 14px; right: auto; z-index: 2;
+  font-family: var(--vp-font-family-mono); font-size: 11px;
+  color: var(--vp-c-text-3);
 }
 .vp-doc div[class*='language-'] > button.copy {
-  top: 4px;
-  z-index: 2;
+  top: 0; right: 4px; width: 32px; height: 32px; z-index: 3;
+  border: 0; background-color: transparent; opacity: 1;
+  filter: invert(0.35);
 }
+html.dark .vp-doc div[class*='language-'] > button.copy { filter: none; }
+/* VitePress hides the lang label while the copy button is focused —
+   they no longer overlap, so keep it. */
+.vp-doc [class*='language-'] > button.copy:focus + span.lang { opacity: 1; }
 
-/* Custom containers (::: tip, ::: warning, etc.) get a glass sheen layered
-   over their existing semantic color — the color itself still carries the
-   meaning, the gloss is just a finish. Same border/shadow tokens as the
-   code-block chrome above, so the two read as one family of container. */
+/* ---------- callouts: tinted glass with a semantic orb ---------- */
 .vp-doc .custom-block {
+  --cb: var(--vp-c-brand-2);
   position: relative;
   border-radius: var(--glass-radius);
-  background-image: linear-gradient(160deg, rgba(74, 107, 238, 0.12), rgba(74, 107, 238, 0.02));
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(3px);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--cb) 13%, transparent), color-mix(in srgb, var(--cb) 4%, transparent)),
+    var(--glass-bg);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+  backdrop-filter: blur(16px) saturate(160%);
 }
-html.dark .vp-doc .custom-block {
-  background-image: linear-gradient(160deg, rgba(88, 120, 239, 0.16), rgba(88, 120, 239, 0.02));
+.vp-doc .custom-block.tip { --cb: #4a9a12; }
+.vp-doc .custom-block.warning { --cb: #d99a00; }
+.vp-doc .custom-block.danger, .vp-doc .custom-block.caution { --cb: #d9432b; }
+.vp-doc .custom-block.details { --cb: #6f8aa0; }
+.vp-doc .custom-block-title { display: flex; align-items: center; gap: 9px; }
+.vp-doc .custom-block:not(.details) .custom-block-title::before {
+  content: 'i';
+  flex-shrink: 0;
+  width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center;
+  font: 700 11px/1 var(--vp-font-family-base); color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--cb) 55%, white), var(--cb) 45%, color-mix(in srgb, var(--cb) 55%, black));
+  box-shadow: 0 2px 6px -1px color-mix(in srgb, var(--cb) 70%, transparent);
+}
+.vp-doc .custom-block.tip .custom-block-title::before { content: '✓'; }
+.vp-doc .custom-block.warning .custom-block-title::before,
+.vp-doc .custom-block.danger .custom-block-title::before,
+.vp-doc .custom-block.caution .custom-block-title::before { content: '!'; }
+
+/* ---------- tables: glass header with a band of light ---------- */
+.vp-doc table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+}
+.vp-doc tr { background-color: transparent; border-top: 0; }
+.vp-doc tr:nth-child(2n) { background-color: color-mix(in srgb, var(--vp-c-brand-2) 5%, transparent); }
+.vp-doc th, .vp-doc td { border: 0; border-top: 1px solid var(--vp-c-divider); }
+.vp-doc thead th {
+  border-top: 0;
+  color: var(--vp-c-text-1);
+  font-weight: 700;
+  background: linear-gradient(180deg, var(--glass-hl), transparent 55%), var(--glass-solid);
 }
 
-/* Nav bar — flat like the sidebar (same --vp-c-bg-alt), not its own gradient
-   wash. A strong top-fading gradient on a 64px-tall fixed bar, sampled
-   through backdrop-filter's blur, was flattening into a visibly different
-   solid tone than the page below it — a hard seam at the nav's bottom edge
-   instead of blending in. Flat + blur (for what scrolls underneath) reads
-   as continuous with the sidebar instead. */
-.VPNav {
-  background-color: var(--vp-c-bg-alt);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--glass-border);
+/* ---------- "On this page": a water tube that fills as you read ---------- */
+.VPDocAside .VPDocAsideOutline .content { border-left: 0; }
+.VPDocAside .VPDocAsideOutline .content::before {
+  content: '';
+  position: absolute; left: -4px; top: 32px; bottom: 0; width: 8px;
+  border-radius: 99px;
+  border: 1px solid var(--glass-edge);
+  box-shadow: inset 1px 0 0 var(--glass-hl);
+  background:
+    linear-gradient(180deg, #8fe0ff, #1aa3dd 70%, #0a86cf) no-repeat 0 0 / 100% 0%,
+    color-mix(in srgb, var(--vp-c-brand-2) 8%, transparent);
+  animation: aero-fill linear both;
+  animation-timeline: scroll(root);
+}
+@keyframes aero-fill { to { background-size: 100% 100%, auto; } }
+/* the active-heading marker becomes a bubble inside the tube */
+.VPDocAside .VPDocAsideOutline .outline-marker {
+  left: -2px; width: 4px; z-index: 1;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 0 6px var(--vp-c-brand-2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .VPDocAside .VPDocAsideOutline .content::before { animation: none; }
 }
 
-/* Product page feature spotlight + grouped mini-grid — one protagonist
-   feature up top, the rest grouped by theme instead of N equal-weight
-   VPFeature cards in a flat wall. Shared across every product page;
-   tinted per-product via --product-accent-1 same as the hero/icons. */
+/* ---------- previous / next ---------- */
+.VPDocFooter .pager-link {
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  background: var(--glass-bg);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+}
+.VPDocFooter .pager-link:hover { box-shadow: inset 0 0 0 1px var(--vp-c-brand-2), var(--glass-shadow); }
+
+/* ---------- product page feature spotlight + grouped mini-grid ---------- */
 .spotlight {
   display: flex;
   gap: 22px;
@@ -266,23 +407,29 @@ html.dark .vp-doc .custom-block {
   padding: 28px;
   border-radius: var(--glass-radius);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  background-image: linear-gradient(160deg, color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 10%, transparent), transparent);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 12%, transparent), transparent),
+    var(--glass-bg);
 }
 @media (max-width: 640px) { .spotlight { flex-direction: column; } }
 .spotlight-icon {
   flex-shrink: 0;
   width: 52px; height: 52px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 13px;
+  border-radius: 50%;
   font-size: 22px;
-  background: color-mix(in srgb, var(--product-accent-1, var(--vp-c-brand-1)) 18%, transparent);
-  color: var(--product-accent-1, var(--vp-c-brand-1));
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 22%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--aero-sun) 55%, white), var(--aero-sun) 45%, color-mix(in srgb, var(--aero-sun) 55%, black));
+  box-shadow: 0 6px 14px -4px color-mix(in srgb, var(--aero-sun) 70%, transparent);
 }
 .spotlight-eyebrow {
   display: block;
-  font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--product-accent-1, var(--vp-c-brand-1));
+  font: 600 12px/1.4 var(--vp-font-family-mono); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--vp-c-brand-1);
   margin-bottom: 6px;
 }
 .spotlight-body h3 {
@@ -294,7 +441,7 @@ html.dark .vp-doc .custom-block {
 .spotlight-body p {
   margin: 0 0 10px;
   color: var(--vp-c-text-2);
-  line-height: 1.65;
+  line-height: 1.7;
 }
 .spotlight-note {
   font-size: 13px;
@@ -305,13 +452,13 @@ html.dark .vp-doc .custom-block {
 
 .feature-group { margin: 40px 0; }
 .feature-group-title {
-  font-size: 12.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--vp-c-text-2);
-  opacity: 0.75;
+  font: 600 12px/1.4 var(--vp-font-family-mono) !important; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--vp-c-text-3);
   margin: 0 0 14px !important;
   padding-top: 0 !important;
   border-top: none !important;
 }
+.feature-group-title::before { display: none !important; }
 .feature-mini-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -324,19 +471,22 @@ html.dark .vp-doc .custom-block {
   padding: 15px 16px;
   border-radius: var(--glass-radius);
   border: 1px solid var(--glass-border);
-  background: var(--vp-c-bg-alt);
-  transition: border-color 0.2s ease;
+  background: var(--glass-bg);
+  box-shadow: inset 0 1px 0 var(--glass-hl);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .feature-mini:hover {
-  border-color: var(--product-accent-1, var(--vp-c-brand-1));
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 1px var(--product-accent-1, var(--vp-c-brand-2)), var(--glass-shadow);
 }
 .feature-mini i {
   flex-shrink: 0;
   margin-top: 2px;
   width: 18px;
   font-size: 15px;
-  color: var(--product-accent-1, var(--vp-c-brand-1));
+  color: var(--product-accent-3, var(--vp-c-brand-1));
 }
+html.dark .feature-mini i { color: var(--product-accent-1, var(--vp-c-brand-1)); }
 .feature-mini b {
   display: block;
   margin-bottom: 4px;
@@ -357,27 +507,11 @@ html.dark .vp-doc .custom-block {
   font-family: var(--vp-heading-font, inherit);
 }
 
-/* Nav active link accent */
-.VPNavBarMenuLink.active {
-  color: var(--vp-c-brand-1) !important;
-}
-
-/* Sidebar active item */
-.VPSidebarItem.is-active > .item > .link > .text {
-  color: var(--vp-c-brand-1);
-}
-
 /* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(88, 120, 239, 0.3);
-  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(143, 224, 255, 0.7), rgba(26, 163, 221, 0.55));
+  border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(88, 120, 239, 0.6);
-}
+::-webkit-scrollbar-thumb:hover { background: rgba(26, 163, 221, 0.8); }

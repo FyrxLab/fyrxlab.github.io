@@ -35,6 +35,8 @@ function updateTheme(path) {
     document.documentElement.classList.add('theme-noteblock');
   } else if (path.includes('/lazymod/')) {
     document.documentElement.classList.add('theme-lazymod');
+  } else if (path.includes('/fyrxai/')) {
+    document.documentElement.classList.add('theme-fyrxai');
   }
 }
 
