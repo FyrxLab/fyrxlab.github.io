@@ -1,6 +1,6 @@
 # Configuration
 
-AbsoluteSolver is configured through `plugins/Solver/config.yml`. New options added by an update merge in automatically on startup — anything you've already customized is left untouched.
+AbsoluteSolver is configured through `plugins/Solver/config.yml`. New options added by an update are picked up automatically — anything you've already customized is left untouched. On 1.18.1+ they're added to your `config.yml` with their explanation; on 1.8–1.17 your file isn't rewritten (saving it there would erase every comment): the new options run with their default values, the console lists them, and a fully documented `config-reference.yml` is written next to your config.
 
 ## Diagnostics Reference
 
@@ -218,9 +218,6 @@ inspect:
 
 ## Staff Mode Toolkit
 
-::: warning Beta
-:::
-
 ```yaml
 staff-mode:
   profiles: {}
@@ -249,9 +246,6 @@ staff-mode:
 `/solver vanish strict` and `solver.staffmode.vanish.see-strict` (a separate permission, not inherited from regular vanish) add a second tier that's invisible even to most staff. Staff with `solver.staffmode.silentjoin` connect already vanished, with no join message.
 
 ## Sanctions System
-
-::: warning Beta
-:::
 
 ### Storage backend
 
@@ -312,8 +306,8 @@ Anonymous usage statistics via [bStats](https://bstats.org/plugin/bukkit/Solver/
 
 ## Proxy Relay
 
-::: warning Requires a separate plugin on the proxy
-This section only configures the Bukkit side. It does nothing unless the matching proxy plugin is also installed — see [Proxy Relay](/en/solver/proxy-relay) for the full setup.
+::: tip Same jar on the proxy
+This section only turns the relay on for this backend. The proxy needs the same `Solver.jar` installed too — see [Proxy Networks](/en/solver/proxy-relay), which also covers AntiVPN and integrity checks at the proxy.
 :::
 
 ```yaml

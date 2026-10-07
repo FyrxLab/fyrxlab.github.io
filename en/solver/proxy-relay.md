@@ -1,12 +1,37 @@
-# Proxy Relay
+# Proxy Networks
 
-::: tip Updated in 0.10.0 — one jar for everything
-Solver itself runs on Bukkit-family servers. On a proxy, the same jar only runs a small relay: a proxy has no worlds, inventories, or players with in-game state, so sanctions, vanish, and GUIs stay on the backends.
+::: tip Updated in 0.10.2 — AntiVPN and integrity at the proxy
+The proxy can now check every connection for VPNs once, for the whole network, and verify its own jar. Same `Solver.jar` as always.
 :::
 
-If you run a BungeeCord, Waterfall, or Velocity network with more than one Solver backend, the relay makes staffchat messages and moderation/integrity/VPN alerts reach staff connected to *any* backend, not just the one where it happened.
+Drop the **same `Solver.jar`** you use on your backends into your BungeeCord, Waterfall, or Velocity proxy. There is no separate proxy plugin: BungeeCord/Waterfall read its `bungee.yml`, Velocity its `velocity-plugin.json`, and neither loads any of the Bukkit code. On the proxy it does three things:
 
-## What gets relayed
+1. **Relays** staffchat and moderation/integrity/VPN alerts so they reach staff on *any* backend.
+2. **AntiVPN** — checks every connection before it reaches a server.
+3. **Integrity** — verifies its own jar and scans the proxy's other plugins.
+
+Sanctions, vanish, and GUIs stay on the backends: a proxy has no worlds, inventories, or players with in-game state.
+
+## Setup
+
+1. Put `Solver.jar` in the proxy's `plugins/` folder and restart the proxy.
+2. On startup it creates its own config: `plugins/SolverProxy/config.yml` (BungeeCord/Waterfall) or `plugins/solverproxy/config.yml` (Velocity). Its keys mean exactly the same as in a backend's `config.yml`.
+3. The console confirms it's running:
+
+```
+SolverProxy (Velocity) enabled - staff permission source: LuckPerms | per-server roster fallback
+```
+
+## Relay
+
+Turn it on in **each backend's** `plugins/Solver/config.yml`:
+
+```yaml
+proxy-relay:
+  enabled: true
+```
+
+Off by default — a network-wide relay is a real behavior change, so it's opt-in. What gets relayed:
 
 - `/solver staffchat` messages (and the toggled staffchat mode)
 - Chat moderation alerts (Fyrx AI)
@@ -15,37 +40,45 @@ If you run a BungeeCord, Waterfall, or Velocity network with more than one Solve
 
 Staff on the server where the message started already see it locally, so the relay doesn't send them a second copy. An alert raised while a backend has nobody online (typical for AntiVPN, which fires before the player has joined) is held and delivered as soon as someone joins that backend.
 
-## Setup
+### Who receives relayed messages
 
-### 1. Enable the relay on every backend
+Players holding `solver.notify` (alerts) or `solver.staffmode.staffchat` (staffchat) — the same permissions used on each backend. How the proxy checks that:
 
-In each backend's `plugins/Solver/config.yml`:
+- **LuckPerms installed on the proxy** — used directly. If your LuckPerms setup shares storage across the network, this already matches what each backend grants.
+- **No LuckPerms on the proxy** — each backend tells the proxy which connected players hold `solver.notify`, and the proxy uses everyone reported by any backend. This is the default.
+
+## AntiVPN at the proxy
+
+On by default in the proxy's config. Every connection is checked before it reaches any server, with the same engine as a backend — sources, [profiles](/en/solver/antivpn), calibration window, whitelist — under the same keys (`antivpn.*`, `reasoning.*`).
+
+::: warning Turn it off on the backends
+If the proxy runs AntiVPN, set this in each backend's `config.yml`, or every connection is checked and alerted twice:
 
 ```yaml
-proxy-relay:
-  enabled: true
+antivpn:
+  own_engine:
+    enabled: false
 ```
 
-Off by default — a network-wide relay is a real behavior change, so it's opt-in.
+The proxy reminds you of this in its console on startup. A backend can't safely detect this on its own: a message claiming "the proxy already checks" could be faked by a player.
+:::
 
-### 2. Install the same jar on the proxy
+- **Alerts** go to every staff member connected to the network, tagged `[proxy]`.
+- **Blocking**: with `antivpn.action.mode: auto-action` (and the calibration window complete), the player is refused at the proxy and never reaches a server. The message they see is `antivpn.kick-message` in the proxy's config (MiniMessage).
+- **FoxGate** on the proxy works exactly as on a backend: Solver never blocks anyone, and `antivpn.foxgate-mode` picks `addon` (keep alerting) or `off`.
+- Verdicts are cached in `antivpn.db` next to the proxy's config, so a proxy restart doesn't re-query every player.
 
-Drop the **same `Solver.jar`** you use on your backends into the proxy's `plugins/` folder and restart the proxy — there is no separate proxy plugin. BungeeCord/Waterfall read its `bungee.yml` and Velocity its `velocity-plugin.json`; neither loads any of the Bukkit code. No configuration file of its own.
+There are no `/solver vpn` commands on the proxy: edit the whitelist under `antivpn.whitelist` in the proxy's config and restart it.
 
-### 3. Confirm it's running
+## Integrity at the proxy
 
-On proxy startup, the console prints one line:
+Same checks as a backend, configured under `integrity.*` in the proxy's config:
 
-```
-SolverProxy (Velocity) enabled - staff permission source: LuckPerms | per-server roster fallback
-```
+- **Build verification** — the proxy's Solver jar is checked against the official release on Modrinth. A development build is only reported, never flagged.
+- **Malware scan** — every other `.jar` in the proxy's `plugins/` folder is checked against the signed list of known-malware hashes (Java 15+).
+- **Java agent detection** — a warning if an agent was attached to the proxy's JVM at launch.
 
-## Who receives relayed messages
-
-The relay only reaches players holding `solver.notify` (for alerts) or `solver.staffmode.staffchat` (for staffchat) — the same permissions used locally on each backend. How the proxy checks that depends on what's installed:
-
-- **LuckPerms installed on the proxy** — used directly. If your LuckPerms setup shares storage across the whole network, this already matches what each backend grants.
-- **No LuckPerms on the proxy** — each backend tells the proxy which connected players currently hold `solver.notify`, and the proxy relays to everyone reported by any backend. This is the default.
+Alerts go to the proxy console and to staff on the network, tagged `[proxy]`.
 
 ## Compatibility
 

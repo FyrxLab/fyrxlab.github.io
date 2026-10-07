@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.10.2 — AntiVPN no Proxy
+
+> Publicado: outubro de 2026
+
+### Novidades
+
+- **AntiVPN no proxy** — o mesmo `Solver.jar` no BungeeCord, Waterfall ou Velocity agora verifica cada conexão antes que ela chegue a qualquer servidor, com exatamente o mesmo motor de um backend: mesmas fontes, perfis, janela de calibração e regras do FoxGate. Ele tem seu próprio arquivo de config no proxy. Veja [Redes com Proxy](/pt/solver/proxy-relay).
+- **Verificação de integridade no proxy** — o proxy verifica o próprio jar do Solver contra a versão oficial no Modrinth, escaneia os outros plugins do proxy contra a lista de malware conhecido (Java 15+) e avisa sobre Java agents anexados na inicialização.
+- **Sanções, Staff Mode Toolkit e PlaceholderAPI saem do beta.** Os `messages.yml` já extraídos perdem sozinhos os cabeçalhos "(BETA)" do `/solver help`.
+- **Todos os idiomas completos** — as mensagens do AntiVPN e sua seção no `/solver help` só existiam em inglês e espanhol; agora estão nos 9 idiomas, e um `/solver help` já extraído ganha a seção do AntiVPN depois da linha do `/solver integrity`.
+
+### Mudanças
+
+- **Atualizações não apagam mais os comentários da sua config.** No 1.18.1+, as opções novas são adicionadas ao `config.yml` junto com a explicação. No 1.8–1.17 (onde salvar um YAML pelo Bukkit apaga todos os comentários), o `config.yml` não é reescrito: as opções novas ficam ativas com o valor padrão, são listadas no console, e um `config-reference.yml` totalmente documentado é escrito ao lado da sua config.
+- Uma mensagem que falte no seu `messages.yml` agora vem primeiro do mesmo idioma incluído no jar, antes do inglês.
+- O `/solver integrity` descreve corretamente a verificação no Modrinth ("não é uma versão oficial" em vez do antigo "a FyrxLab ainda não publicou um hash").
+- O início do `config.yml` agora diz exatamente quais seções o `/solver reload` relê; todo o resto precisa de reinício.
+
+### Corrigido
+
+- Acentos e outros caracteres não ingleses no `messages.yml` ou `config.yml` apareciam corrompidos (ex.: `versiÃ³n`) em servidores Windows com Java anterior ao 18. Agora os dois arquivos são sempre lidos em UTF-8.
+
 ## v0.10.1 — Fazendo Exatamente o que Promete
 
 > Publicado: outubro de 2026

@@ -9,9 +9,9 @@
 | **Spigot** | ✅ Compatible (1.8.8+) | Totalmente compatible, incluyendo la [Moderación de Chat con IA](/es/solver/fyrx-ai) — no hace falta Paper. |
 | **CraftBukkit** | ✅ Compatible (1.8.8+) | Mismo nivel de soporte que Spigot. |
 | **Folia** | ✅ Compatible | El TickMonitor se desactiva automáticamente (Folia tiene su propio watchdog). El resto de funciones funcionan con normalidad. |
-| **Velocity** | ⚠️ Solo relay | Instala el mismo `Solver.jar` en el proxy para retransmitir staffchat/alertas entre backends. Ver [Relay de Proxy](/es/solver/proxy-relay). |
-| **BungeeCord** | ⚠️ Solo relay | Mismo jar, mismo relay. Ver [Relay de Proxy](/es/solver/proxy-relay). |
-| **Waterfall** | ⚠️ Solo relay | Mismo jar, mismo relay. Ver [Relay de Proxy](/es/solver/proxy-relay). |
+| **Velocity** | ✅ Funciones de proxy | El mismo `Solver.jar`: relay, AntiVPN para toda la red y verificación de integridad. Ver [Redes con Proxy](/es/solver/proxy-relay). |
+| **BungeeCord** | ✅ Funciones de proxy | Mismo jar, mismas funciones de proxy. Ver [Redes con Proxy](/es/solver/proxy-relay). |
+| **Waterfall** | ✅ Funciones de proxy | Mismo jar, mismas funciones de proxy. Ver [Redes con Proxy](/es/solver/proxy-relay). |
 | **Forge / Fabric** | ❌ No soportado | Cargadores de mods; no usan la API de Bukkit. |
 | **Sponge** | ❌ No soportado | Usa la SpongeAPI, no Bukkit. |
 

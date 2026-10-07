@@ -50,7 +50,11 @@ antivpn:
     persist-as-sanction: true   # registra i login bloccati in /solver history come KICK
 ```
 
-Con `auto-action`, una connessione viene rifiutata quando il punteggio raggiunge la soglia di espulsione del profilo. Gli avvisi arrivano a chiunque abbia `solver.notify`, e anche agli altri backend se il [Relay Proxy](/it/solver/proxy-relay) è attivo.
+Con `auto-action`, una connessione viene rifiutata quando il punteggio raggiunge la soglia di espulsione del profilo. Gli avvisi arrivano a chiunque abbia `solver.notify`, e anche agli altri backend se il [Reti con Proxy](/it/solver/proxy-relay) è attivo.
+
+::: tip Hai una rete con proxy?
+Lo stesso jar può eseguire AntiVPN una sola volta sul proxy per tutta la rete — vedi [Reti con Proxy](/it/solver/proxy-relay#antivpn-sul-proxy). Se lo fai, disattivalo sui backend.
+:::
 
 ## FoxGate
 

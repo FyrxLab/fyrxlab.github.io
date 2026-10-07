@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.10.2 — AntiVPN at the Proxy
+
+> Released: October 2026
+
+### New Features
+
+- **AntiVPN on the proxy** — the same `Solver.jar` on BungeeCord, Waterfall, or Velocity now checks every connection before it reaches any server, with the exact same engine as a backend: same sources, profiles, calibration window, and FoxGate rules. It has its own config file on the proxy. See [Proxy Networks](/en/solver/proxy-relay).
+- **Integrity checks on the proxy** — the proxy verifies its own Solver jar against the official release on Modrinth, scans the proxy's other plugins against the known-malware list (Java 15+), and warns about Java agents attached at launch.
+- **Sanctions, Staff Mode Toolkit, and PlaceholderAPI are out of beta.** Already-extracted `messages.yml` files lose the "(BETA)" headers in `/solver help` on their own.
+- **Every language complete** — the AntiVPN messages and the AntiVPN section of `/solver help` were only in English and Spanish; they're now in all 9 languages, and an already-extracted `/solver help` gets the AntiVPN section added after the `/solver integrity` line.
+
+### Changed
+
+- **Config updates no longer wipe your comments.** On 1.18.1+, new options are added to `config.yml` together with their explanation. On 1.8–1.17 (where saving a YAML file through Bukkit drops every comment), `config.yml` is not rewritten at all: the new options are active with their default values, listed in the console, and a fully documented `config-reference.yml` is written next to your config.
+- A message missing from your `messages.yml` now falls back to the same language bundled in the jar before English.
+- `/solver integrity` describes the Modrinth check accurately ("not an official release" instead of the old "FyrxLab hasn't published a hash").
+- The top of `config.yml` now says exactly which sections `/solver reload` re-reads; everything else needs a restart.
+
+### Fixed
+
+- Accents and other non-English characters in `messages.yml` or `config.yml` showed garbled (e.g. `versiÃ³n`) on Windows servers running Java older than 18. Both files are now always read as UTF-8.
+
 ## v0.10.1 — Doing Exactly What It Promises
 
 > Released: October 2026

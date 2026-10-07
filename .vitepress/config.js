@@ -25,7 +25,7 @@ const enAbsoluteSolverSidebar = [
       { text: 'Console Monitor', link: '/en/solver/console-monitor' },
       { text: 'Crash Analysis', link: '/en/solver/crash-analysis' },
       { text: 'Tick Monitor', link: '/en/solver/tick-monitor' },
-      { text: 'Proxy Relay', link: '/en/solver/proxy-relay' },
+      { text: 'Proxy Networks', link: '/en/solver/proxy-relay' },
       { text: 'AntiVPN', link: '/en/solver/antivpn' },
     ]
   },
@@ -55,7 +55,7 @@ const esAbsoluteSolverSidebar = [
       { text: 'Monitor de Consola', link: '/es/solver/console-monitor' },
       { text: 'Análisis de Crashes', link: '/es/solver/crash-analysis' },
       { text: 'Monitor de Ticks', link: '/es/solver/tick-monitor' },
-      { text: 'Relay de Proxy', link: '/es/solver/proxy-relay' },
+      { text: 'Redes con Proxy', link: '/es/solver/proxy-relay' },
       { text: 'AntiVPN', link: '/es/solver/antivpn' },
     ]
   },
@@ -85,7 +85,7 @@ const itAbsoluteSolverSidebar = [
       { text: 'Monitor Console', link: '/it/solver/console-monitor' },
       { text: 'Analisi dei Crash', link: '/it/solver/crash-analysis' },
       { text: 'Monitor dei Tick', link: '/it/solver/tick-monitor' },
-      { text: 'Relay Proxy', link: '/it/solver/proxy-relay' },
+      { text: 'Reti con Proxy', link: '/it/solver/proxy-relay' },
       { text: 'AntiVPN', link: '/it/solver/antivpn' },
     ]
   },
@@ -115,7 +115,7 @@ const ptAbsoluteSolverSidebar = [
       { text: 'Monitor de Console', link: '/pt/solver/console-monitor' },
       { text: 'Análise de Crashes', link: '/pt/solver/crash-analysis' },
       { text: 'Monitor de Ticks', link: '/pt/solver/tick-monitor' },
-      { text: 'Relay de Proxy', link: '/pt/solver/proxy-relay' },
+      { text: 'Redes com Proxy', link: '/pt/solver/proxy-relay' },
       { text: 'AntiVPN', link: '/pt/solver/antivpn' },
     ]
   },

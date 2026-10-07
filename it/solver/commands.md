@@ -37,9 +37,6 @@ Vedi [AntiVPN](/it/solver/antivpn) per come funziona il rilevamento.
 
 ### Sistema di Sanzioni
 
-::: warning Beta
-:::
-
 | Sottocomando | Descrizione | Permesso |
 |------------|-------------|---------|
 | `warn \| mute \| tempmute \| kick \| ban \| tempban <giocatore> [durata] <motivo>` | Applica la sanzione corrispondente. `durata` è obbligatoria per le varianti temp- (es. `30s`, `10m`, `1d`) e facoltativa per `ban`/`mute`, che diventano così `tempban`/`tempmute`. Il motivo può anche essere `#nome`, che si espande in un [modello di motivo](/it/solver/configuration#modelli-di-motivo-ed-escalation-degli-avvisi) configurato in `config.yml`. | `solver.sanctions.<tipo>` |
@@ -66,9 +63,6 @@ Novità della 0.8.0. Permette a qualsiasi giocatore di segnalare qualcosa all'at
 | `reports gui` | Apre una GUI delle segnalazioni aperte — click sinistro prende in carico, click destro chiude. | `solver.reports.gui` |
 
 ### Staff Mode Toolkit
-
-::: warning Beta
-:::
 
 | Sottocomando | Descrizione | Permesso |
 |------------|-------------|---------|

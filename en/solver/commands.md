@@ -37,9 +37,6 @@ See [AntiVPN](/en/solver/antivpn) for how detection works.
 
 ### Sanctions System
 
-::: warning Beta
-:::
-
 | Subcommand | Description | Permission |
 |------------|-------------|------------|
 | `warn \| mute \| tempmute \| kick \| ban \| tempban <player> [duration] <reason>` | Applies the corresponding sanction. `duration` is required for the temp- variants (e.g. `30s`, `10m`, `1d`) and optional for `ban`/`mute`, which then become a `tempban`/`tempmute`. A reason can also be `#name`, expanding to a [reason template](/en/solver/configuration#reason-templates--warn-escalation) configured in `config.yml`. | `solver.sanctions.<type>` |
@@ -66,9 +63,6 @@ New in 0.8.0. Lets any player flag something for staff attention, completely sep
 | `reports gui` | Opens a GUI of open reports — left-click claims, right-click closes. | `solver.reports.gui` |
 
 ### Staff Mode Toolkit
-
-::: warning Beta
-:::
 
 | Subcommand | Description | Permission |
 |------------|-------------|------------|

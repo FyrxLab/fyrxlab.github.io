@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.10.2 — AntiVPN sul Proxy
+
+> Pubblicato: ottobre 2026
+
+### Novità
+
+- **AntiVPN sul proxy** — lo stesso `Solver.jar` su BungeeCord, Waterfall o Velocity ora controlla ogni connessione prima che raggiunga qualsiasi server, con esattamente lo stesso motore di un backend: stesse fonti, profili, finestra di calibrazione e regole di FoxGate. Ha un proprio file di configurazione sul proxy. Vedi [Reti con Proxy](/it/solver/proxy-relay).
+- **Verifica di integrità sul proxy** — il proxy verifica il proprio jar di Solver contro la release ufficiale su Modrinth, scansiona gli altri plugin del proxy contro la lista di malware noti (Java 15+) e avvisa dei Java agent collegati all'avvio.
+- **Sanzioni, Staff Mode Toolkit e PlaceholderAPI escono dalla beta.** I `messages.yml` già estratti perdono da soli le intestazioni "(BETA)" di `/solver help`.
+- **Tutte le lingue complete** — i messaggi di AntiVPN e la sua sezione in `/solver help` erano solo in inglese e spagnolo; ora sono in tutte le 9 lingue, e a un `/solver help` già estratto viene aggiunta la sezione AntiVPN dopo la riga di `/solver integrity`.
+
+### Modifiche
+
+- **Gli aggiornamenti non cancellano più i commenti della config.** Su 1.18.1+, le nuove opzioni vengono aggiunte a `config.yml` insieme alla loro spiegazione. Su 1.8–1.17 (dove salvare un YAML tramite Bukkit elimina tutti i commenti), `config.yml` non viene riscritto: le nuove opzioni sono attive con il valore predefinito, elencate in console, e accanto alla config viene scritto un `config-reference.yml` completamente documentato.
+- Un messaggio mancante nel tuo `messages.yml` ora viene preso prima dalla stessa lingua inclusa nel jar, poi dall'inglese.
+- `/solver integrity` descrive correttamente il controllo su Modrinth ("non è una release ufficiale" invece del vecchio "FyrxLab non ha ancora pubblicato l'hash").
+- L'inizio di `config.yml` ora indica esattamente quali sezioni rilegge `/solver reload`; tutto il resto richiede un riavvio.
+
+### Correzioni
+
+- Gli accenti e gli altri caratteri non inglesi in `messages.yml` o `config.yml` apparivano corrotti (es. `versiÃ³n`) sui server Windows con Java precedente al 18. Ora entrambi i file vengono sempre letti in UTF-8.
+
 ## v0.10.1 — Fa Esattamente Ciò che Promette
 
 > Pubblicato: ottobre 2026

@@ -1,6 +1,6 @@
 # Configuración
 
-AbsoluteSolver se configura mediante `plugins/Solver/config.yml`. Las opciones nuevas que agrega una actualización se combinan automáticamente al iniciar — lo que ya hayas personalizado no se toca.
+AbsoluteSolver se configura mediante `plugins/Solver/config.yml`. Las opciones nuevas que agrega una actualización se aplican solas — lo que ya hayas personalizado no se toca. En 1.18.1+ se agregan a tu `config.yml` con su explicación; en 1.8–1.17 tu archivo no se reescribe (guardarlo ahí borraría todos los comentarios): las opciones nuevas corren con su valor por defecto, la consola las lista y al lado de tu config se escribe un `config-reference.yml` con toda la documentación.
 
 ## Referencia de Diagnóstico
 
@@ -222,9 +222,6 @@ inspect:
 
 ## Staff Mode Toolkit
 
-::: warning Beta
-:::
-
 ```yaml
 staff-mode:
   profiles: {}
@@ -253,9 +250,6 @@ staff-mode:
 `/solver vanish strict` y `solver.staffmode.vanish.see-strict` (un permiso aparte, no heredado del vanish normal) agregan un segundo nivel invisible incluso para la mayoría del staff. Un staff con `solver.staffmode.silentjoin` se conecta ya en vanish, sin mensaje de conexión.
 
 ## Sistema de Sanciones
-
-::: warning Beta
-:::
 
 ### Backend de almacenamiento
 
@@ -316,8 +310,8 @@ Estadísticas de uso anónimas vía [bStats](https://bstats.org/plugin/bukkit/So
 
 ## Relay de Proxy
 
-::: warning Requiere un plugin separado en el proxy
-Esta sección solo configura el lado de Bukkit. No hace nada a menos que también esté instalado el plugin de proxy correspondiente — ver [Relay de Proxy](/es/solver/proxy-relay) para la configuración completa.
+::: tip El mismo jar en el proxy
+Esta sección solo activa el relay en este backend. El proxy también necesita el mismo `Solver.jar` instalado — ver [Redes con Proxy](/es/solver/proxy-relay), que además cubre el AntiVPN y la integridad en el proxy.
 :::
 
 ```yaml
