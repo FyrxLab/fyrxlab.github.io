@@ -515,3 +515,197 @@ html.dark .feature-mini i { color: var(--product-accent-1, var(--vp-c-brand-1));
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover { background: rgba(26, 163, 221, 0.8); }
+
+/* ==========================================================================
+   Phase 2
+   ========================================================================== */
+
+/* ---------- changelog timeline: one glass card per release on a water line
+   (config.js wraps each h2-section of a changelog.md in .cl-release) ------ */
+.vp-doc .cl-release {
+  position: relative;
+  margin: 28px 0 0 34px;
+  padding: 2px 24px 18px;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
+}
+.vp-doc .cl-release::before { /* the water line, joining this card to the next */
+  content: '';
+  position: absolute; left: -23px; top: 0; bottom: -29px; width: 3px; border-radius: 3px;
+  background: linear-gradient(180deg, #8fe0ff, #1aa3dd 60%, color-mix(in srgb, #1aa3dd 40%, transparent));
+}
+.vp-doc .cl-release:last-of-type::before { bottom: 0; background: linear-gradient(180deg, #8fe0ff, transparent); }
+.vp-doc .cl-release::after { /* the release bubble on the line */
+  content: '';
+  position: absolute; left: -32px; top: 26px; width: 21px; height: 21px; border-radius: 50%;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, #8fe0ff, #1aa3dd 45%, #0a6fa6);
+  box-shadow: 0 0 0 4px var(--vp-c-bg), 0 2px 8px -1px rgba(26, 163, 221, 0.7);
+}
+.vp-doc .cl-release:first-of-type::after { /* latest release glows lime */
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, #d6ff9a, #79c92e 45%, #3f8a12);
+  box-shadow: 0 0 0 4px var(--vp-c-bg), 0 0 14px 2px rgba(121, 201, 46, 0.55);
+}
+.vp-doc .cl-release > h2 { margin-top: 18px; padding-top: 0; }
+.vp-doc .cl-release > h2::before { display: none; }
+/* "> Released: …" right under the version: a small chip, not a quote */
+.vp-doc .cl-release > h2 + blockquote {
+  display: inline-block; margin: 0 0 6px; padding: 2px 12px; border: 0; border-radius: 999px;
+  background: color-mix(in srgb, var(--vp-c-brand-2) 11%, transparent);
+}
+.vp-doc .cl-release > h2 + blockquote p { margin: 0; font-size: 12.5px; color: var(--vp-c-text-2); }
+/* section headings get a semantic dot: new = lime, changed = aqua,
+   fixed = amber, compatibility = violet (ids are the localized slugs) */
+.vp-doc .cl-release h3 { --dot: var(--vp-c-text-3); display: flex; align-items: center; gap: 9px; }
+.vp-doc .cl-release h3::before {
+  content: ''; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 72%),
+    var(--dot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot) 20%, transparent);
+}
+.vp-doc .cl-release h3:is([id^="new"], [id^="novedades"], [id^="novita"], [id^="novidades"], [id^="nuove"], [id^="novos"], [id^="major"]) { --dot: #5fae1e; }
+.vp-doc .cl-release h3:is([id^="changed"], [id^="cambi"], [id^="modifiche"], [id^="mudancas"], [id^="alterado"], [id^="minor"]) { --dot: #1aa3dd; }
+.vp-doc .cl-release h3:is([id^="fix"], [id^="correc"], [id^="corregido"], [id^="correzioni"], [id^="corrigido"], [id^="patch"]) { --dot: #e0a100; }
+.vp-doc .cl-release h3:is([id^="compat"]) { --dot: #8b5cf6; }
+@media (max-width: 640px) {
+  .vp-doc .cl-release { margin-left: 26px; padding: 2px 16px 14px; }
+  .vp-doc .cl-release::before { left: -18px; }
+  .vp-doc .cl-release::after { left: -27px; }
+}
+
+/* ---------- ordered steps joined by a water line ---------- */
+.vp-doc ol > li:not(:last-child)::after {
+  content: '';
+  position: absolute; left: 10px; top: calc(0.2em + 26px); bottom: calc(-6px - 0.2em); width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, color-mix(in srgb, #1aa3dd 55%, transparent), color-mix(in srgb, #1aa3dd 15%, transparent));
+}
+
+/* ---------- <Badge>: water-drop pills ---------- */
+.VPBadge {
+  --bd: var(--vp-c-brand-2);
+  border: 1px solid color-mix(in srgb, var(--bd) 65%, black) !important;
+  border-radius: 999px !important;
+  padding: 0 9px !important;
+  color: color-mix(in srgb, var(--bd) 25%, black) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.12) 50%, transparent 50%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bd) 55%, white), var(--bd) 50%, color-mix(in srgb, var(--bd) 82%, black) 50%, var(--bd)) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.VPBadge.tip { --bd: #79c92e; }
+.VPBadge.warning { --bd: #f0b429; }
+.VPBadge.danger { --bd: #ef6a4f; }
+
+/* ---------- "Copied": a bubble that rises and fades ---------- */
+.vp-doc [class*='language-'] > button.copy.copied::before,
+.vp-doc [class*='language-'] > button.copy:hover.copied::before {
+  position: absolute; top: 4px; right: 38px; transform: none;
+  border: 1px solid var(--glass-border) !important; border-radius: 999px !important;
+  padding: 0 12px; height: 24px; width: auto;
+  color: var(--vp-c-brand-1); font-weight: 600;
+  background: linear-gradient(180deg, var(--glass-hl), transparent 60%), var(--glass-solid);
+  box-shadow: var(--glass-shadow);
+  animation: copied-rise 1.4s ease-out forwards;
+}
+.vp-doc [class*='language-'] > button.copy.copied { border-radius: 0; background-color: transparent; }
+@keyframes copied-rise {
+  0% { opacity: 0; translate: 0 6px; }
+  15%, 70% { opacity: 1; translate: 0 0; }
+  100% { opacity: 0; translate: 0 -10px; }
+}
+
+/* ---------- search (Ctrl K): glass shell, product orb on each result ---------- */
+.VPLocalSearchBox .backdrop { background: color-mix(in srgb, #06304f 35%, transparent) !important; backdrop-filter: blur(4px); }
+.VPLocalSearchBox .shell {
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, var(--glass-hl), transparent 120px), var(--vp-c-bg-elv) !important;
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hl), 0 30px 60px -20px rgba(6, 48, 79, 0.5);
+}
+.VPLocalSearchBox .search-bar { border-radius: 999px !important; }
+.VPLocalSearchBox .results .result { border-radius: 12px; --c: var(--vp-c-brand-2); }
+.VPLocalSearchBox .results .result.selected { border-color: color-mix(in srgb, var(--vp-c-brand-2) 55%, transparent); }
+.VPLocalSearchBox .results .result::before {
+  content: ''; flex-shrink: 0; margin-left: 12px; width: 14px; height: 14px; border-radius: 50%;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--c) 55%, white), var(--c) 45%, color-mix(in srgb, var(--c) 55%, black));
+}
+.VPLocalSearchBox .result[href*="/solver/"] { --c: #f1c40f; }
+.VPLocalSearchBox .result[href*="/solvermotd/"] { --c: #d17a3d; }
+.VPLocalSearchBox .result[href*="/phos/"] { --c: #49a37b; }
+.VPLocalSearchBox .result[href*="/furnace/"] { --c: #c9982b; }
+.VPLocalSearchBox .result[href*="/noteblock/"] { --c: #8b5cf6; }
+.VPLocalSearchBox .result[href*="/lazymod/"] { --c: #ff6a00; }
+.VPLocalSearchBox .result[href*="/fyrxai/"] { --c: #5865f2; }
+
+/* ---------- day/night switch: a sun orb that turns into a moon ---------- */
+button.VPSwitchAppearance.VPSwitch {
+  width: 44px; height: 24px; border-radius: 999px;
+  border: 1px solid var(--glass-edge);
+  background: linear-gradient(180deg, #8fd3f5, #cdeefd);
+  box-shadow: inset 0 1px 2px rgba(6, 48, 79, 0.25);
+}
+html.dark button.VPSwitchAppearance.VPSwitch { background: linear-gradient(180deg, #041426, #0b3a5e); }
+button.VPSwitchAppearance .check {
+  top: 2px; left: 2px; width: 18px; height: 18px;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, #fff1a8, #f5c518 45%, #c98a00);
+  box-shadow: 0 0 10px 1px rgba(245, 197, 24, 0.6);
+}
+html.dark button.VPSwitchAppearance .check {
+  transform: translateX(20px);
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, #ffffff, #c9dcef 45%, #7d97b3);
+  box-shadow: 0 0 10px 1px rgba(170, 215, 255, 0.45);
+}
+button.VPSwitchAppearance .check .icon { opacity: 0; }
+
+/* ---------- Products menu: an orb beside every product ---------- */
+.VPNavBarMenuGroup .VPMenu,
+.VPNavBarTranslations .VPMenu,
+.VPNavBarExtra .VPMenu {
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, var(--glass-hl), transparent 80px), var(--vp-c-bg-elv);
+  box-shadow: inset 0 1px 0 var(--glass-hl), 0 24px 48px -20px rgba(6, 48, 79, 0.45);
+}
+:is(.VPMenuLink, .VPNavScreenMenuGroupLink) a:is([href*="/solver/"], [href*="/solvermotd/"], [href*="/phos/"], [href*="/furnace/"], [href*="/noteblock/"], [href*="/lazymod/"], [href*="/fyrxai/"]),
+.VPNavScreenMenuGroupLink:is([href*="/solver/"], [href*="/solvermotd/"], [href*="/phos/"], [href*="/furnace/"], [href*="/noteblock/"], [href*="/lazymod/"], [href*="/fyrxai/"]) {
+  display: flex; align-items: center; gap: 10px;
+}
+:is(.VPMenuLink, .VPNavScreenMenuGroupLink) a:is([href*="/solver/"], [href*="/solvermotd/"], [href*="/phos/"], [href*="/furnace/"], [href*="/noteblock/"], [href*="/lazymod/"], [href*="/fyrxai/"])::before,
+.VPNavScreenMenuGroupLink:is([href*="/solver/"], [href*="/solvermotd/"], [href*="/phos/"], [href*="/furnace/"], [href*="/noteblock/"], [href*="/lazymod/"], [href*="/fyrxai/"])::before {
+  content: ''; flex-shrink: 0; width: 16px; height: 16px; border-radius: 50%;
+  background:
+    radial-gradient(ellipse 62% 42% at 50% 24%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 50% 120%, color-mix(in srgb, var(--c) 55%, white), var(--c) 45%, color-mix(in srgb, var(--c) 55%, black));
+  box-shadow: 0 2px 5px -1px color-mix(in srgb, var(--c) 70%, transparent);
+  transition: transform 0.2s ease;
+}
+.VPMenuLink a:hover::before { transform: translateY(-2px) scale(1.12); }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/solver/"] { --c: #f1c40f; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/solvermotd/"] { --c: #d17a3d; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/phos/"] { --c: #49a37b; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/furnace/"] { --c: #c9982b; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/noteblock/"] { --c: #8b5cf6; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/lazymod/"] { --c: #ff6a00; }
+:is(.VPMenuLink a, a.VPNavScreenMenuGroupLink)[href*="/fyrxai/"] { --c: #5865f2; }
+
+/* ---------- footer: SiteFooter.vue replaces it ---------- */
+.VPFooter { display: none !important; }
+
+/* ---------- view transitions (index.js pages, Layout.vue day/night) ---------- */
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.22s; }
+html[data-vt="theme"]::view-transition-old(root),
+html[data-vt="theme"]::view-transition-new(root) { animation-duration: 0.6s; animation-timing-function: ease-in-out; }

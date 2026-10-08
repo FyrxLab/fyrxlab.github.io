@@ -1,5 +1,32 @@
 import { defineConfig } from 'vitepress'
 import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
+import { PRODUCTS } from './theme/productPalette.js'
+
+// Changelog pages: wrap each release (an h2 and everything up to the next h2)
+// in <section class="cl-release"> so custom.css can draw one glass card per
+// version on the timeline. The markdown files themselves stay plain.
+function changelogSections(md) {
+  const html = (state, content) => {
+    const t = new state.Token('html_block', '', 0)
+    t.content = `${content}\n`
+    return t
+  }
+  md.core.ruler.push('changelog_sections', (state) => {
+    if (!/(^|\/)changelog\.md$/.test(state.env.relativePath || '')) return
+    const out = []
+    let open = false
+    for (const token of state.tokens) {
+      if (token.type === 'heading_open' && token.tag === 'h2') {
+        if (open) out.push(html(state, '</section>'))
+        out.push(html(state, '<section class="cl-release">'))
+        open = true
+      }
+      out.push(token)
+    }
+    if (open) out.push(html(state, '</section>'))
+    state.tokens = out
+  })
+}
 
 // NOTE: Solver's pages live flat under solver/ (no guide/ or features/ subfolders,
 // unlike Furnace/SolverMOTD/Phos) — links below must match that or they 404.
@@ -444,7 +471,24 @@ export default defineConfig({
     // onto comment/tag/string/constant, used for both slots so the syntax
     // colors never depend on the site theme, only on the (always-dark) code
     // background.
-    theme: { light: fyrxCodeTheme, dark: fyrxCodeTheme }
+    theme: { light: fyrxCodeTheme, dark: fyrxCodeTheme },
+    config(md) {
+      md.use(changelogSections)
+    }
+  },
+
+  // Share image per product (public/og/<product>.png, the FyrxLab one
+  // everywhere else) so links pasted in Discord get an Aero preview card.
+  transformHead({ pageData }) {
+    const key = pageData.relativePath.split('/')[1]
+    const image = `https://fyrx.net/og/${PRODUCTS[key] ? key : 'fyrxlab'}.png`
+    return [
+      ['meta', { property: 'og:image', content: image }],
+      ['meta', { property: 'og:image:width', content: '1200' }],
+      ['meta', { property: 'og:image:height', content: '630' }],
+      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+      ['meta', { name: 'twitter:image', content: image }]
+    ]
   },
   head: [
     ['link', { rel: 'icon', href: '/logo.svg' }],

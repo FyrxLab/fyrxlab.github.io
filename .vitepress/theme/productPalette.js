@@ -2,6 +2,8 @@
 // copy shared between the nav version badge, the per-route theme CSS, and the
 // homepage's product highlights. Update the `version`/`changelog` fields here
 // when a product ships a new release - nothing else needs to change.
+// `install` feeds the install card on each product home (InstallCard.vue);
+// Minecraft ranges and platforms mirror the project's Modrinth listing.
 export const PRODUCTS = {
   solver: {
     name: 'AbsoluteSolver',
@@ -11,6 +13,7 @@ export const PRODUCTS = {
     version: '0.10.2',
     changelog: '/solver/changelog',
     home: '/solver/',
+    install: { url: 'https://modrinth.com/plugin/solver', mc: '1.8.8 – 26.3', platforms: ['Paper', 'Purpur', 'Spigot', 'Folia', 'Velocity', 'BungeeCord', 'Waterfall'] },
     tagline: {
       en: 'AI-powered crash analysis, chat moderation, and a full sanctions system.',
       es: 'Análisis de crashes con IA, moderación de chat, y un sistema completo de sanciones.',
@@ -26,6 +29,7 @@ export const PRODUCTS = {
     version: '1.2.2',
     changelog: null,
     home: '/solvermotd/',
+    install: { url: 'https://modrinth.com/plugin/solvermotd', mc: '1.8 – 1.21.6', platforms: ['Paper', 'Purpur', 'Spigot', 'Folia', 'Velocity', 'BungeeCord', 'Waterfall'] },
     tagline: {
       en: 'Cross-platform MOTD plugin with MiniMessage and 1.21.9+ Image Banners.',
       es: 'Plugin MOTD multiplataforma con MiniMessage y Banners de Imagen 1.21.9+.',
@@ -41,6 +45,7 @@ export const PRODUCTS = {
     version: '1.2.2',
     changelog: null,
     home: '/phos/',
+    install: { url: 'https://modrinth.com/mod/phos', mc: '1.12.2 · 1.20.1 – 1.20.6', platforms: ['Fabric', 'Forge', 'NeoForge'] },
     tagline: {
       en: 'A gem-inspired mineral with fragile weaponry and crystallization mechanics.',
       es: 'Un mineral inspirado en gemas, con armas frágiles y mecánicas de cristalización.',
@@ -56,6 +61,7 @@ export const PRODUCTS = {
     version: '1.2.7',
     changelog: '/furnace/changelog',
     home: '/furnace/',
+    install: { url: 'https://modrinth.com/mod/furnace', mc: '1.20.1 · 1.21.1 · 26.2', platforms: ['Forge', 'NeoForge'] },
     tagline: {
       en: 'An 18-slot furnace with hopper automation and the Absolute Energy system.',
       es: 'Un horno de 18 slots con automatización por tolvas y el sistema Absolute Energy.',
@@ -71,6 +77,7 @@ export const PRODUCTS = {
     version: '1.2.0',
     changelog: '/noteblock/changelog',
     home: '/noteblock/',
+    install: { url: 'https://modrinth.com/mod/noteblock', mc: '1.12.2 · 1.18 – 26.3', platforms: ['Fabric', 'Forge', 'NeoForge'] },
     tagline: {
       en: '11 new music discs, each song arranged entirely with note blocks. One jar for Fabric, Forge and NeoForge.',
       es: '11 discos de música nuevos, cada canción arreglada con bloques de nota. Un solo jar para Fabric, Forge y NeoForge.',
@@ -86,6 +93,7 @@ export const PRODUCTS = {
     version: null,
     changelog: null,
     home: '/lazymod/',
+    install: { url: 'https://modrinth.com/mod/lazymod', mc: '1.12.2 · 1.20.1 · 1.21.1', platforms: ['Fabric', 'Forge', 'NeoForge'] },
     font: 'Dokdo',
     tagline: {
       en: 'Spawn already equipped with absurdly overpowered gear. Skip the grind.',
@@ -102,6 +110,7 @@ export const PRODUCTS = {
     version: '1.2.1',
     changelog: '/fyrxai/changelog',
     home: '/fyrxai/',
+    install: { url: 'https://github.com/FyrxLab/fyrx-ai', command: 'npm install github:FyrxLab/fyrx-ai', platforms: ['Node.js', 'discord.js'] },
     tagline: {
       en: 'Drop-in AI support agent for your own discord.js bot — configured entirely from Discord.',
       es: 'Agente de soporte con IA para tu propio bot de discord.js — configurado enteramente desde Discord.',

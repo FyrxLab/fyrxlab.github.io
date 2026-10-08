@@ -1,8 +1,11 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
-import { useRoute } from 'vitepress'
-import { watch, onMounted } from 'vue'
+import { useData, useRoute } from 'vitepress'
+import { watch, onMounted, provide, nextTick } from 'vue'
 import VersionBadge from './VersionBadge.vue'
+import InstallCard from './InstallCard.vue'
+import SiteFooter from './SiteFooter.vue'
+import NotFound from './NotFound.vue'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
@@ -40,6 +43,25 @@ function updateTheme(path) {
   }
 }
 
+// Day/night toggle: crossfade the whole page so the sky changes instead of
+// cutting over. data-vt lets custom.css give this fade its own, slower timing
+// than the page-to-page transition (see index.js).
+const { isDark } = useData()
+provide('toggle-appearance', async () => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!document.startViewTransition || reduced) {
+    isDark.value = !isDark.value
+    return
+  }
+  document.documentElement.dataset.vt = 'theme'
+  const vt = document.startViewTransition(async () => {
+    isDark.value = !isDark.value
+    await nextTick()
+  })
+  vt.ready.catch(() => {})
+  vt.finished.catch(() => {}).finally(() => delete document.documentElement.dataset.vt)
+})
+
 // Watch for route changes
 watch(() => route.path, updateTheme)
 
@@ -53,6 +75,15 @@ onMounted(() => {
   <Layout>
     <template #nav-bar-content-after>
       <VersionBadge />
+    </template>
+    <template #home-hero-after>
+      <InstallCard />
+    </template>
+    <template #not-found>
+      <NotFound />
+    </template>
+    <template #layout-bottom>
+      <SiteFooter />
     </template>
   </Layout>
 </template>
