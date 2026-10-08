@@ -2,6 +2,10 @@
 
 AbsoluteSolver se configura mediante `plugins/Solver/config.yml`. Las opciones nuevas que agrega una actualización se aplican solas — lo que ya hayas personalizado no se toca. En 1.18.1+ se agregan a tu `config.yml` con su explicación; en 1.8–1.17 tu archivo no se reescribe (guardarlo ahí borraría todos los comentarios): las opciones nuevas corren con su valor por defecto, la consola las lista y al lado de tu config se escribe un `config-reference.yml` con toda la documentación.
 
+## Explorador interactivo
+
+<ConfigExplorer />
+
 ## Referencia de Diagnóstico
 
 ```yaml

@@ -37,19 +37,7 @@ hero:
 
 ## The discs
 
-| Disc | Length |
-|------|--------|
-| Howl Moving Castle | 3:27 |
-| Lumiose City | 3:15 |
-| Gravity Falls | 2:28 |
-| The Painful Way | 3:19 |
-| No Escape | 2:30 |
-| Super Mario Maker | 1:47 |
-| Hyrule Castle | 4:58 |
-| Pandora Palace | 3:22 |
-| Attack of the Killer Queen | 4:07 |
-| Studiopolis Zone | 4:31 |
-| Storm Eagle | 2:41 |
+<DiscPlayer />
 
 Every disc is found the vanilla way: a creeper killed by a skeleton can drop any of them.
 

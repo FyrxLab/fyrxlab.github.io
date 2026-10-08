@@ -229,7 +229,6 @@ body {
   border: 1px solid var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
-  backdrop-filter: blur(14px);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .VPFeatures .VPFeature:hover {
@@ -322,7 +321,6 @@ html.dark .vp-doc div[class*='language-'] > button.copy { filter: none; }
     linear-gradient(180deg, color-mix(in srgb, var(--cb) 13%, transparent), color-mix(in srgb, var(--cb) 4%, transparent)),
     var(--glass-bg);
   box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
-  backdrop-filter: blur(16px) saturate(160%);
 }
 .vp-doc .custom-block.tip { --cb: #4a9a12; }
 .vp-doc .custom-block.warning { --cb: #d99a00; }
@@ -709,3 +707,44 @@ button.VPSwitchAppearance .check .icon { opacity: 0; }
 ::view-transition-new(root) { animation-duration: 0.22s; }
 html[data-vt="theme"]::view-transition-old(root),
 html[data-vt="theme"]::view-transition-new(root) { animation-duration: 0.6s; animation-timing-function: ease-in-out; }
+
+
+/* ==========================================================================
+   Phase 3
+   ========================================================================== */
+
+/* "Updated <date>" under each doc page: a small glass chip */
+.VPLastUpdated {
+  display: inline-flex !important; align-items: center; gap: 4px;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 12.5px !important; color: var(--vp-c-text-2) !important;
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, var(--glass-hl), transparent 60%), var(--glass-solid);
+}
+
+/* "Spotted a mistake?" line (Layout.vue doc-footer-before) */
+.report-note {
+  margin: 40px 0 8px; padding-top: 16px; border-top: 1px solid var(--vp-c-divider);
+  font-size: 13.5px; color: var(--vp-c-text-2);
+}
+.report-note a { font-weight: 600; color: var(--vp-c-brand-1); text-decoration: none; }
+.report-note a:hover { text-decoration: underline; }
+
+/* filter box above long tables (docEnhance.js) */
+.vp-doc .table-filter { display: flex; align-items: center; gap: 12px; margin: 16px 0 -8px; }
+.vp-doc .table-filter input {
+  flex: 0 1 320px; min-width: 0; padding: 7px 14px; border-radius: 999px; font-size: 14px;
+  color: var(--vp-c-text-1); border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, var(--glass-hl), transparent 70%), var(--glass-solid);
+  box-shadow: inset 0 1px 2px rgba(6, 48, 79, 0.12);
+}
+.vp-doc .table-filter input:focus { outline: 2px solid var(--vp-c-brand-2); outline-offset: 1px; }
+.vp-doc .table-filter-count { font-size: 13px; color: var(--vp-c-text-2); font-variant-numeric: tabular-nums; }
+
+/* click a command/permission in a table to copy it */
+.vp-doc td code { cursor: copy; transition: background-color 0.2s ease; }
+.vp-doc td code.copied-chip {
+  background: color-mix(in srgb, #79c92e 22%, transparent) !important;
+  border-color: color-mix(in srgb, #79c92e 50%, transparent) !important;
+}
+.vp-doc td code.copied-chip::after { content: ' ✓'; color: var(--aero-lime); font-weight: 700; }

@@ -1,6 +1,81 @@
 import { defineConfig } from 'vitepress'
 import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
 import { PRODUCTS } from './theme/productPalette.js'
+import fs from 'node:fs'
+import path from 'node:path'
+
+const LOCALES = ['en', 'es', 'it', 'pt']
+const SITE = 'https://fyrx.net'
+
+// Same slug rule VitePress uses for heading ids, so feed links land on the
+// right release card.
+const slugify = (str) => str
+  .normalize('NFKD').replace(/[\u0300-\u036F]/g, '')
+  .replace(/[\u0000-\u001f]/g, '')
+  .replace(/[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'“”‘’<>,.?/]+/g, '-')
+  .replace(/-{2,}/g, '-').replace(/^-+|-+$/g, '')
+  .replace(/^(\d)/, '_$1').toLowerCase()
+
+const MONTHS = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+  enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, octubre: 10, noviembre: 11, diciembre: 12,
+  gennaio: 1, febbraio: 2, aprile: 4, maggio: 5, giugno: 6, luglio: 7, settembre: 9, ottobre: 10, dicembre: 12,
+  janeiro: 1, fevereiro: 2, 'março': 3, maio: 5, junho: 6, julho: 7, setembro: 9, outubro: 10, novembro: 11, dezembro: 12
+}
+const FEED_TITLE = { en: 'FyrxLab releases', es: 'Versiones de FyrxLab', it: 'Versioni di FyrxLab', pt: 'Versões da FyrxLab' }
+const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const plain = (md) => md
+  .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`>#]/g, '')
+  .replace(/\s+/g, ' ').trim()
+
+// One RSS feed per language (/<lang>/feed.xml) built from every product's
+// changelog.md: each "## version" section becomes an item.
+function writeFeeds(srcDir, outDir) {
+  for (const loc of LOCALES) {
+    const items = []
+    for (const [key, product] of Object.entries(PRODUCTS)) {
+      const file = path.join(srcDir, loc, key, 'changelog.md')
+      if (!fs.existsSync(file)) continue
+      const sections = fs.readFileSync(file, 'utf8').split(/^## /m).slice(1)
+      sections.forEach((section, order) => {
+        const [heading, ...body] = section.split('\n')
+        const text = body.join('\n')
+        const when = text.match(/^>\s*(.+)$/m)?.[1].toLowerCase() || ''
+        const year = when.match(/\b(20\d\d)\b/)?.[1]
+        const month = Object.entries(MONTHS).find(([name]) => when.includes(name))?.[1] || 1
+        const date = year ? new Date(Date.UTC(+year, month - 1, 1)) : null
+        const summary = plain(text.replace(/^>.*$/m, ''))
+        items.push({
+          title: `${product.name} ${heading.trim()}`,
+          link: `${SITE}/${loc}/${key}/changelog#${slugify(heading.trim())}`,
+          date,
+          order,
+          summary: summary.length > 400 ? `${summary.slice(0, 397)}…` : summary
+        })
+      })
+    }
+    items.sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0) || a.order - b.order)
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>${FEED_TITLE[loc]}</title>
+<link>${SITE}/${loc}/</link>
+<description>${FEED_TITLE[loc]}</description>
+<language>${loc}</language>
+<atom:link href="${SITE}/${loc}/feed.xml" rel="self" type="application/rss+xml"/>
+${items.map((i) => `<item>
+<title>${esc(i.title)}</title>
+<link>${i.link}</link>
+<guid>${i.link}</guid>
+${i.date ? `<pubDate>${i.date.toUTCString()}</pubDate>\n` : ''}<description>${esc(i.summary)}</description>
+</item>`).join('\n')}
+</channel>
+</rss>
+`
+    fs.mkdirSync(path.join(outDir, loc), { recursive: true })
+    fs.writeFileSync(path.join(outDir, loc, 'feed.xml'), xml)
+  }
+}
 
 // Changelog pages: wrap each release (an h2 and everything up to the next h2)
 // in <section class="cl-release"> so custom.css can draw one glass card per
@@ -462,6 +537,11 @@ export default defineConfig({
   title: 'FyrxLab Documentation',
   description: 'Official documentation for FyrxLab products',
   cleanUrls: true,
+  lastUpdated: true,
+
+  buildEnd(siteConfig) {
+    writeFeeds(siteConfig.srcDir, siteConfig.outDir)
+  },
   markdown: {
     // Code blocks are always rendered on the dark terminal-window background
     // (see custom.css --vp-code-block-bg) regardless of the site's light/dark
@@ -482,7 +562,9 @@ export default defineConfig({
   transformHead({ pageData }) {
     const key = pageData.relativePath.split('/')[1]
     const image = `https://fyrx.net/og/${PRODUCTS[key] ? key : 'fyrxlab'}.png`
+    const loc = LOCALES.find((l) => pageData.relativePath.startsWith(`${l}/`)) || 'en'
     return [
+      ['link', { rel: 'alternate', type: 'application/rss+xml', title: FEED_TITLE[loc], href: `/${loc}/feed.xml` }],
       ['meta', { property: 'og:image', content: image }],
       ['meta', { property: 'og:image:width', content: '1200' }],
       ['meta', { property: 'og:image:height', content: '630' }],
@@ -535,6 +617,7 @@ export default defineConfig({
             ]
           },
           { text: 'Developer Tools', link: '/es/fyrxai/' },
+          { text: 'Compatibilidad', link: '/es/compatibility' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
@@ -544,6 +627,7 @@ export default defineConfig({
           '/es/phos/': esPhosSidebar,
           '/es/fyrxai/': esFyrxAISidebar
         },
+        lastUpdated: { text: 'Actualizado', formatOptions: { dateStyle: 'medium', forceLocale: true } },
         footer: {
           message: 'Solver y Noteblock: Todos los derechos reservados · Otros productos: Licencia MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
@@ -578,6 +662,7 @@ export default defineConfig({
             ]
           },
           { text: 'Developer Tools', link: '/it/fyrxai/' },
+          { text: 'Compatibilità', link: '/it/compatibility' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
@@ -587,6 +672,7 @@ export default defineConfig({
           '/it/phos/': itPhosSidebar,
           '/it/fyrxai/': itFyrxAISidebar
         },
+        lastUpdated: { text: 'Aggiornato', formatOptions: { dateStyle: 'medium', forceLocale: true } },
         footer: {
           message: 'Solver e Noteblock: Tutti i diritti riservati · Altri prodotti: Licenza MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
@@ -621,6 +707,7 @@ export default defineConfig({
             ]
           },
           { text: 'Developer Tools', link: '/pt/fyrxai/' },
+          { text: 'Compatibilidade', link: '/pt/compatibility' },
           { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
         ],
         sidebar: {
@@ -630,6 +717,7 @@ export default defineConfig({
           '/pt/phos/': ptPhosSidebar,
           '/pt/fyrxai/': ptFyrxAISidebar
         },
+        lastUpdated: { text: 'Atualizado', formatOptions: { dateStyle: 'medium', forceLocale: true } },
         footer: {
           message: 'Solver e Noteblock: Todos os direitos reservados · Outros produtos: Licença MIT.',
           copyright: 'Copyright © 2026 FyrxLab'
@@ -665,6 +753,7 @@ export default defineConfig({
         ]
       },
       { text: 'Developer Tools', link: '/en/fyrxai/' },
+      { text: 'Compatibility', link: '/en/compatibility' },
       { text: 'Modrinth', link: 'https://modrinth.com/user/jeamcube' }
     ],
 
@@ -680,6 +769,8 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/FyrxLab' },
       { icon: 'discord', link: 'https://discord.gg/EdcYuBAdFB' },
     ],
+
+    lastUpdated: { text: 'Updated', formatOptions: { dateStyle: 'medium', forceLocale: true } },
 
     footer: {
       message: 'Solver and Noteblock: All Rights Reserved · Other products: MIT License.',

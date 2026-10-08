@@ -3,6 +3,7 @@ import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vitepress'
 import { PRODUCTS, PRODUCT_ORDER } from './productPalette.js'
 import { LANDING_COPY, SCENARIO_TEXT } from './landingCopy.js'
+import { fetchProjects } from './modrinth.js'
 
 const route = useRoute()
 const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')
@@ -13,7 +14,7 @@ const solver = PRODUCTS.solver
 const products = reactive(
   PRODUCT_ORDER.map((key) => {
     const p = PRODUCTS[key]
-    return { key, ...p, link: `/${locale.value}${p.home}`, displayVersion: p.version ? '0.0.0' : null, counted: false }
+    return { key, ...p, link: `/${locale.value}${p.home}`, displayVersion: p.version ? '0.0.0' : null, counted: false, updated: '' }
   })
 )
 
@@ -189,8 +190,27 @@ async function runFlagshipTerminal() {
   }
 }
 
+/* ---------- portfolio: "updated 3 days ago", live from Modrinth / GitHub ---------- */
+function ago(iso) {
+  const days = Math.round((Date.now() - new Date(iso).getTime()) / 86400000)
+  const rtf = new Intl.RelativeTimeFormat(locale.value, { numeric: 'auto' })
+  if (days < 30) return rtf.format(-days, 'day')
+  if (days < 365) return rtf.format(-Math.round(days / 30), 'month')
+  return rtf.format(-Math.round(days / 365), 'year')
+}
+async function loadUpdated() {
+  const fyrxai = fetch('https://api.github.com/repos/FyrxLab/fyrx-ai')
+    .then((r) => (r.ok ? r.json() : null))
+    .then((repo) => repo && { fyrxai: { updated: repo.pushed_at } })
+    .catch(() => null)
+  const [modrinth, github] = await Promise.all([fetchProjects().catch(() => ({})), fyrxai])
+  const all = { ...modrinth, ...github }
+  for (const p of products) if (all[p.key]?.updated) p.updated = ago(all[p.key].updated)
+}
+
 onMounted(() => {
   runHeroBoot()
+  loadUpdated()
 
   portfolioObserver = new IntersectionObserver(
     (entries) => {
@@ -341,7 +361,7 @@ onUnmounted(() => {
           <span class="orb" />
           <span class="dir-name">{{ p.name }}</span>
           <span class="dir-kind">{{ p.kind }}</span>
-          <span class="dir-ver">{{ p.version ? `v${p.displayVersion}` : '—' }}</span>
+          <span class="dir-ver">{{ p.version ? `v${p.displayVersion}` : '—' }}<small v-if="p.updated" class="dir-upd">{{ p.updated }}</small></span>
           <span class="dir-tag">{{ p.tagline[locale] || p.tagline.en }}</span>
         </a>
       </div>
@@ -621,17 +641,16 @@ html.dark .win::after { background: linear-gradient(115deg, transparent 30%, rgb
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
 }
 .dir-row {
-  display: grid; grid-template-columns: 26px minmax(0, 1.3fr) 80px 72px minmax(0, 2.2fr); gap: 14px; align-items: center;
+  display: grid; grid-template-columns: 26px minmax(0, 1.3fr) 80px 96px minmax(0, 2.2fr); gap: 14px; align-items: center;
   padding: 11px 12px; border-radius: 11px; text-decoration: none; color: var(--vp-c-text-1);
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 .dir-row:hover { background: linear-gradient(180deg, var(--glass-hl), transparent); box-shadow: inset 0 0 0 1px var(--glass-border); }
 .dir-row:hover .orb { transform: translateY(-2px) scale(1.08); }
 @media (max-width: 640px) {
-  .dir-row { grid-template-columns: 24px minmax(0, 1fr) 64px; }
+  .dir-row { grid-template-columns: 24px minmax(0, 1fr) 96px; }
   .dir-kind, .dir-tag { display: none; }
 }
 .orb {
@@ -643,7 +662,8 @@ html.dark .win::after { background: linear-gradient(115deg, transparent 30%, rgb
   transition: transform 0.2s ease;
 }
 .dir-name { font-weight: 700; transition: color 0.15s ease; }
-.dir-ver { color: var(--vp-c-text-3); font: 12px var(--vp-font-family-mono); font-variant-numeric: tabular-nums; }
+.dir-ver { display: grid; gap: 1px; color: var(--vp-c-text-3); font: 12px var(--vp-font-family-mono); font-variant-numeric: tabular-nums; }
+.dir-upd { font: 11px/1.3 var(--vp-font-family-base); color: var(--vp-c-text-3); white-space: nowrap; }
 .dir-kind { color: var(--vp-c-text-3); font: 11px var(--vp-font-family-mono); text-transform: uppercase; letter-spacing: 0.05em; }
 .dir-tag { color: var(--vp-c-text-2); font-size: 13px; line-height: 1.45; }
 

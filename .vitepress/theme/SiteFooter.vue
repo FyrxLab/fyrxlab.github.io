@@ -22,6 +22,7 @@ const products = computed(() => PRODUCT_ORDER.map((k) => ({ key: k, ...PRODUCTS[
     </nav>
     <p v-if="theme.footer.message" class="sf-msg" v-html="theme.footer.message" />
     <p v-if="theme.footer.copyright" class="sf-copy" v-html="theme.footer.copyright" />
+    <a class="sf-rss" :href="`/${locale}/feed.xml`" target="_blank" rel="noopener">RSS</a>
   </footer>
 </template>
 
@@ -35,8 +36,6 @@ const products = computed(() => PRODUCT_ORDER.map((k) => ({ key: k, ...PRODUCTS[
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
 }
 @media (min-width: 768px) { .site-footer { margin: 96px 32px 20px; } }
 
@@ -60,6 +59,13 @@ const products = computed(() => PRODUCT_ORDER.map((k) => ({ key: k, ...PRODUCTS[
 .sf-msg, .sf-copy { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--vp-c-text-2); }
 .sf-copy { color: var(--vp-c-text-3); }
 .sf-msg :deep(a), .sf-copy :deep(a) { color: var(--vp-c-brand-1); }
+.sf-rss {
+  display: inline-block; margin-top: 10px; font: 600 11px/1 var(--vp-font-family-mono); letter-spacing: 0.08em;
+  color: #fff; text-decoration: none; padding: 5px 10px; border-radius: 999px; border: 1px solid #c25d00;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.08) 46%, transparent 46%), linear-gradient(180deg, #ffc27a, #f28a1e 50%, #d96d00 50%, #f28a1e);
+  text-shadow: 0 1px 1px rgba(90, 40, 0, 0.6);
+}
+.sf-rss:hover { filter: brightness(1.08); }
 
 @media (prefers-reduced-motion: reduce) { .sf-ball { transition: none; } }
 </style>

@@ -3,6 +3,9 @@ import { nextTick } from 'vue'
 import Layout from './Layout.vue'
 import ProductHighlights from './ProductHighlights.vue'
 import Landing from './Landing.vue'
+import DiscPlayer from './DiscPlayer.vue'
+import ConfigExplorer from './ConfigExplorer.vue'
+import CompatMatrix from './CompatMatrix.vue'
 import './custom.css'
 import './dynamic-colors.css'
 
@@ -47,6 +50,9 @@ export default {
   enhanceApp({ app, router }) {
     app.component('ProductHighlights', ProductHighlights)
     app.component('Landing', Landing)
+    app.component('DiscPlayer', DiscPlayer)
+    app.component('ConfigExplorer', ConfigExplorer)
+    app.component('CompatMatrix', CompatMatrix)
     setupPageTransitions(router)
   }
 }

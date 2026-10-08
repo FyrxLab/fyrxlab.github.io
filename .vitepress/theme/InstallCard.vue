@@ -2,12 +2,13 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vitepress'
 import { PRODUCTS } from './productPalette.js'
+import { fetchProjects, fetchBestVersion, slugOf } from './modrinth.js'
 
 const LABELS = {
-  en: { modrinth: 'Download on Modrinth', github: 'View on GitHub', mc: 'Minecraft', plugin: 'Platforms', mod: 'Loaders', library: 'Runs on', latest: 'Latest', install: 'Install', copy: 'Copy', copied: 'Copied' },
-  es: { modrinth: 'Descargar en Modrinth', github: 'Ver en GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona con', latest: 'Última versión', install: 'Instalar', copy: 'Copiar', copied: 'Copiado' },
-  it: { modrinth: 'Scarica su Modrinth', github: 'Vedi su GitHub', mc: 'Minecraft', plugin: 'Piattaforme', mod: 'Loader', library: 'Funziona con', latest: 'Ultima versione', install: 'Installa', copy: 'Copia', copied: 'Copiato' },
-  pt: { modrinth: 'Baixar no Modrinth', github: 'Ver no GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona com', latest: 'Última versão', install: 'Instalar', copy: 'Copiar', copied: 'Copiado' }
+  en: { modrinth: 'Download on Modrinth', github: 'View on GitHub', mc: 'Minecraft', plugin: 'Platforms', mod: 'Loaders', library: 'Runs on', latest: 'Latest', install: 'Install', copy: 'Copy', copied: 'Copied', pick: 'Which file do I need?', yourMc: 'Your Minecraft version', yourPlatform: 'Your platform', loading: 'Asking Modrinth…', none: 'No build for this combination yet.', error: 'Couldn’t reach Modrinth. Use the download button instead.', get: 'Download' },
+  es: { modrinth: 'Descargar en Modrinth', github: 'Ver en GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona con', latest: 'Última versión', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: '¿Qué archivo descargo?', yourMc: 'Tu versión de Minecraft', yourPlatform: 'Tu plataforma', loading: 'Consultando Modrinth…', none: 'Todavía no hay un archivo para esta combinación.', error: 'No se pudo consultar Modrinth. Usa el botón de descarga.', get: 'Descargar' },
+  it: { modrinth: 'Scarica su Modrinth', github: 'Vedi su GitHub', mc: 'Minecraft', plugin: 'Piattaforme', mod: 'Loader', library: 'Funziona con', latest: 'Ultima versione', install: 'Installa', copy: 'Copia', copied: 'Copiato', pick: 'Quale file mi serve?', yourMc: 'La tua versione di Minecraft', yourPlatform: 'La tua piattaforma', loading: 'Interrogo Modrinth…', none: 'Non c’è ancora un file per questa combinazione.', error: 'Modrinth non risponde. Usa il pulsante di download.', get: 'Scarica' },
+  pt: { modrinth: 'Baixar no Modrinth', github: 'Ver no GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona com', latest: 'Última versão', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: 'Qual arquivo eu baixo?', yourMc: 'Sua versão do Minecraft', yourPlatform: 'Sua plataforma', loading: 'Consultando o Modrinth…', none: 'Ainda não há um arquivo para essa combinação.', error: 'Não foi possível consultar o Modrinth. Use o botão de download.', get: 'Baixar' }
 }
 
 const route = useRoute()
@@ -20,6 +21,39 @@ const product = computed(() => {
   const p = m && PRODUCTS[m[1]]
   return p && p.install ? p : null
 })
+
+const LOADER_NAMES = { fabric: 'Fabric', forge: 'Forge', neoforge: 'NeoForge', paper: 'Paper', purpur: 'Purpur', spigot: 'Spigot', bukkit: 'Bukkit', folia: 'Folia', velocity: 'Velocity', bungeecord: 'BungeeCord', waterfall: 'Waterfall' }
+const loaderName = (l) => LOADER_NAMES[l] || l
+
+// "Which file do I need?" — live from Modrinth, only fetched once opened.
+const productKey = computed(() => route.path.match(/^\/(?:en|es|it|pt)\/([^/]+)/)?.[1])
+const canPick = computed(() => product.value && slugOf(productKey.value))
+const picker = ref({ open: false, state: 'idle', versions: [], loaders: [], mc: '', loader: '', result: null })
+async function openPicker() {
+  picker.value.open = true
+  if (picker.value.versions.length) return
+  picker.value.state = 'loading'
+  try {
+    const proj = (await fetchProjects())[productKey.value]
+    picker.value.versions = [...proj.game_versions].reverse()
+    picker.value.loaders = proj.loaders
+    picker.value.mc = picker.value.versions[0]
+    picker.value.loader = proj.loaders[0]
+    await pick()
+  } catch {
+    picker.value.state = 'error'
+  }
+}
+async function pick() {
+  const p = picker.value
+  p.state = 'loading'
+  try {
+    p.result = await fetchBestVersion(productKey.value, p.mc, p.loader)
+    p.state = p.result ? 'ok' : 'none'
+  } catch {
+    p.state = 'error'
+  }
+}
 
 const copied = ref(false)
 async function copyCommand() {
@@ -69,6 +103,33 @@ async function copyCommand() {
       <a class="ic-get" :href="product.install.url" target="_blank" rel="noopener">
         {{ product.install.url.includes('modrinth') ? t.modrinth : t.github }}
       </a>
+
+      <div v-if="canPick" class="ic-pick">
+        <button v-if="!picker.open" type="button" class="ic-pick-open" @click="openPicker">{{ t.pick }}</button>
+        <div v-else class="ic-pick-row">
+          <label>
+            <span>{{ t.yourMc }}</span>
+            <select v-model="picker.mc" :disabled="!picker.versions.length" @change="pick">
+              <option v-for="v in picker.versions" :key="v" :value="v">{{ v }}</option>
+            </select>
+          </label>
+          <label>
+            <span>{{ t.yourPlatform }}</span>
+            <select v-model="picker.loader" :disabled="!picker.loaders.length" @change="pick">
+              <option v-for="l in picker.loaders" :key="l" :value="l">{{ loaderName(l) }}</option>
+            </select>
+          </label>
+          <div class="ic-pick-result" aria-live="polite">
+            <span v-if="picker.state === 'loading'" class="ic-muted">{{ t.loading }}</span>
+            <span v-else-if="picker.state === 'none'" class="ic-muted">{{ t.none }}</span>
+            <span v-else-if="picker.state === 'error'" class="ic-muted">{{ t.error }}</span>
+            <template v-else-if="picker.state === 'ok'">
+              <a class="ic-file" :href="picker.result.page" target="_blank" rel="noopener">{{ picker.result.file }}</a>
+              <a class="ic-dl" :href="picker.result.url">{{ t.get }} v{{ picker.result.number }}</a>
+            </template>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -88,8 +149,6 @@ async function copyCommand() {
     var(--glass-bg);
   border: 1px solid var(--glass-border);
   box-shadow: inset 0 1px 0 var(--glass-hl), var(--glass-shadow);
-  backdrop-filter: blur(18px) saturate(170%);
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
 }
 @media (max-width: 860px) {
   .install-card { grid-template-columns: 1fr; gap: 18px; }
@@ -150,5 +209,30 @@ async function copyCommand() {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.08));
 }
 .ic-get:hover { filter: brightness(1.08) saturate(1.1); transform: translateY(-1px); }
-.ic-get:focus-visible, .ic-copy:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
+.ic-pick { grid-column: 1 / -1; border-top: 1px solid var(--glass-edge); padding-top: 14px; }
+.ic-pick-open {
+  font-size: 13.5px; font-weight: 600; color: var(--vp-c-brand-1);
+  padding: 6px 14px; border-radius: 999px; border: 1px solid var(--glass-edge);
+  background: linear-gradient(180deg, var(--glass-hl), transparent 60%), var(--glass-solid);
+}
+.ic-pick-open:hover { border-color: var(--vp-c-brand-2); }
+.ic-pick-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 18px; }
+.ic-pick-row label { display: grid; gap: 4px; }
+.ic-pick-row label span { font: 600 11px/1.4 var(--vp-font-family-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--vp-c-text-3); }
+.ic-pick-row select {
+  min-width: 150px; padding: 6px 12px; border-radius: 10px; font-size: 14px; color: var(--vp-c-text-1);
+  border: 1px solid var(--glass-edge); background: var(--vp-c-bg-elv);
+  appearance: auto;
+}
+.ic-pick-result { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; min-height: 34px; min-width: 0; }
+.ic-muted { font-size: 13.5px; color: var(--vp-c-text-2); }
+.ic-file { font: 13px var(--vp-font-family-mono); color: var(--vp-c-text-2); word-break: break-all; }
+.ic-dl {
+  font-size: 13px; font-weight: 700; color: #fff; text-decoration: none; white-space: nowrap;
+  padding: 7px 14px; border-radius: 999px; border: 1px solid #3c7f0d;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.08) 46%, transparent 46%), linear-gradient(180deg, #c9f58a, #6fbf26 50%, #4a9a12 50%, #6fbf26);
+  text-shadow: 0 1px 2px rgba(20, 60, 0, 0.6);
+}
+.ic-dl:hover { filter: brightness(1.08); }
+.ic-get:focus-visible, .ic-copy:focus-visible, .ic-pick-open:focus-visible, .ic-dl:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 2px; }
 </style>

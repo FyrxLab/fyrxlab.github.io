@@ -1,0 +1,447 @@
+# Solver - configuration
+# Full documentation: https://fyrx.net/en/solver/
+#
+# /solver reload re-reads: localization, console monitoring, ai-provider, analysis, notifications
+# and chat-moderation. Everything else is read when the server starts - restart after changing it.
+
+# Language (en_US, es_ES, pt_BR, ru_RU, de_DE, fr_FR, ja_JP, ko_KR, eo_EO)
+localization: en_US
+
+# Automatically analyze whether there was a crash when the server starts up
+check-crash-on-startup: true
+
+# Monitor the entire console for errors (red text)
+monitor-console: true
+# Avoid analyzing the same error multiple times (minutes to wait)
+error-cooldown-minutes: 10
+
+# Show the giant ASCII art banner in the console on startup?
+show-banner: true
+
+# AI Provider Configuration
+ai-provider:
+  # Provider: 'anthropic', 'google' or 'other'
+  provider: "anthropic"
+
+  # Model to use
+  # Anthropic: Sonnet, Haiku, Opus
+  # Google: Pro, Flash
+  # Other: Model name (e.g: gpt-4o, mistral-large)
+  model: "Sonnet"
+
+  # API Keys
+  anthropic-key: ""
+  google-key: ""
+
+  # Configuration for the 'other' provider (any OpenAI-compatible endpoint). For a local model
+  # (Ollama, LM Studio...) point other-url at it, e.g. http://localhost:11434/v1/chat/completions,
+  # and leave other-key empty.
+  other-key: ""
+  other-url: "https://api.openai.com/v1/chat/completions"
+
+# Analysis configuration
+analysis:
+  # Automatically analyze exceptions
+  auto-analyze: true
+
+  # Timeout for analysis (seconds)
+  timeout: 60
+
+  # Save analysis to file
+  save-to-file: true
+
+  # Reports directory
+  reports-directory: "crash-reports"
+
+  # How many days to keep analyses saved in analysis-logs/ before deleting them.
+  # 0 = keep forever.
+  reports-retention-days: 0
+
+# Notifications
+notifications:
+  # Notify admins in-game when there's an error
+  notify-admins: true
+
+  # Send analysis to chat (in addition to console)
+  send-to-chat: false
+
+# AI Chat Moderation (Fyrx reads chat and evaluates the CONTEXT of the conversation,
+# not a word blacklist. Enabling this sends chat content to the AI provider configured
+# above in 'ai-provider'. Disabled by default for privacy.
+chat-moderation:
+  enabled: false
+
+  # If true (default), OPs are automatically exempt from chat moderation.
+  # Set to false so OPs are also examined like any other player. The
+  # solver.moderation.bypass permission still works independently to exempt a specific
+  # player (OP or not), regardless of this value.
+  exempt-ops: true
+
+  # Maximum recent messages to remember per player / globally
+  buffer-size: 50
+
+  # Time window of context sent to the AI (minutes)
+  context-window-minutes: 5
+
+  # How often (seconds) to check whether there's new chat to analyze (unconditional
+  # sweep, never depends on the pre-filter: nothing can be hidden from the AI this way)
+  analysis-interval-seconds: 45
+
+  # How to scan chat each cycle:
+  # bulk: 1 single AI call with the whole mixed conversation. Cheap, but with many
+  #       players talking at once the AI can confuse who said what.
+  # individual: 1 AI call PER player with new activity. The offender is already known
+  #       beforehand (the AI doesn't have to guess), so this eliminates that confusion
+  #       risk, but the cost scales with how many players are active per cycle - on a
+  #       busy server this can burn through the provider's rate limit fast.
+  scan-mode: "bulk"
+
+  # How often the AI actually gets called to check chat (0-3). scan-mode above decides HOW
+  # the AI is called; this decides WHEN.
+  # 0 = never call the AI - the pre-filter above decides entirely on its own (cheaper/faster,
+  #     less accurate; works with no AI provider configured at all).
+  # 1 = only call the AI once the pre-filter already flagged something suspicious (balanced).
+  # 2 = default/classic behavior: the AI reviews all new chat every cycle, regardless of
+  #     whether the pre-filter flagged anything.
+  # 3 = real-time: every message is sent to the AI immediately as it arrives, instead of
+  #     waiting for analysis-interval-seconds (much faster reaction, at the cost of many more calls).
+  llm-analysis-level: 2
+
+  # Lightweight pre-filter: computes an urgency score (0.0-1.0) combining several signals.
+  # NEVER decides whether something is harassment nor blocks the analysis - the sweep
+  # above still reads all the chat regardless. It only decides whether it's worth WAKING
+  # Fyrx up early instead of waiting for the full interval, to react faster in obvious cases.
+  pre-filter:
+    # Raises the urgency score if the same player receives several messages in a row from
+    # others (possible insistent harassment toward a fixed target).
+    trigger-on-repeated-target: true
+    # Fraction (0.0-1.0) of a message in UPPERCASE from which it's considered "shouted"
+    # and adds urgency score (0.6 = 60% or more of the message in caps).
+    trigger-on-caps-ratio: 0.6
+    # How many messages from a player need to build up before the pre-filter starts
+    # evaluating the "repeated target" pattern described above.
+    min-messages-before-trigger: 3
+    # Minimum score (0.0-1.0) to trigger an immediate analysis instead of waiting
+    urgent-score-threshold: 0.65
+
+  # What to do when the AI reports a toxic/harassment verdict
+  action:
+    # alert-only: only notifies players with the solver.notify permission
+    # warn-player: alert-only + a private notice to the flagged player
+    # auto-action: warn-player + automatic mute/kick based on severity (1-5)
+    mode: "alert-only"
+    # Severity (1-5, set by the AI on each verdict) at which "auto-action" automatically
+    # mutes the player instead of just warning them.
+    severity-threshold-mute: 4
+    # Severity at which "auto-action" automatically kicks the player instead of muting them.
+    # Should be >= severity-threshold-mute for the escalation to make sense.
+    severity-threshold-kick: 5
+    # Duration in minutes of the automatic mute applied by "auto-action" when crossing
+    # severity-threshold-mute (does not affect the manual /solver mute|tempmute).
+    mute-duration-minutes: 10
+
+    # Optional: force a specific sanction type for specific "situations" (AI tags), regardless of
+    # severity-threshold-mute/kick above - only used when mode is "auto-action". Valid tags:
+    # TOXIC, HARASSMENT, THREAT, HATE_SPEECH, SCAM, SPAM. Valid types: warn, mute, tempmute, kick,
+    # ban, tempban ('duration' required for tempmute/tempban, same s/m/h/d/w format as elsewhere).
+    # If a verdict matches more than one configured tag, the harshest configured type wins. This
+    # is also the only way to reach an automatic ban/tempban from chat moderation - the severity
+    # thresholds above never go past kick on their own.
+    tag-overrides: {}
+    #  THREAT:
+    #    type: tempban
+    #    duration: 7d
+    #  HATE_SPEECH:
+    #    type: tempban
+    #    duration: 3d
+    #  SCAM:
+    #    type: ban
+
+    # Multi-signal corroboration: the AI verdict alone can only trigger a real warn/mute/kick
+    # when it's at least this confident AND this severe. Below that, it also needs at least one
+    # corroborating pre-filter signal (caps/insult/repeated-target/burst - see pre-filter above);
+    # without one it stays as a staff-only alert for manual review via /solver check, never an
+    # automatic sanction. Confidence 0-100, severity 1-5.
+    min-confidence-to-act-alone: 85
+    min-severity-to-act-alone: 4
+
+  # Save every detected incident to moderation-reports/
+  log-incidents-to-file: true
+
+  # Also show in console the result of /solver moderation test <message> when a player
+  # runs it (the console always sees it already if it's the one running the command).
+  log-test-results-to-console: true
+
+  # How many days to keep incidents saved in moderation-reports/ before deleting them.
+  # 0 = keep forever.
+  reports-retention-days: 0
+
+# Whether these command groups can also be run directly without the /solver prefix (e.g. /vanish
+# instead of /solver vanish). /solver <command> always keeps working either way regardless of
+# these settings. Turn a category off if another plugin you have installed already claims one of
+# its command names (e.g. EssentialsX also has /mute, /kick, /ban, /warn, /tempban, /tempmute,
+# /unmute, /unban) - Bukkit will otherwise let whichever plugin registers first keep the bare name.
+# /enderchest is the one exception handled automatically: if EssentialsX is detected, its
+# standalone form is skipped on its own (no need to toggle this whole category off for it) -
+# EssentialsX's /enderchest means "show MY OWN enderchest", a different meaning from ours.
+standalone-commands:
+  staff-mode: true  # /vanish, /freeze, /staffchat, /commandspy, /enderchest (unless EssentialsX is installed)
+  sanctions: true   # /warn, /mute, /tempmute, /kick, /ban, /tempban, /unban, /unmute, /unwarn, /history, /check, /note, /checkuser, /appeal, /sanctions
+  moderation: true  # /moderation
+  reports: true     # /report
+
+# Live relay of executed commands to whoever has toggled it on with /solver commandspy - not just
+# retrospective logging.
+commandspy:
+  enabled: true
+  # "*" watches every command. Otherwise list specific command names (without the leading /) to
+  # watch only those, e.g. ["op", "gamemode", "give"].
+  watch-patterns: ["*"]
+  # Player names (case-insensitive) never relayed, regardless of who's watching.
+  exempt-players: []
+  # Anyone holding one of these permissions is never relayed either.
+  exempt-permissions: []
+
+# Sanctions System (warn/mute/kick/ban via /solver, persistent history in sanctions.db).
+punishments:
+  # Where sanction history is stored: sqlite (default, zero config, local file) or mysql
+  # (for multi-server setups sharing one sanctions database).
+  storage: sqlite
+
+  # Only read when storage is mysql.
+  mysql:
+    host: localhost
+    port: 3306
+    database: solver
+    user: solver
+    password: ""
+
+  # Shortcut reason templates: "/solver ban Player #griefing" expands to the configured text
+  # (and duration, if the sanction type needs one and none was given explicitly). Unmatched
+  # #names are left as a literal reason, so this never breaks a reason that legitimately starts
+  # with "#".
+  reason-templates: {}
+  #  griefing:
+  #    text: "Griefing / destroying other players' builds"
+  #    duration: "1d"
+
+  # Auto-escalation on warn count: after a WARN is recorded, if the player's total warn count
+  # matches a key here, the configured action fires automatically. "action: sanction" applies
+  # another sanction (type/reason/duration, same as a manual one); "action: command" runs a
+  # console command instead ({player} is replaced with the player's name).
+  warn-escalation: {}
+  #  "3":
+  #    action: sanction
+  #    type: kick
+  #    reason: "Auto: 3 warnings"
+  #  "5":
+  #    action: sanction
+  #    type: tempban
+  #    duration: "1d"
+  #    reason: "Auto: 5 warnings"
+
+  appeals:
+    # Show a line pointing to /solver appeal <id> <reason> in warn/mute/kick/ban messages.
+    show-in-sanction-message: true
+
+# Staff Mode Toolkit (vanish/freeze/staff chat via /solver).
+staff-mode:
+  vanish:
+    # Also subtract vanished players from the online-player count shown in the server list (MOTD)
+    hide-from-server-list: true
+    # Also make a vanished player immune to damage while vanished.
+    invulnerable-while-vanished: false
+  freeze:
+    # Commands allowed while a player is frozen (without the leading /)
+    allowed-commands: ["msg", "tell", "r", "helpop"]
+
+  # Named combined profiles for /solver staffmode <profile> - each toggles a bundle of the
+  # individual staff tools at once instead of turning them on one by one. Every field is optional
+  # and defaults to off. clear-inventory always saves your items first and restores them when you
+  # leave the profile.
+  profiles: {}
+  #  moderator:
+  #    vanish: true
+  #    freeze-immunity: true
+  #    flight: true
+  #    god-mode: true
+  #    clear-inventory: true
+  #  builder:
+  #    flight: true
+
+# /solver inspect <player> - view a player's inventory without physically opening it.
+inspect:
+  # Keep refreshing the opened inventory every few ticks instead of a one-time snapshot. This is
+  # polling, not a real push update (Bukkit has no "inventory changed" event to react to).
+  live-refresh: false
+  live-refresh-interval-ticks: 10
+
+# Build integrity verification + known-malware plugin scan. Solver's own jar is
+# checked against the official releases on Modrinth; the malware list is a signed JSON file served
+# from FyrxLab's CDN (static files only). Solver does not send telemetry for this. The malware
+# list is cached under plugins/Solver/integrity-cache/ and only re-downloaded every
+# refresh-interval-hours - a handful of requests per day, never per-join or per-tick.
+integrity:
+  # Base URL of FyrxLab's static integrity CDN (malware list). Leave blank to disable the malware scan.
+  cdn-base-url: "https://cdn.jeamcube.com"
+  # How often (hours) to re-check Modrinth and re-download malware-hashes.json. A stale local cache is
+  # always used if the CDN is unreachable - never blocks startup, never leaves you with nothing.
+  refresh-interval-hours: 24
+  # Timeout (seconds) for each CDN/Modrinth request.
+  timeout-seconds: 10
+  build-verification:
+    # Confirms the running Solver jar matches an official release published on Modrinth
+    # (modrinth.com/plugin/solver), to help detect a tampered/modified jar. A jar that is simply not
+    # on Modrinth (e.g. a development build) is only reported, never flagged. /solver integrity
+    # shows the result.
+    enabled: true
+  # Warns at startup if a Java agent (-javaagent/-agentlib/-agentpath) was attached to the JVM - an
+  # agent can patch classes in memory at runtime (including this integrity check itself) without
+  # ever touching the jar on disk. Only catches agents attached AT LAUNCH, not ones attached
+  # dynamically afterwards. If you intentionally run a profiler/APM agent, this warning is expected
+  # and harmless - it just confirms what's already loaded.
+  agent-detection:
+    enabled: true
+  malware-scan:
+    # Scans every .jar in plugins/ (Solver's own jar excluded) against a list of known-malware
+    # hashes. A match is alerted in console and (per notifications.* above) in-game to solver.notify.
+    enabled: true
+    modrinth-lookup:
+      # Optional addon: for jars that DON'T match the malware list, ask Modrinth's public API
+      # (2 batched requests per scan cycle, never one per jar) whether their hash matches a known
+      # official release, and show that in /solver integrity. Purely informational - never blocks
+      # or flags anything by itself. A jar NOT found on Modrinth is NOT suspicious on its own (paid
+      # or private plugins are never there) - this only ever adds positive identifications, never
+      # negative signal. Off by default since it depends on a third-party service.
+      enabled: false
+
+# Anonymous usage statistics via bStats (https://bstats.org) - server count, AI provider in use,
+# which features are enabled, nothing player-identifiable. Independent opt-out from the global
+# bStats toggle in plugins/bStats/config.yml, which also always applies.
+metrics:
+  enabled: true
+
+# Relay staffchat messages and moderation/integrity alerts across every backend
+# connected to the same proxy (BungeeCord, Waterfall, or Velocity). Requires this same Solver jar
+# installed on the proxy too (one jar works on backends and proxies alike) - without it, this is a
+# harmless no-op. Off by default: a proxy-wide relay is a meaningful behavior change an admin
+# should opt into deliberately. (Since 0.10.2 the jar on the proxy can also run AntiVPN and the
+# integrity checks there - see its own plugins/SolverProxy/config.yml or plugins/solverproxy/.)
+proxy-relay:
+  enabled: false
+
+# Shared calibration for Solver's reasoning engine. Every pillar built on it
+# (AntiVPN today, AntiCheat later) combines its detections into an explainable 0-100 score using
+# these settings. Nothing here is AI - the score is deterministic and always comes with the
+# breakdown of which signal contributed how much.
+reasoning:
+  # conservative | balanced | strict | custom. The three named profiles carry fixed, tested values;
+  # only 'custom' reads the raw numbers below. Start at conservative - you can always tighten it.
+  profile: conservative
+  # Calibration window. When a pillar is enabled for the first time, Solver refuses to enforce
+  # anything (alert-only) until it has seen min-flags detections OR max-days have passed, whichever
+  # comes first. This is deliberate: a scoring engine with zero real data on YOUR server has not
+  # earned the right to kick anyone yet.
+  bootstrap:
+    min-flags: 20
+    max-days: 7
+  # Only read when profile is 'custom'.
+  custom:
+    # How much Solver trusts each signal source (1.0 = full trust).
+    trust:
+      own: 1.0
+      grim: 1.0
+      foxaddition: 0.7
+      foxgate: 1.0
+    # Score (0-100) needed for each action.
+    action_thresholds:
+      warn: 40
+      kick: 70
+      ban: 95
+
+# AntiVPN. Solver's own engine, built on two free no-API-key data sources.
+#
+# IMPORTANT - FoxGate: if FoxGate (https://modrinth.com/plugin/foxgate) is installed, Solver NEVER
+# kicks or bans for VPN reasons. Ever. That is hardcoded into the plugin and there is no setting -
+# here or anywhere else - that changes it. FoxGate has the final word on enforcement. This is
+# FyrxLab's own product decision.
+#
+# PRIVACY: the two real-time sources (ipquery, ipapiis) send the connecting player's IP address to
+# that third-party service (IPQuery.io / ipapi.is) - only for addresses not already resolved by the
+# static lists or the local cache. x4bnet-* and bad-asn-list never send anything: Solver downloads
+# the lists and matches locally. Turn off any source below, or the whole engine with
+# own_engine.enabled, if that does not fit your server's privacy policy.
+antivpn:
+  # What Solver does when FoxGate is installed. Only two options - neither lets Solver override
+  # FoxGate:
+  #   addon - (default) keep checking and alerting staff, never kick/ban; FoxGate enforces.
+  #   off   - Solver's AntiVPN does not run at all (no lookups, no alerts) while FoxGate is present.
+  # Has no effect when FoxGate is not installed.
+  foxgate-mode: "addon"
+  own_engine:
+    # If Solver's AntiVPN already runs on your proxy (0.10.2+), set this to false here so each
+    # connection is checked - and alerted - only once.
+    enabled: true
+    sources:
+      # X4BNet/lists_vpn (MIT, CI-rebuilt): a static list of known VPN ranges, downloaded once a
+      # day and matched in memory. No API key, no rate limit, no per-login network call.
+      x4bnet-vpn:
+        enabled: true
+      # Same project's broader list: VPN + datacenter/hosting ranges. Catches more, but also flags
+      # legitimate hosting (a player connecting from their own VPS). Off by default.
+      x4bnet-datacenter:
+        enabled: false
+      # IPQuery.io (free, no API key): a real-time lookup, used ONLY for addresses the static list
+      # did not already cover. If it is slow or down, the connection is allowed: a third party
+      # being unreachable must never lock out a legitimate player.
+      #
+      # Be aware of what this source is actually worth. Tested against the live API, its
+      # is_vpn/is_proxy/is_tor fields came back false even for a well-known Tor exit node and for
+      # known commercial VPN ranges. The one field that reliably discriminates is is_datacenter -
+      # and that flags a legitimate VPS just as readily as a VPN exit, which is why it is opt-in
+      # below. The layer that actually catches VPNs today is the static X4BNet list above.
+      ipquery:
+        enabled: true
+        # Treat "this address is in a datacenter" as a VPN signal. Same trade-off - and same
+        # default - as x4bnet-datacenter above.
+        flag-datacenter: false
+      # ipapi.is: a SECOND real-time lookup, used only as a last resort when NEITHER the static list
+      # NOR IPQuery.io found anything.
+      #
+      # Since 1 September 2026, ipapi.is only returns its VPN/proxy/Tor/datacenter flags to requests
+      # made WITH an API key. Without one it still tells Solver which network (ASN) the address
+      # belongs to - which the bad-asn-list check below uses - but flags nothing on its own, and is
+      # capped at 30 lookups per day. A free account at https://ipapi.is gives the flags back: paste
+      # its key below. With a key, is_tor/is_proxy are trusted highly, is_vpn only moderately (it
+      # flagged public DNS resolvers like 8.8.8.8 in testing), and is_abuser is never used.
+      ipapiis:
+        enabled: true
+        # Optional. Without a key this source only contributes the ASN (see above).
+        api-key: ""
+        flag-datacenter: false
+      # bountyyfi/bad-asn-list (MIT): blocks by ASN instead of IP range, so a VPN provider's brand
+      # new range is caught immediately, before any CIDR list catches up. The upstream file is a
+      # broad "problem ASN" list (generic hosting, entire national ISPs) - Solver only takes the
+      # subset whose organization name names a known consumer VPN brand (NordVPN, ExpressVPN,
+      # Mullvad, ProtonVPN, etc., ~21 entries). Only usable when IPQuery.io/ipapi.is already
+      # resolved an ASN for the address (neither list alone tells Solver the ASN of an arbitrary
+      # IP), so this only ever adds signal on top of one of those two, never on its own.
+      bad-asn-list:
+        enabled: true
+    # How long a per-IP verdict stays cached before it is looked up again.
+    cache-ttl-hours: 24
+    # Timeout for the real-time lookup. This runs while the player is connecting, so keep it short.
+    check-timeout-seconds: 3
+  action:
+    # alert-only | auto-action. (warn-player behaves like alert-only here: the check runs before the
+    # player has joined, so there is nobody to warn yet.)
+    # alert-only is the default on purpose: see reasoning.bootstrap above.
+    mode: "alert-only"
+    # When Solver does block a connection, also record it in the sanctions history so it shows up
+    # in /solver history and can be appealed. Set false if you would rather blocked VPN logins
+    # leave no database trail (console log and staff alert still happen either way).
+    persist-as-sanction: true
+  # Addresses that skip every check - e.g. your staff's own corporate VPN.
+  whitelist:
+    ips: []
+    cidrs: []

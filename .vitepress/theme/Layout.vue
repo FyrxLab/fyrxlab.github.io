@@ -1,11 +1,13 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import { useData, useRoute } from 'vitepress'
-import { watch, onMounted, provide, nextTick } from 'vue'
+import { watch, onMounted, provide, nextTick, computed } from 'vue'
 import VersionBadge from './VersionBadge.vue'
 import InstallCard from './InstallCard.vue'
 import SiteFooter from './SiteFooter.vue'
 import NotFound from './NotFound.vue'
+import SiteToasts from './SiteToasts.vue'
+import { enhanceTables, bindTableCopy } from './docEnhance.js'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
@@ -62,12 +64,28 @@ provide('toggle-appearance', async () => {
   vt.finished.catch(() => {}).finally(() => delete document.documentElement.dataset.vt)
 })
 
+const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')
+
+// "Spotted a mistake?" line under every doc page
+const REPORT = {
+  en: { q: 'Spotted a mistake or something unclear on this page?', a: 'Tell us on Discord' },
+  es: { q: '¿Ves un error o algo confuso en esta página?', a: 'Avísanos en Discord' },
+  it: { q: 'Hai trovato un errore o qualcosa di poco chiaro in questa pagina?', a: 'Diccelo su Discord' },
+  pt: { q: 'Viu um erro ou algo confuso nesta página?', a: 'Avise no Discord' }
+}
+const report = computed(() => REPORT[locale.value])
+
 // Watch for route changes
-watch(() => route.path, updateTheme)
+watch(() => route.path, (path) => {
+  updateTheme(path)
+  nextTick(() => enhanceTables(locale.value))
+})
 
 // Apply on initial load
 onMounted(() => {
   updateTheme(route.path)
+  enhanceTables(locale.value)
+  bindTableCopy()
 })
 </script>
 
@@ -82,8 +100,12 @@ onMounted(() => {
     <template #not-found>
       <NotFound />
     </template>
+    <template #doc-footer-before>
+      <p class="report-note">{{ report.q }} <a href="https://discord.gg/EdcYuBAdFB" target="_blank" rel="noopener">{{ report.a }} →</a></p>
+    </template>
     <template #layout-bottom>
       <SiteFooter />
+      <SiteToasts />
     </template>
   </Layout>
 </template>
