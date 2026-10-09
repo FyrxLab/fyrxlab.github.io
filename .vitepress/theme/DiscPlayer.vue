@@ -2,8 +2,8 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vitepress'
 
-// Noteblock's 11 discs, each linked to its video on the JEAMCube NoteBlock
-// channel. The YouTube player only loads after a click (youtube-nocookie),
+// Noteblock's 16 discs, each linked to its video on the JEAMCube NoteBlock
+// channel (id: null = not on YouTube yet). The YouTube player only loads after a click (youtube-nocookie),
 // so the page stays light and nothing is sent to YouTube before that.
 const CHANNEL = 'https://www.youtube.com/@jeamcube.noteblock'
 const DISCS = [
@@ -17,14 +17,19 @@ const DISCS = [
   { name: 'Pandora Palace', length: '3:22', id: '4aSqj1TPvKI' },
   { name: 'Attack of the Killer Queen', length: '4:07', id: 'k1itX0O3Sss' },
   { name: 'Studiopolis Zone', length: '4:31', id: 'ebBcnu904cM' },
-  { name: 'Storm Eagle', length: '2:41', id: '9vDiM65EHFI' }
+  { name: 'Storm Eagle', length: '2:41', id: '9vDiM65EHFI' },
+  { name: 'Bite Me', length: '3:10', id: 'Wj-3arXX-6c' },
+  { name: 'Catswing', length: '2:13', id: 'dWD2Nx5nhgU' },
+  { name: 'Catastrophes Before the Calamity', length: '5:03', id: null },
+  { name: 'Colgera Battle', length: '3:28', id: '_zTcGHPqj8w' },
+  { name: 'Forever', length: '5:11', id: 'Q6V1DmIlj2Q' }
 ]
 
 const COPY = {
-  en: { title: 'Noteblock Player', play: 'Play', youtube: 'Watch on YouTube', channel: 'All songs on the JEAMCube NoteBlock channel', list: 'Discs', disc: 'Disc' },
-  es: { title: 'Reproductor Noteblock', play: 'Reproducir', youtube: 'Ver en YouTube', channel: 'Todas las canciones en el canal JEAMCube NoteBlock', list: 'Discos', disc: 'Disco' },
-  it: { title: 'Lettore Noteblock', play: 'Riproduci', youtube: 'Guarda su YouTube', channel: 'Tutti i brani sul canale JEAMCube NoteBlock', list: 'Dischi', disc: 'Disco' },
-  pt: { title: 'Player Noteblock', play: 'Tocar', youtube: 'Ver no YouTube', channel: 'Todas as músicas no canal JEAMCube NoteBlock', list: 'Discos', disc: 'Disco' }
+  en: { soon: 'Not on YouTube yet', title: 'Noteblock Player', play: 'Play', youtube: 'Watch on YouTube', channel: 'All songs on the JEAMCube NoteBlock channel', list: 'Discs', disc: 'Disc' },
+  es: { soon: 'Aún no está en YouTube', title: 'Reproductor Noteblock', play: 'Reproducir', youtube: 'Ver en YouTube', channel: 'Todas las canciones en el canal JEAMCube NoteBlock', list: 'Discos', disc: 'Disco' },
+  it: { soon: 'Non ancora su YouTube', title: 'Lettore Noteblock', play: 'Riproduci', youtube: 'Guarda su YouTube', channel: 'Tutti i brani sul canale JEAMCube NoteBlock', list: 'Dischi', disc: 'Disco' },
+  pt: { soon: 'Ainda não está no YouTube', title: 'Player Noteblock', play: 'Tocar', youtube: 'Ver no YouTube', channel: 'Todas as músicas no canal JEAMCube NoteBlock', list: 'Discos', disc: 'Disco' }
 }
 
 const route = useRoute()
@@ -60,6 +65,7 @@ function select(i) {
             allow="autoplay; encrypted-media; picture-in-picture"
             allowfullscreen
           />
+          <div v-else-if="!disc.id" class="dp-soon">{{ t.soon }}</div>
           <button v-else type="button" class="dp-poster" @click="playing = true" :aria-label="`${t.play}: ${disc.name}`">
             <img :key="disc.id" :src="`https://i.ytimg.com/vi/${disc.id}/hqdefault.jpg`" alt="" loading="lazy" @error="(e) => (e.target.style.visibility = 'hidden')" />
             <span class="dp-play" aria-hidden="true" />
@@ -70,12 +76,12 @@ function select(i) {
             <b>{{ disc.name }}</b>
             <span>{{ t.disc }} {{ current + 1 }} / {{ DISCS.length }} · {{ disc.length }}</span>
           </div>
-          <a class="dp-yt" :href="watchUrl" target="_blank" rel="noopener">{{ t.youtube }}</a>
+          <a v-if="disc.id" class="dp-yt" :href="watchUrl" target="_blank" rel="noopener">{{ t.youtube }}</a>
         </div>
       </div>
 
       <ol class="dp-list" :aria-label="t.list">
-        <li v-for="(d, i) in DISCS" :key="d.id">
+        <li v-for="(d, i) in DISCS" :key="d.name">
           <button type="button" class="dp-item" :class="{ on: i === current }" :aria-current="i === current ? 'true' : undefined" @click="select(i)">
             <span class="dp-disc" aria-hidden="true" />
             <span class="dp-name">{{ d.name }}</span>
@@ -120,6 +126,7 @@ function select(i) {
 .dp-poster { position: absolute; inset: 0; padding: 0; border: 0; cursor: pointer; background: #000; }
 .dp-poster img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: opacity 0.2s ease; }
 .dp-poster:hover img { opacity: 1; }
+.dp-soon { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255, 255, 255, 0.6); font-size: 13px; }
 .dp-play { /* the round WMP play orb */
   position: absolute; left: 50%; top: 50%; width: 68px; height: 68px; transform: translate(-50%, -50%);
   border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.6);

@@ -23,7 +23,7 @@ hero:
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Por qué Noteblock</span>
     <h3>Canciones completas, tocadas enteramente con bloques de nota</h3>
-    <p>Añade 11 discos de música, cada uno una pista completa arreglada por JEAMCube enteramente con bloques de nota — el propio instrumento de Minecraft, convertido en canciones reales en vez de los loops ambientales de siempre.</p>
+    <p>Añade 16 discos de música, cada uno una pista completa arreglada por JEAMCube enteramente con bloques de nota — el propio instrumento de Minecraft, convertido en canciones reales en vez de los loops ambientales de siempre.</p>
     <p class="spotlight-note">Sin configuración, sin comandos — instálalo y los nuevos discos funcionan como cualquier disco vanilla: tocadiscos, comparadores y creepers abatidos por esqueletos.</p>
   </div>
 </div>
@@ -40,6 +40,16 @@ hero:
 <DiscPlayer />
 
 Los discos se consiguen como en vanilla: un creeper abatido por un esqueleto puede soltar cualquiera de ellos.
+
+## Sonolita
+
+Un mineral raro, enterrado en lo profundo del Overworld, más o menos a la altura de los diamantes, en piedra y pizarra profunda. Cristales de vinilo negro con remaches de colores: cuando lo encuentres, no pasa desapercibido.
+
+- Mínalo con un **pico de hierro** o mejor para conseguir **Sonolita en bruto**. Fortuna da más.
+- Con **Toque de seda** obtienes el bloque de mineral.
+- Todavía no tiene uso... pero emite sonidos raros. ¿Quizá se pueda refinar de algún modo?
+
+En Forge 1.18.x el mineral y la Sonolita en bruto existen, pero el mineral no se genera en el mundo: esa versión de Forge no permite que los mods añadan minerales a los biomas.
 
 ## Compatibilidad
 

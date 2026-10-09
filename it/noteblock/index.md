@@ -23,7 +23,7 @@ hero:
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Perché Noteblock</span>
     <h3>Brani completi, suonati interamente da blocchi nota</h3>
-    <p>Aggiunge 11 dischi musicali, ognuno un brano completo arrangiato da JEAMCube interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in vere canzoni invece dei soliti loop ambientali.</p>
+    <p>Aggiunge 16 dischi musicali, ognuno un brano completo arrangiato da JEAMCube interamente con blocchi nota — lo strumento stesso di Minecraft, trasformato in vere canzoni invece dei soliti loop ambientali.</p>
     <p class="spotlight-note">Nessuna configurazione, nessun comando — installalo e i nuovi dischi funzionano come qualsiasi disco vanilla: jukebox, comparatori e creeper uccisi dagli scheletri.</p>
   </div>
 </div>
@@ -40,6 +40,16 @@ hero:
 <DiscPlayer />
 
 I dischi si ottengono come in vanilla: un creeper ucciso da uno scheletro può lasciarne cadere uno qualsiasi.
+
+## Sonolite
+
+Un minerale raro sepolto in profondità nell'Overworld, più o meno all'altezza dei diamanti, nella pietra e nell'ardesia abissale. Cristalli di vinile nero con rivetti colorati: quando lo trovi, non passa inosservato.
+
+- Scavalo con un **piccone di ferro** o migliore per ottenere **Sonolite grezza**. Fortuna ne dà di più.
+- Con **Tocco di velluto** ottieni il blocco di minerale.
+- Non ha ancora un uso... ma emette suoni strani. Forse si potrebbe raffinare in qualche modo?
+
+Su Forge 1.18.x il minerale e la Sonolite grezza esistono, ma il minerale non si genera nel mondo: quella versione di Forge non permette alle mod di aggiungere minerali ai biomi.
 
 ## Compatibilità
 

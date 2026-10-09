@@ -74,15 +74,15 @@ export const PRODUCTS = {
     kind: 'mod',
     color: '#8b5cf6',
     icon: 'fa-music',
-    version: '1.2.0',
+    version: '1.3.0',
     changelog: '/noteblock/changelog',
     home: '/noteblock/',
     install: { url: 'https://modrinth.com/mod/noteblock', mc: '1.12.2 · 1.18 – 26.3', platforms: ['Fabric', 'Forge', 'NeoForge'] },
     tagline: {
-      en: '11 new music discs, each song arranged entirely with note blocks. One jar for Fabric, Forge and NeoForge.',
-      es: '11 discos de música nuevos, cada canción arreglada con bloques de nota. Un solo jar para Fabric, Forge y NeoForge.',
-      it: '11 nuovi dischi musicali, ogni brano arrangiato con blocchi nota. Un solo jar per Fabric, Forge e NeoForge.',
-      pt: '11 novos discos de música, cada faixa arranjada com note blocks. Um único jar para Fabric, Forge e NeoForge.'
+      en: '16 new music discs, each song arranged entirely with note blocks. One jar for Fabric, Forge and NeoForge.',
+      es: '16 discos de música nuevos, cada canción arreglada con bloques de nota. Un solo jar para Fabric, Forge y NeoForge.',
+      it: '16 nuovi dischi musicali, ogni brano arrangiato con blocchi nota. Un solo jar per Fabric, Forge e NeoForge.',
+      pt: '16 novos discos de música, cada faixa arranjada com note blocks. Um único jar para Fabric, Forge e NeoForge.'
     }
   },
   lazymod: {

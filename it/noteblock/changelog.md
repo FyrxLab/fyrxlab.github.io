@@ -2,6 +2,20 @@
 
 Tutte le modifiche importanti della mod **Noteblock** sono documentate qui.
 
+## v1.3.0 — Cinque nuovi dischi e la Sonolite
+
+> Pubblicato: ottobre 2026
+
+### Novità
+
+- **Cinque nuovi dischi, 16 in totale:** Bite Me e Forever (Murder Drones), Catswing (Deltarune), Catastrophes Before the Calamity (Terraria Calamity) e Colgera Battle (The Legend of Zelda). Funzionano come tutti gli altri: jukebox, comparatori e creeper uccisi dagli scheletri.
+- **Minerale di Sonolite.** Un nuovo minerale raro in profondità nell'Overworld, nelle varianti di pietra e ardesia abissale. Scavalo con un piccone di ferro per ottenere **Sonolite grezza** (Fortuna funziona), oppure usa Tocco di velluto per tenere il blocco. Per ora non ha un uso.
+
+### Note
+
+- Su Forge 1.18.x la Sonolite non si genera nel mondo, perché quella versione di Forge non può aggiungere minerali ai biomi. Tutto il resto funziona.
+- Restano supportati tutti i loader e le versioni della 1.2.0. Le versioni NeoForge 1.21.4 – 26.3 ora sono anche testate.
+
 ## v1.2.0 — Un solo jar, tutti i loader
 
 > Pubblicato: ottobre 2026

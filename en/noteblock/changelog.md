@@ -2,6 +2,20 @@
 
 All notable changes to the **Noteblock** mod are documented here.
 
+## v1.3.0 — Five New Discs and Sonolite
+
+> Released: October 2026
+
+### New
+
+- **Five new discs, 16 in total:** Bite Me and Forever (Murder Drones), Catswing (Deltarune), Catastrophes Before the Calamity (Terraria Calamity) and Colgera Battle (The Legend of Zelda). They work like every other disc: jukeboxes, comparators and creepers killed by skeletons.
+- **Sonolite Ore.** A rare new ore deep in the Overworld, in stone and deepslate variants. Mine it with an iron pickaxe for **Raw Sonolite** (Fortune applies), or use Silk Touch to keep the block. It has no use yet.
+
+### Notes
+
+- On Forge 1.18.x Sonolite does not generate in the world, because that Forge version can't add ores to biomes. Everything else works there.
+- Every loader and version range from 1.2.0 is still supported. The NeoForge 1.21.4 – 26.3 builds are now tested too.
+
 ## v1.2.0 — One Jar, Every Loader
 
 > Released: October 2026

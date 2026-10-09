@@ -23,7 +23,7 @@ hero:
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Why Noteblock</span>
     <h3>Full songs, played entirely by note blocks</h3>
-    <p>Adds 11 music discs, each one a full track arranged by JEAMCube entirely with note blocks — Minecraft's own instrument, turned into real songs instead of the usual ambient loops.</p>
+    <p>Adds 16 music discs, each one a full track arranged by JEAMCube entirely with note blocks — Minecraft's own instrument, turned into real songs instead of the usual ambient loops.</p>
     <p class="spotlight-note">No configuration, no commands — install it and the new discs work like any vanilla disc: jukeboxes, comparators, and creepers killed by skeletons.</p>
   </div>
 </div>
@@ -40,6 +40,16 @@ hero:
 <DiscPlayer />
 
 Every disc is found the vanilla way: a creeper killed by a skeleton can drop any of them.
+
+## Sonolite
+
+A rare ore buried deep in the Overworld, around diamond depth, in stone and deepslate. Black vinyl crystals with colored rivets: hard to miss once you find it.
+
+- Mine it with an **iron pickaxe** or better to get **Raw Sonolite**. Fortune gives more.
+- With **Silk Touch** you get the ore block itself.
+- It has no use yet... but it gives off strange sounds. Maybe it could be refined somehow?
+
+On Forge 1.18.x the ore and Raw Sonolite exist, but the ore does not generate in the world: that Forge version has no way for mods to add ores to biomes.
 
 ## Compatibility
 
