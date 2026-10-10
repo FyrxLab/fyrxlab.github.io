@@ -6,6 +6,10 @@ O AbsoluteSolver é configurado através do `plugins/Solver/config.yml`. As opç
 
 <ConfigExplorer />
 
+## Verifique seu config
+
+<ConfigChecker />
+
 ## Referência de Diagnóstico
 
 ```yaml

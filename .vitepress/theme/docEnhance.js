@@ -58,3 +58,24 @@ export function bindTableCopy() {
     }
   })
 }
+
+// Clicking a heading's "#" also copies the link to that section, with a
+// small "Link copied" bubble (custom.css .header-anchor[data-copied]).
+const LINK_COPIED = { en: 'Link copied', es: 'Enlace copiado', it: 'Link copiato', pt: 'Link copiado' }
+let anchorBound = false
+export function bindAnchorCopy() {
+  if (anchorBound) return
+  anchorBound = true
+  document.addEventListener('click', async (e) => {
+    const a = e.target.closest?.('.vp-doc .header-anchor')
+    if (!a) return
+    const locale = ['es', 'it', 'pt'].find((l) => location.pathname.startsWith(`/${l}/`)) || 'en'
+    try {
+      await navigator.clipboard.writeText(new URL(a.getAttribute('href'), location.href).href)
+      a.dataset.copied = LINK_COPIED[locale]
+      setTimeout(() => delete a.dataset.copied, 1500)
+    } catch {
+      /* clipboard refused: the URL bar still has the link */
+    }
+  })
+}

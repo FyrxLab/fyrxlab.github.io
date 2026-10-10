@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
 import { PRODUCTS } from './theme/productPalette.js'
+import { pageMeta, renderQueued } from './og.js'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -541,6 +542,7 @@ export default defineConfig({
 
   buildEnd(siteConfig) {
     writeFeeds(siteConfig.srcDir, siteConfig.outDir)
+    console.log(`Rendered ${renderQueued(siteConfig.outDir)} share previews.`)
   },
   markdown: {
     // Code blocks are always rendered on the dark terminal-window background
@@ -557,26 +559,17 @@ export default defineConfig({
     }
   },
 
-  // Share image per product (public/og/<product>.png, the FyrxLab one
-  // everywhere else) so links pasted in Discord get an Aero preview card.
-  transformHead({ pageData }) {
-    const key = pageData.relativePath.split('/')[1]
-    const image = `https://fyrx.net/og/${PRODUCTS[key] ? key : 'fyrxlab'}.png`
-    const loc = LOCALES.find((l) => pageData.relativePath.startsWith(`${l}/`)) || 'en'
+  // Every page gets its own share preview (title, description, URL, product
+  // color for the Discord embed accent, and a generated image) — see og.js.
+  transformHead(ctx) {
+    const loc = LOCALES.find((l) => ctx.pageData.relativePath.startsWith(`${l}/`)) || 'en'
     return [
       ['link', { rel: 'alternate', type: 'application/rss+xml', title: FEED_TITLE[loc], href: `/${loc}/feed.xml` }],
-      ['meta', { property: 'og:image', content: image }],
-      ['meta', { property: 'og:image:width', content: '1200' }],
-      ['meta', { property: 'og:image:height', content: '630' }],
-      ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-      ['meta', { name: 'twitter:image', content: image }]
+      ...pageMeta(ctx)
     ]
   },
   head: [
     ['link', { rel: 'icon', href: '/logo.svg' }],
-    ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:title', content: 'FyrxLab Documentation' }],
-    ['meta', { name: 'og:description', content: 'Official documentation for FyrxLab products' }],
     ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],

@@ -7,7 +7,8 @@ import InstallCard from './InstallCard.vue'
 import SiteFooter from './SiteFooter.vue'
 import NotFound from './NotFound.vue'
 import SiteToasts from './SiteToasts.vue'
-import { enhanceTables, bindTableCopy } from './docEnhance.js'
+import ChangesSince from './ChangesSince.vue'
+import { enhanceTables, bindTableCopy, bindAnchorCopy } from './docEnhance.js'
 
 const { Layout } = DefaultTheme
 const route = useRoute()
@@ -86,6 +87,7 @@ onMounted(() => {
   updateTheme(route.path)
   enhanceTables(locale.value)
   bindTableCopy()
+  bindAnchorCopy()
 })
 </script>
 
@@ -99,6 +101,9 @@ onMounted(() => {
     </template>
     <template #not-found>
       <NotFound />
+    </template>
+    <template #doc-before>
+      <ChangesSince />
     </template>
     <template #doc-footer-before>
       <p class="report-note">{{ report.q }} <a href="https://discord.gg/EdcYuBAdFB" target="_blank" rel="noopener">{{ report.a }} →</a></p>

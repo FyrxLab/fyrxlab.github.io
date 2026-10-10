@@ -748,3 +748,17 @@ html[data-vt="theme"]::view-transition-new(root) { animation-duration: 0.6s; ani
   border-color: color-mix(in srgb, #79c92e 50%, transparent) !important;
 }
 .vp-doc td code.copied-chip::after { content: ' ✓'; color: var(--aero-lime); font-weight: 700; }
+
+/* ---------- section link copied (docEnhance.js bindAnchorCopy) ---------- */
+.vp-doc .header-anchor[data-copied]::after {
+  content: attr(data-copied);
+  position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%);
+  white-space: nowrap; padding: 3px 10px; border-radius: 999px;
+  font: 600 12px/1.4 var(--vp-font-family-base); color: var(--vp-c-brand-1);
+  border: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, var(--glass-hl), transparent 60%), var(--glass-solid);
+  box-shadow: var(--glass-shadow);
+  animation: copied-rise 1.5s ease-out forwards;
+  pointer-events: none;
+}
+.vp-doc .header-anchor[data-copied] { opacity: 1; }

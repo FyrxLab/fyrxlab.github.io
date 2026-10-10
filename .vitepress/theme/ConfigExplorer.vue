@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vitepress'
-import raw from './data/solver-config.yml?raw'
+import { OFFICIAL_LINES, OFFICIAL_KEYS } from './solverConfig.js'
 import { PRODUCTS } from './productPalette.js'
 
 // data/solver-config.yml is the config.yml shipped in the released Solver
@@ -16,32 +16,8 @@ const COPY = {
   pt: { search: 'Buscar opções (ex.: api key, antivpn, discord)', hint: 'Clique em qualquer opção para ver o que ela faz.', path: 'Caminho', def: 'Padrão', copy: 'Copiar caminho', copied: 'Copiado', nodoc: 'O arquivo não tem comentário para esta opção; veja a referência abaixo.', matches: (n) => (n === 1 ? '1 opção' : `${n} opções`), none: 'Nenhuma opção corresponde.', note: (v) => `O config.yml que vem no Solver ${v}. Os comentários estão em inglês, como no próprio arquivo.` }
 }
 
-function parse(text) {
-  const out = []
-  const stack = []
-  let pending = []
-  for (const line of text.split(/\r?\n/)) {
-    if (!line.trim()) { out.push({ kind: 'blank' }); pending = []; continue }
-    const c = line.match(/^(\s*)#\s?(.*)$/)
-    if (c) { out.push({ kind: 'comment', indent: c[1].length, text: c[2] }); pending.push(c[2]); continue }
-    const k = line.match(/^(\s*)([\w.\-"']+):\s*(.*)$/)
-    if (!k) { out.push({ kind: 'other', indent: line.match(/^\s*/)[0].length, text: line.trim() }); pending = []; continue }
-    const indent = k[1].length
-    const key = k[2].replace(/["']/g, '')
-    while (stack.length && stack.at(-1).indent >= indent) stack.pop()
-    // split an inline "# comment" off the value, ignoring '#' inside quotes
-    const v = k[3].match(/^((?:"[^"]*"|'[^']*'|[^#])*?)\s*(?:#\s?(.*))?$/)
-    const value = (v?.[1] ?? k[3]).trim()
-    const doc = [...pending, v?.[2]].filter(Boolean).join(' ')
-    out.push({ kind: 'key', indent, key, value, doc, path: [...stack.map((s) => s.key), key].join('.') })
-    stack.push({ indent, key })
-    pending = []
-  }
-  return out
-}
-
-const LINES = parse(raw)
-const KEYS = LINES.filter((l) => l.kind === 'key')
+const LINES = OFFICIAL_LINES
+const KEYS = OFFICIAL_KEYS
 
 const route = useRoute()
 const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')

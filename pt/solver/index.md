@@ -85,3 +85,9 @@ hero:
 </div>
 
 </div>
+
+## Um selo para o seu servidor
+
+Usa o AbsoluteSolver? Mostre no site, na loja ou no tópico do fórum do seu servidor. Copie o trecho no formato que o seu site usa; o selo leva de volta para cá.
+
+<SolverBadge />

@@ -85,3 +85,9 @@ hero:
 </div>
 
 </div>
+
+## Una insignia para tu servidor
+
+¿Usas AbsoluteSolver? Muéstralo en la web, la tienda o el hilo del foro de tu servidor. Copia el fragmento en el formato que use tu sitio; la insignia enlaza aquí.
+
+<SolverBadge />

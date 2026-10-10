@@ -88,3 +88,9 @@ hero:
 </div>
 
 </div>
+
+## A badge for your server
+
+Running AbsoluteSolver? Show it on your server’s website, store or forum thread. Copy the snippet in the format your site uses; the badge links back here.
+
+<SolverBadge />

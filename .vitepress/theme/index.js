@@ -6,6 +6,8 @@ import Landing from './Landing.vue'
 import DiscPlayer from './DiscPlayer.vue'
 import ConfigExplorer from './ConfigExplorer.vue'
 import CompatMatrix from './CompatMatrix.vue'
+import ConfigChecker from './ConfigChecker.vue'
+import SolverBadge from './SolverBadge.vue'
 import './custom.css'
 import './dynamic-colors.css'
 
@@ -53,6 +55,8 @@ export default {
     app.component('DiscPlayer', DiscPlayer)
     app.component('ConfigExplorer', ConfigExplorer)
     app.component('CompatMatrix', CompatMatrix)
+    app.component('ConfigChecker', ConfigChecker)
+    app.component('SolverBadge', SolverBadge)
     setupPageTransitions(router)
   }
 }
