@@ -7,6 +7,7 @@ import InstallCard from './InstallCard.vue'
 import SiteFooter from './SiteFooter.vue'
 import NotFound from './NotFound.vue'
 import SiteToasts from './SiteToasts.vue'
+import MovedNotice from './MovedNotice.vue'
 import ChangesSince from './ChangesSince.vue'
 import { enhanceTables, bindTableCopy, bindAnchorCopy } from './docEnhance.js'
 
@@ -111,6 +112,7 @@ onMounted(() => {
     <template #layout-bottom>
       <SiteFooter />
       <SiteToasts />
+      <MovedNotice />
     </template>
   </Layout>
 </template>

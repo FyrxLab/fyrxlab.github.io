@@ -4,5 +4,5 @@ layout: false
 
 <script setup>
 import { useRouter } from 'vitepress'
-useRouter().go('/en/')
+useRouter().go('/en/' + location.search)
 </script>
