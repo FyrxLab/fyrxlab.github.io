@@ -1,9 +1,9 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
-import { useRoute } from 'vitepress'
+import { useRoute, useRouter } from 'vitepress'
 
 // Shown once when a reader arrives from the old docs.jeamcube.com address,
-// which redirects to fyrx.net/en/?old_domain=true. Closing it drops the
+// which redirects to fyrx.net/en/?old_domain=true[/old/path]. Closing it drops the
 // parameter from the URL so a reload or a shared link doesn't repeat it.
 const T = {
   en: {
@@ -41,6 +41,7 @@ const T = {
 }
 
 const route = useRoute()
+const router = useRouter()
 const open = ref(false)
 const btn = ref(null)
 const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')
@@ -55,7 +56,13 @@ function close() {
 function onKey(e) { if (e.key === 'Escape') close() }
 
 onMounted(() => {
-  if (new URLSearchParams(location.search).get('old_domain') !== 'true') return
+  // Forwarders that append the old path to the target give
+  // /en/?old_domain=true/en/solver/page: send the reader to that page.
+  const m = location.search.match(/^\?old_domain=true(\/[^#]*)/)
+  if (m) {
+    const rest = m[1]
+    router.go(`${rest}${rest.includes('?') ? '&' : '?'}old_domain=true${location.hash}`)
+  } else if (new URLSearchParams(location.search).get('old_domain') !== 'true') return
   open.value = true
   document.addEventListener('keydown', onKey)
   nextTick(() => btn.value?.focus())
