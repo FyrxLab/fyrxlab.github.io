@@ -231,3 +231,9 @@
 .lab-launch-preview .motd-template-gallery b { font-size:11px; }
 @media(max-width:900px) { .journey-header { align-items:start; flex-direction:column; } .journey-steps { grid-template-columns:repeat(2,minmax(0,1fr)); } .lab-single-column { grid-template-columns:minmax(0,1fr); } }
 @media(max-width:640px) { .journey-panel { padding:20px; } .journey-header h2 { font-size:24px; } .journey-steps a { padding:12px; } .motd-template-gallery { gap:6px; } .motd-template-gallery > button { flex-direction:column; align-items:start; padding:12px; } .motd-template-gallery b { font-size:12px; } .lab-project-save { align-items:start; flex-direction:column; gap:6px; } .lab-diff-table th,.lab-diff-table td { padding:8px; } .lab-view-tabs button { padding:8px 10px; } }
+
+@media (max-width: 480px) {
+  .lab-setup-empty { padding: 40px 12px; }
+  .lab-setup-visual { gap: 8px; }
+  .lab-setup-visual > span { width: 68px; height: 68px; min-width: 0; font-size: 11px; overflow: hidden; }
+}
