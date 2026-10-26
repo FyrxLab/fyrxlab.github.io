@@ -49,7 +49,7 @@ Ver [AntiVPN](/es/solver/antivpn) para cómo funciona la detección.
 | `appeal list \| accept \| reject <id>` | El staff revisa las apelaciones pendientes; `accept` revierte la sanción, `reject` la deja tal cual. | `solver.sanctions.appeal.manage` |
 | `sanctions <jugador>` | Abre una GUI que navega el historial completo de sanciones de un jugador; click en una activa muestra el comando exacto para revocarla. | `solver.sanctions.gui` |
 
-Cada sanción recibe un ID real, persiste en `sanctions.db` (o una base de datos MySQL — ver [Configuración](/es/solver/configuration#almacenamiento-de-sanciones)), y se aplica incluso si el servidor se reinicia. Los bans rechazan el login directamente y expulsan al instante a cualquier otra cuenta conectada que haya compartido alguna vez una IP con la cuenta baneada; los mutes y duraciones activas se restauran al conectarse.
+Cada sanción recibe un ID real, persiste en `sanctions.db` (o una base de datos MySQL — ver [Configuración](/es/solver/configuration#backend-de-almacenamiento)), y se aplica incluso si el servidor se reinicia. Los bans rechazan el login directamente y expulsan al instante a cualquier otra cuenta conectada que haya compartido alguna vez una IP con la cuenta baneada; los mutes y duraciones activas se restauran al conectarse.
 
 ### Reportes de Staff
 

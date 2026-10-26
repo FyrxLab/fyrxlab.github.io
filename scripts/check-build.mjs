@@ -32,4 +32,32 @@ for (const loc of ['en', 'es', 'it', 'pt']) {
 assert.ok(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').includes('/es/lab/config'))
 assert.ok(fs.readFileSync(path.join(root, 'llms.txt'), 'utf8').includes('/es/lab/motd'))
 assert.ok(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes('Enter FyrxLab'))
-console.log(`Verified ${count} rendered laboratory routes, search entries, internal links, language metadata, discovery files and root fallback.`)
+let documentCount = 0
+const navigationErrors = []
+const pageCache = new Map()
+const readPage = file => { if (!pageCache.has(file)) pageCache.set(file, fs.readFileSync(file,'utf8')); return pageCache.get(file) }
+for (const locale of ['en','es','it','pt']) {
+  for (const relative of fs.readdirSync(path.join(root,locale), { recursive:true }).filter(file=>file.endsWith('.html'))) {
+    const file = path.join(root,locale,relative), html = readPage(file)
+    for (const [, href] of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {
+      if (!href.startsWith('/') && !href.startsWith('#')) continue
+      if (href.startsWith('//')) continue
+      const [pathname, hash] = href.split('#'), route = pathname.split('?')[0]
+      let target = route ? path.join(root,decodeURIComponent(route)) : file
+      if (fs.existsSync(`${target}.html`)) target += '.html'
+      else if (fs.existsSync(path.join(target,'index.html'))) target = path.join(target,'index.html')
+      if (!fs.existsSync(target)) { navigationErrors.push(`${locale}/${relative}: broken destination ${href}`); continue }
+      if (hash && target.endsWith('.html')) {
+        const fragment = decodeURIComponent(hash)
+        if (!readPage(target).includes(`id="${fragment}"`)) navigationErrors.push(`${locale}/${relative}: missing anchor ${href}`)
+      }
+    }
+    assert.ok(!html.includes('<div class="feature-mini"'), `${locale}/${relative}: feature card is not linked`)
+    documentCount++
+  }
+  for (const product of ['solver','solvermotd','furnace','phos','noteblock','lazymod','fyrxai']) {
+    assert.ok(readPage(path.join(root,locale,product,'index.html')).includes('page-compass-map'), `${locale}/${product}: missing page directory`)
+  }
+}
+assert.equal(navigationErrors.length, 0, navigationErrors.join('\n'))
+console.log(`Verified ${count} laboratory search entries and ${documentCount} rendered pages, including navigation destinations, anchors, product directories, language metadata and discovery files.`)

@@ -20,27 +20,27 @@ hero:
       link: /en/phos/features/items
 ---
 
-<div class="spotlight">
+<a class="spotlight" href="/pt/phos/features/mechanics">
   <div class="spotlight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Por que Phosphophyllite</span>
     <h3>Um efeito de status construído em torno da própria gema</h3>
     <p>A Cristalização envolve os alvos em cristal — um efeito de status único disponível naturalmente nas armas Phos, ou adicionado a qualquer arma através de um encantamento personalizado.</p>
   </div>
-</div>
+</a>
 
 <div class="feature-group">
 <div class="feature-group-title">Também Incluído</div>
 
 <div class="feature-mini-grid">
-  <div class="feature-mini">
+  <a class="feature-mini" href="/pt/phos/features/items">
     <i class="fa-solid fa-gem"></i>
     <div><b>Materiais Preciosos</b><p>Novos minérios subterrâneos para minerar Pó e Gemas de Phosphophyllite, com suporte a Fortuna e texturas emissivas.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/pt/phos/features/items">
     <i class="fa-solid fa-khanda"></i>
     <div><b>Armas Frágeis</b><p>Forje espadas e machados incrivelmente afiados, porém muito frágeis, que se despedaçam em pó ao quebrar.</p></div>
-  </div>
+  </a>
 </div>
 
 </div>

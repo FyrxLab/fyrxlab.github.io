@@ -9,6 +9,7 @@ import NotFound from './NotFound.vue'
 import SiteToasts from './SiteToasts.vue'
 import MovedNotice from './MovedNotice.vue'
 import ChangesSince from './ChangesSince.vue'
+import PageNav from './PageNav.vue'
 import { enhanceTables, bindTableCopy, bindAnchorCopy } from './docEnhance.js'
 
 const { Layout } = DefaultTheme
@@ -99,14 +100,18 @@ onMounted(() => {
     </template>
     <template #home-hero-after>
       <InstallCard />
+      <PageNav mode="map" />
     </template>
+    <template #home-hero-before><PageNav /></template>
     <template #not-found>
       <NotFound />
     </template>
     <template #doc-before>
+      <PageNav />
       <ChangesSince />
     </template>
     <template #doc-footer-before>
+      <PageNav mode="related" />
       <p class="report-note">{{ report.q }} <a href="https://discord.gg/EdcYuBAdFB" target="_blank" rel="noopener">{{ report.a }} →</a></p>
     </template>
     <template #layout-bottom>

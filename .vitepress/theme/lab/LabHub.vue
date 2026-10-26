@@ -1,6 +1,7 @@
 <script setup>
 import LabShell from './LabShell.vue'
 import { useLab } from './useLab.js'
+import JourneyPanel from './JourneyPanel.vue'
 const { t, link } = useLab()
 const cards = [
   { slug: 'setup', key: 'prepare', icon: 'fa-server', color: '#30b6ea', number: '01' },
@@ -11,7 +12,8 @@ const cards = [
 </script>
 <template>
   <LabShell>
-    <header class="lab-heading lab-heading-xl"><p class="lab-kicker">{{ t.eyebrow }}</p><h1>{{ t.title }}</h1><p>{{ t.intro }}</p></header>
+    <header class="lab-heading lab-heading-xl"><p class="lab-kicker">{{ t.eyebrow }}</p><h1>{{ t.myServer }}</h1><p>{{ t.intro }}</p></header>
+    <JourneyPanel />
     <div class="lab-hub-grid"><a v-for="c in cards" :key="c.slug" :href="link(c.slug)" class="lab-tool-card" :style="{ '--tool-color': c.color }"><div class="lab-card-top"><span class="lab-orb"><i :class="['fa-solid', c.icon]" aria-hidden="true" /></span><span class="lab-number">{{ c.number }}</span></div><h2>{{ t[c.key] }}</h2><p>{{ t[c.key + 'Desc'] }}</p><span class="lab-card-action">{{ t.open }} <span>↗</span></span></a></div>
     <aside class="lab-footnote"><i class="fa-solid fa-laptop-code" aria-hidden="true" /><div><b>{{ t.browser }}</b><p>{{ t.local }}</p></div></aside>
   </LabShell>

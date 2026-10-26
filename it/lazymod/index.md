@@ -17,12 +17,15 @@ features:
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-sparkles"></i>'
     title: Equipaggiamento Endgame Istantaneo
     details: Appari con una spada, un arco e un'armatura assurdamente potenti — niente tavoli da lavoro, niente farming di risorse, niente meccaniche complesse da imparare prima.
+    link: /it/lazymod/#domande-frequenti
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-dragon"></i>'
     title: Pronto per lo Speedrun
     details: Pensato per chi vuole solo arrivare all'End e vedere i titoli di coda — salta la macinata e vai dritto allo scontro che conta.
+    link: /it/lazymod/#certificato-di-merito
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-couch"></i>'
     title: Zero Configurazione
     details: Nessuna schermata di configurazione, nessun comando da memorizzare. Installalo, carica un mondo, e sei già equipaggiato.
+    link: /it/lab/setup?product=lazymod
 ---
 
 ::: tip Questa mod non si prende troppo sul serio

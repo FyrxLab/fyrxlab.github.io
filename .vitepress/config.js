@@ -3,6 +3,7 @@ import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
 import { PRODUCTS } from './theme/productPalette.js'
 import { pageMeta, renderQueued } from './og.js'
 import { discoveryHead, writeDiscovery, searchTranslations } from './discovery.js'
+import { outlineGuard } from './outline-guard.js'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -541,7 +542,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   srcExclude: ['README.md', 'tests/**', 'scripts/**'],
-  vite: { server: { watch: { ignored: ['**/.vitepress/dist/**', '**/.vitepress/.temp/**'] } } },
+  vite: { plugins: [outlineGuard()], server: { watch: { ignored: ['**/.vitepress/dist/**', '**/.vitepress/.temp/**'] } } },
 
   buildEnd(siteConfig) {
     writeFeeds(siteConfig.srcDir, siteConfig.outDir)

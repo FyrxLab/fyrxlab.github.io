@@ -1,4 +1,4 @@
-import { parseDocument, isMap } from 'yaml'
+import { parseDocument, isMap, LineCounter } from 'yaml'
 
 export const MAX_CONFIG_SIZE = 256 * 1024
 const type = value => Array.isArray(value) ? 'array' : value === null ? 'null' : typeof value
@@ -24,7 +24,8 @@ const bounds = {
 export function readConfig(source) {
   if (source.length > MAX_CONFIG_SIZE) return { errors: [{ kind: 'size' }] }
   try {
-    const doc = parseDocument(source, { uniqueKeys: true, strict: true })
+    const lineCounter = new LineCounter()
+    const doc = parseDocument(source, { uniqueKeys: true, strict: true, lineCounter })
     // Never echo parser messages: a YAML error can contain an API key.
     const errors = [...doc.errors, ...doc.warnings].map(e => ({ kind: 'syntax', line: e.linePos?.[0]?.line, code: e.code }))
     if (!isMap(doc.contents)) errors.push({ kind: 'root' })
@@ -77,4 +78,32 @@ export function updateConfig(source, updates) {
   if (result.errors.length) throw new Error('Invalid YAML')
   for (const [path, value] of Object.entries(updates)) result.doc.setIn(path.split('.'), value)
   return result.doc.toString()
+}
+
+export function configOffset(source, path) {
+  const parsed = readConfig(source)
+  return parsed.doc?.getIn(path.split('.'), true)?.range?.[0] || 0
+}
+
+// Values in reviews may include credentials, even in custom keys or URLs.
+const sensitive = /key|secret|token|password|credential|webhook|endpoint|url|host|address|user/i
+export function configDiff(before, after) {
+  const a = readConfig(before), b = readConfig(after)
+  if (a.errors.length || b.errors.length) return []
+  const rows = []
+  function walk(left, right, path = []) {
+    if (JSON.stringify(left) === JSON.stringify(right)) return
+    if (object(left) && object(right)) {
+      for (const key of new Set([...Object.keys(left), ...Object.keys(right)])) walk(left[key], right[key], [...path, key])
+      return
+    }
+    const name = path.join('.')
+    // Custom fields are hidden as well; the review must never echo a secret.
+    const safeValue = value => value === undefined ? '—' : sensitive.test(name) ? '••••••' : typeof value === 'number' || typeof value === 'boolean' ? String(value) : '••••••'
+    const publicStrings = ['localization', 'ai-provider.provider', 'chat-moderation.scan-mode', 'chat-moderation.action.mode']
+    const display = value => publicStrings.includes(name) && typeof value === 'string' && !sensitive.test(name) ? value : safeValue(value)
+    rows.push({ path: name, before: display(left), after: display(right), kind: left === undefined ? 'added' : right === undefined ? 'removed' : 'modified', hidden: sensitive.test(name) || ([left, right].some(v => typeof v === 'string') && !publicStrings.includes(name)) })
+  }
+  walk(a.data, b.data)
+  return rows
 }

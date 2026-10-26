@@ -19,6 +19,14 @@ The laboratory includes:
 - Solver demo: three scripted teaching scenarios, without a live server or AI request.
 - MOTD Studio: safe text-token previews, local PNG validation (264×16), and a YAML snippet to merge with an existing SolverMOTD configuration. The preview supports a documented subset of MiniMessage; the plugin remains the authority for final rendering.
 
+Phase 2A connects the tools through **My server**: select a release, prepare files, and follow a personal installation checklist. The checklist records user preparation only; it does not connect to or inspect a running server. Changing the environment invalidates the chosen release.
+
+Config Studio now has guided/YAML/review views, masked change comparisons, bounded undo/redo and credential-free guided-preference projects. MOTD Studio adds formatting controls, localized templates, side-by-side client previews, comparison snapshots and text project import/export. Full configuration documents and banner images remain only in tab memory while navigating; download them before closing or reloading. Config projects contain only the six guided preference fields, not a full YAML backup. MOTD projects contain text, not the banner image.
+
+Product homepages include a generated directory of their actual pages and sections. Documentation pages have breadcrumbs, a page index and related destinations. Feature cards, platform chips and compatibility markers link to the relevant guide or exact-setup flow. Navigation checks verify rendered internal destinations and anchors across all four locales.
+
+The local Vite plugin in `.vitepress/outline-guard.js` protects VitePress 1.6.4's delayed outline callback after a documentation page unmounts. Review this narrow workaround when upgrading VitePress; the regression test exercises both active and unmounted callbacks. Visual transitions allow clicks through to the current page.
+
 Configurations and uploaded images are never sent to a service or persisted in browser storage. Only the non-secret server profile is stored locally. Release lookups call Modrinth. Existing fonts, video embeds and product metadata retain their existing external sources.
 
 ## Verify

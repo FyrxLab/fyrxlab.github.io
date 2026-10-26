@@ -20,27 +20,27 @@ hero:
       link: /en/furnace/guide/getting-started
 ---
 
-<div class="spotlight">
+<a class="spotlight" href="/es/furnace/guide/getting-started">
   <div class="spotlight-icon"><i class="fa-solid fa-fire-burner"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Por qué Absolute Furnace</span>
     <h3>18 slots, para dejar de atender ítem por ítem</h3>
     <p>6 slots de entrada, 6 de energía y 6 de salida — fundición masiva sin llenar tu base de hornos vanilla ni programar tu propia automatización desde cero.</p>
   </div>
-</div>
+</a>
 
 <div class="feature-group">
 <div class="feature-group-title">También Incluye</div>
 
 <div class="feature-mini-grid">
-  <div class="feature-mini">
+  <a class="feature-mini" href="/es/furnace/features/energy">
     <i class="fa-solid fa-bolt"></i>
     <div><b>Sistema Absolute Energy</b><p>Convierte cualquier combustible estándar en Absolute Energy. Cada ítem fundido consume exactamente 2 Absolute Energy.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/es/furnace/guide/automation">
     <i class="fa-solid fa-gears"></i>
     <div><b>Automatización con Tolvas</b><p>Totalmente compatible con tolvas vanilla y tuberías. Ingresa materiales por arriba, combustible por los lados, y extrae por debajo.</p></div>
-  </div>
+  </a>
 </div>
 
 </div>

@@ -39,7 +39,7 @@ See [AntiVPN](/en/solver/antivpn) for how detection works.
 
 | Subcommand | Description | Permission |
 |------------|-------------|------------|
-| `warn \| mute \| tempmute \| kick \| ban \| tempban <player> [duration] <reason>` | Applies the corresponding sanction. `duration` is required for the temp- variants (e.g. `30s`, `10m`, `1d`) and optional for `ban`/`mute`, which then become a `tempban`/`tempmute`. A reason can also be `#name`, expanding to a [reason template](/en/solver/configuration#reason-templates--warn-escalation) configured in `config.yml`. | `solver.sanctions.<type>` |
+| `warn \| mute \| tempmute \| kick \| ban \| tempban <player> [duration] <reason>` | Applies the corresponding sanction. `duration` is required for the temp- variants (e.g. `30s`, `10m`, `1d`) and optional for `ban`/`mute`, which then become a `tempban`/`tempmute`. A reason can also be `#name`, expanding to a [reason template](/en/solver/configuration#reason-templates-warn-escalation) configured in `config.yml`. | `solver.sanctions.<type>` |
 | `unban \| unmute \| unwarn <player>` | Reverts an active sanction of that type. | `solver.sanctions.<type>` |
 | `history <player>` | Shows a player's full sanction history. | `solver.sanctions.history` |
 | `check <id>` | Shows the detail of a single sanction by its ID. | `solver.sanctions.check` |
@@ -49,7 +49,7 @@ See [AntiVPN](/en/solver/antivpn) for how detection works.
 | `appeal list \| accept \| reject <id>` | Staff review pending appeals; `accept` reverts the sanction, `reject` leaves it standing. | `solver.sanctions.appeal.manage` |
 | `sanctions <player>` | Opens a GUI browsing a player's full sanction history; click an active one for the exact command to revoke it. | `solver.sanctions.gui` |
 
-Every sanction gets a real ID, persists in `sanctions.db` (or a MySQL database — see [Configuration](/en/solver/configuration#sanctions-storage)), and is enforced even if the server restarts. Bans reject login directly and instantly kick any other online account that has ever shared an IP with the banned one; mutes and active durations are restored on join.
+Every sanction gets a real ID, persists in `sanctions.db` (or a MySQL database — see [Configuration](/en/solver/configuration#storage-backend)), and is enforced even if the server restarts. Bans reject login directly and instantly kick any other online account that has ever shared an IP with the banned one; mutes and active durations are restored on join.
 
 ### Staff Reports
 

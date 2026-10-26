@@ -5,7 +5,7 @@ O AbsoluteSolver fornece um único comando raiz com subcomandos agrupados em qua
 ## `/solver`
 
 **Aliases:** `/as`
-**Permissão:** `solver.admin` (padrão: OP) concede tudo abaixo; veja [Permissões](#permissões) para os nós granulares.
+**Permissão:** `solver.admin` (padrão: OP) concede tudo abaixo; veja [Permissões](#permissoes) para os nós granulares.
 
 A maioria dos subcomandos também está disponível como seu próprio comando independente (ex.: `/vanish` em vez de `/solver vanish`) — veja [Comandos Independentes](#comandos-independentes).
 
@@ -49,7 +49,7 @@ Veja [AntiVPN](/pt/solver/antivpn) para entender como a detecção funciona.
 | `appeal list \| accept \| reject <id>` | O staff analisa recursos pendentes; `accept` reverte a sanção, `reject` a mantém. | `solver.sanctions.appeal.manage` |
 | `sanctions <jogador>` | Abre uma GUI navegando pelo histórico completo de sanções de um jogador; clique em uma ativa para o comando exato de revogá-la. | `solver.sanctions.gui` |
 
-Cada sanção recebe um ID real, persiste em `sanctions.db` (ou em um banco de dados MySQL — veja [Configuração](/pt/solver/configuration#armazenamento-de-sancoes)), e é aplicada mesmo que o servidor reinicie. Banimentos rejeitam o login diretamente e expulsam instantaneamente qualquer outra conta online que já tenha compartilhado um IP com a banida; mutes e durações ativas são restaurados ao entrar.
+Cada sanção recebe um ID real, persiste em `sanctions.db` (ou em um banco de dados MySQL — veja [Configuração](/pt/solver/configuration#backend-de-armazenamento)), e é aplicada mesmo que o servidor reinicie. Banimentos rejeitam o login diretamente e expulsam instantaneamente qualquer outra conta online que já tenha compartilhado um IP com a banida; mutes e durações ativas são restaurados ao entrar.
 
 ### Denúncias de Staff
 

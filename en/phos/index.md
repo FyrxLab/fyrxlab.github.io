@@ -21,27 +21,27 @@ hero:
 
 ---
 
-<div class="spotlight">
+<a class="spotlight" href="/en/phos/features/mechanics">
   <div class="spotlight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Why Phosphophyllite</span>
     <h3>A status effect built around the gem itself</h3>
     <p>Crystallization encases targets in crystal — a unique status effect available naturally on Phos weapons, or added to any weapon of your choice through a custom enchantment.</p>
   </div>
-</div>
+</a>
 
 <div class="feature-group">
 <div class="feature-group-title">Also Included</div>
 
 <div class="feature-mini-grid">
-  <div class="feature-mini">
+  <a class="feature-mini" href="/en/phos/features/items">
     <i class="fa-solid fa-gem"></i>
     <div><b>Precious Materials</b><p>New underground ores to mine Phosphophyllite Dust and Gems, complete with Fortune support and emissive textures.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/en/phos/features/items">
     <i class="fa-solid fa-khanda"></i>
     <div><b>Fragile Weaponry</b><p>Forge incredibly sharp but highly brittle swords and axes that shatter into dust upon breaking.</p></div>
-  </div>
+  </a>
 </div>
 
 </div>

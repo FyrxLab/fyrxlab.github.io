@@ -72,5 +72,5 @@ Ou, sem afetar o servidor de forma alguma:
 Em poucos segundos, o Fyrx vai analisar a exceção e imprimir um relatório de diagnóstico completo no seu console.
 
 ::: warning Comando restrito ao console
-O comando `/solver` requer a permissão `solver.admin` (ou a permissão específica do subcomando — veja [Comandos](/pt/solver/commands#permissões)). Por padrão, apenas operadores do servidor têm essa permissão.
+O comando `/solver` requer a permissão `solver.admin` (ou a permissão específica do subcomando — veja [Comandos](/pt/solver/commands#permissoes)). Por padrão, apenas operadores do servidor têm essa permissão.
 :::

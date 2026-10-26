@@ -3,6 +3,9 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vitepress'
 import { PRODUCTS, PRODUCT_ORDER } from './productPalette.js'
 import { fetchProjects, slugOf } from './modrinth.js'
+import { useLab } from './lab/useLab.js'
+import { useServerProfile } from './lab/profile.js'
+const { t: labText, link } = useLab(), { profile } = useServerProfile()
 
 // Product × Minecraft-version grid, read live from each Modrinth listing so
 // it never needs a manual update. A cell is filled when any patch release of
@@ -40,6 +43,8 @@ onMounted(async () => {
       ...PRODUCTS[k],
       link: `/${locale.value}${PRODUCTS[k].home}`,
       cells: RANGES.map(([, re]) => projects[k].game_versions.some((v) => re.test(v))),
+      versions: RANGES.map(([, re]) => projects[k].game_versions.filter(v => re.test(v)).sort((a,b) => b.localeCompare(a, undefined, { numeric:true }))),
+      rawLoaders: projects[k].loaders,
       loaders: projects[k].loaders.map((l) => LOADER_NAMES[l] || l)
     }))
     state.value = 'ok'
@@ -68,14 +73,14 @@ onMounted(async () => {
               <span class="cm-loaders">{{ r.loaders.join(' · ') }}</span>
             </th>
             <td v-for="(ok, i) in r.cells" :key="i" class="cm-v">
-              <span v-if="ok" class="cm-orb" role="img" :aria-label="t.yes" />
+              <a v-if="ok" class="cm-orb" :href="`${link('setup')}?product=${r.key}&minecraft=${encodeURIComponent(r.versions[i].includes(profile.minecraft) ? profile.minecraft : r.versions[i][0])}&platform=${r.rawLoaders.includes(profile.platform) ? profile.platform : r.rawLoaders[0]}`" :aria-label="`${r.name}: ${RANGES[i][0]} · ${labText.testCombination}`" :title="labText.testCombination" />
               <span v-else class="cm-no" role="img" :aria-label="t.no">·</span>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="cm-source">{{ t.source }}</p>
+    <p class="cm-source">{{ t.source }} {{ labText.matrixNote }} <a :href="link('setup')">{{ labText.testCombination }} →</a></p>
   </div>
 </template>
 

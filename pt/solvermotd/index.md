@@ -23,27 +23,27 @@ hero:
       link: /en/solvermotd/guide/getting-started
 ---
 
-<div class="spotlight">
+<a class="spotlight" href="/pt/solvermotd/features/banner">
   <div class="spotlight-icon"><i class="fa-solid fa-image"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Por que SolverMOTD</span>
     <h3>Sua entrada na lista de servidores não precisa ser texto puro</h3>
     <p>Substitua o MOTD de texto padrão por imagens enormes de 264×16 pixels para clientes mais novos, geradas automaticamente com nosso gerador de tiles MineSkin — sem precisar configurar hospedagem de imagens.</p>
   </div>
-</div>
+</a>
 
 <div class="feature-group">
 <div class="feature-group-title">Também Incluído</div>
 
 <div class="feature-mini-grid">
-  <div class="feature-mini">
+  <a class="feature-mini" href="/pt/solvermotd/guide/getting-started">
     <i class="fa-solid fa-server"></i>
     <div><b>Suporte Multiplataforma</b><p>Funciona perfeitamente em Bukkit/Spigot, BungeeCord, e proxies Velocity — um único plugin para toda a sua rede.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/pt/lab/motd">
     <i class="fa-solid fa-palette"></i>
     <div><b>MiniMessage e Legado</b><p>Suporte total à formatação moderna MiniMessage com gradientes e texto clicável, mantendo compatibilidade com códigos legados de e comercial.</p></div>
-  </div>
+  </a>
 </div>
 
 </div>

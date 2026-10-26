@@ -18,35 +18,35 @@ hero:
 
 ---
 
-<div class="spotlight">
+<a class="spotlight" href="/pt/fyrxai/configuration">
   <div class="spotlight-icon"><i class="fa-solid fa-robot"></i></div>
   <div class="spotlight-body">
     <span class="spotlight-eyebrow">Por que FyrxAI</span>
     <h3>Aponte para sua documentação, não para seu código</h3>
     <p>FyrxAI é uma pequena biblioteca, não um serviço hospedado — você a instala no seu próprio bot. Dê a ela um ou mais sites de documentação com <code>/fyrxai wiki add</code> e ela os rastreia, extrai palavras-chave, e começa a responder perguntas nos seus canais de suporte automaticamente. Sem preparar um dataset manualmente.</p>
   </div>
-</div>
+</a>
 
 <div class="feature-group">
 <div class="feature-group-title">O Que Você Ganha</div>
 
 <div class="feature-mini-grid">
-  <div class="feature-mini">
+  <a class="feature-mini" href="/pt/fyrxai/configuration">
     <i class="fa-solid fa-spider"></i>
     <div><b>Rastreamento do Site Inteiro</b><p>Aponte <code>/fyrxai wiki add</code> para uma única página e ela descobre o resto via <code>llms.txt</code>, <code>sitemap.xml</code>, ou seguindo links do mesmo domínio.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/pt/fyrxai/topic-detection">
     <i class="fa-solid fa-layer-group"></i>
     <div><b>Detecção de Tópicos em Três Camadas</b><p>Correspondência exata, depois difusa (tolerante a erros de digitação), depois um modelo de embeddings local offline — sem gastar uma chamada de IA para descobrir do que se trata uma pergunta.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/pt/fyrxai/providers">
     <i class="fa-solid fa-plug"></i>
     <div><b>Traga Seu Próprio Provedor</b><p>WaveSpeed, OpenRouter, Google AI Studio, ou Claude Platform — escolha um por servidor, configurado com uma resposta efêmera de slash command.</p></div>
-  </div>
-  <div class="feature-mini">
+  </a>
+  <a class="feature-mini" href="/pt/fyrxai/configuration">
     <i class="fa-solid fa-shield-halved"></i>
     <div><b>Nada Fixo no Código</b><p>Cada canal, wiki, provedor e permissão é configurado pelo chat do Discord. Instale o pacote e ele vem sem nenhum arquivo de configuração.</p></div>
-  </div>
+  </a>
 </div>
 
 </div>

@@ -289,6 +289,7 @@ onUnmounted(() => {
           <div class="hero-actions">
             <a class="gloss" :href="labLink('setup')">{{ labCopy.prepare }} →</a>
             <a class="gloss glass-btn" :href="labLink('solver')">{{ labCopy.demo }}</a>
+            <a class="gloss glass-btn" href="#portfolio">{{ labCopy.products }} ↓</a>
           </div>
         </div>
 
@@ -317,14 +318,14 @@ onUnmounted(() => {
     <section class="flagship" id="flagship">
       <div class="flagship-head">
         <h2 class="flagship-title">{{ t.flagshipPrefix }}<span>AbsoluteSolver</span></h2>
-        <span class="flagship-ver">v{{ solver.version }}</span>
+        <a class="flagship-ver" :href="`/${locale}/solver/changelog`">v{{ solver.version }} ↗</a>
       </div>
 
       <div class="flagship-grid">
         <div class="flagship-copy">
           <p>{{ t.flagshipParagraph }}</p>
           <ul class="flagship-list">
-            <li v-for="(item, i) in t.flagshipBullets" :key="i"><b>{{ item.b }}</b> &mdash; {{ item.t }}</li>
+            <li v-for="(item, i) in t.flagshipBullets" :key="i"><a :href="`/${locale}/solver/${['crash-analysis','tick-monitor','configuration','commands'][i]}`"><b>{{ item.b }} ↗</b> &mdash; {{ item.t }}</a></li>
           </ul>
           <a class="gloss" :href="labLink('solver')">{{ labCopy.demo }} →</a>
         </div>

@@ -705,6 +705,8 @@ button.VPSwitchAppearance .check .icon { opacity: 0; }
 /* ---------- view transitions (index.js pages, Layout.vue day/night) ---------- */
 ::view-transition-old(root),
 ::view-transition-new(root) { animation-duration: 0.22s; }
+/* The visual crossfade must not intercept navigation or editor controls. */
+::view-transition { pointer-events: none; }
 html[data-vt="theme"]::view-transition-old(root),
 html[data-vt="theme"]::view-transition-new(root) { animation-duration: 0.6s; animation-timing-function: ease-in-out; }
 

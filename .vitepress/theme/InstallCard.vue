@@ -110,7 +110,7 @@ async function copyCommand() {
         </div>
         <div>
           <dt>{{ t[product.kind] }}</dt>
-          <dd class="ic-chips"><span v-for="p in product.install.platforms" :key="p" class="ic-chip">{{ p }}</span></dd>
+          <dd class="ic-chips"><a v-for="p in product.install.platforms" :key="p" class="ic-chip" :href="product.kind === 'library' ? `/${locale}/fyrxai/configuration` : `/${locale}/lab/setup?product=${productKey}&platform=${p.toLowerCase()}`">{{ p }} ↗</a></dd>
         </div>
       </dl>
 
@@ -119,7 +119,7 @@ async function copyCommand() {
       </a>
 
       <div v-if="canPick" class="ic-pick">
-        <a :href="`/${locale}/lab/setup`" class="ic-pick-open">{{ LAB_COPY[locale].prepare }} →</a>
+        <a :href="`/${locale}/lab/setup?product=${productKey}`" class="ic-pick-open">{{ LAB_COPY[locale].prepare }} →</a>
         <button v-if="!picker.open" type="button" class="ic-pick-open" @click="openPicker">{{ t.pick }}</button>
         <div v-else class="ic-pick-row">
           <label>
