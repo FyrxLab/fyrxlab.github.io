@@ -40,9 +40,9 @@ export const LANDING_COPY = {
     factDeveloper: 'developer',
     factActiveProducts: 'active products',
     factLanguages: 'languages in the docs',
-    factSolver: 'Solver:',
+    factSolver: 'Solver · Noteblock · Phos · LazyMod:',
     factSolverLicense: 'All Rights Reserved',
-    factMods: 'Mods:',
+    factMods: 'SolverMOTD · Furnace:',
     factModsLicense: 'MIT'
   },
   es: {
@@ -75,9 +75,9 @@ export const LANDING_COPY = {
     factDeveloper: 'desarrollador',
     factActiveProducts: 'productos activos',
     factLanguages: 'idiomas en la documentación',
-    factSolver: 'Solver:',
+    factSolver: 'Solver · Noteblock · Phos · LazyMod:',
     factSolverLicense: 'Todos los derechos reservados',
-    factMods: 'Mods:',
+    factMods: 'SolverMOTD · Furnace:',
     factModsLicense: 'MIT'
   },
   it: {
@@ -110,9 +110,9 @@ export const LANDING_COPY = {
     factDeveloper: 'sviluppatore',
     factActiveProducts: 'prodotti attivi',
     factLanguages: 'lingue nella documentazione',
-    factSolver: 'Solver:',
+    factSolver: 'Solver · Noteblock · Phos · LazyMod:',
     factSolverLicense: 'Tutti i diritti riservati',
-    factMods: 'Mod:',
+    factMods: 'SolverMOTD · Furnace:',
     factModsLicense: 'MIT'
   },
   pt: {
@@ -145,9 +145,9 @@ export const LANDING_COPY = {
     factDeveloper: 'desenvolvedor',
     factActiveProducts: 'produtos ativos',
     factLanguages: 'idiomas na documentação',
-    factSolver: 'Solver:',
+    factSolver: 'Solver · Noteblock · Phos · LazyMod:',
     factSolverLicense: 'Todos os direitos reservados',
-    factMods: 'Mods:',
+    factMods: 'SolverMOTD · Furnace:',
     factModsLicense: 'MIT'
   }
 }
