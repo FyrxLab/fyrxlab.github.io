@@ -9,6 +9,9 @@ hero:
     src: /solver.svg
     alt: AbsoluteSolver
   actions:
+    - theme: alt
+      text: Config Studio
+      link: /pt/lab/config
     - theme: brand
       text: Primeiros Passos
       link: /pt/solver/getting-started

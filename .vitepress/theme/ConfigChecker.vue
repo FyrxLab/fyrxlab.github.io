@@ -1,8 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vitepress'
-import { parse, OFFICIAL_KEYS } from './solverConfig.js'
+import { OFFICIAL_KEYS } from './solverConfig.js'
 import { PRODUCTS } from './productPalette.js'
+import defaults from './data/solver-config.yml?raw'
+import { inspectConfig } from './lab/config-core.js'
+import { COPY as LAB_COPY } from './lab/copy.js'
 
 // Paste your config.yml, compare it with the one shipped in the current
 // Solver release. Runs entirely in the browser; nothing is sent anywhere.
@@ -25,18 +28,15 @@ const leaves = (keys) => {
   return keys.filter((k) => !paths.some((p) => p.startsWith(`${k.path}.`)))
 }
 const OFFICIAL = new Map(leaves(OFFICIAL_KEYS).map((k) => [k.path, k]))
-const norm = (v) => v.replace(/^["']|["']$/g, '').trim()
 
 const text = ref('')
 const result = computed(() => {
   if (!text.value.trim()) return null
-  const mine = new Map(leaves(parse(text.value).filter((l) => l.kind === 'key')).map((k) => [k.path, k]))
-  if (!mine.size) return { empty: true }
-  const missing = [...OFFICIAL.values()].filter((k) => !mine.has(k.path))
-  const unknown = [...mine.values()].filter((k) => !OFFICIAL.has(k.path))
-  const changed = [...mine.values()]
-    .filter((k) => OFFICIAL.has(k.path) && norm(k.value) !== norm(OFFICIAL.get(k.path).value))
-    .map((k) => ({ path: k.path, value: SECRET.test(k.path) ? null : k.value, def: OFFICIAL.get(k.path).value }))
+  const check = inspectConfig(text.value, defaults)
+  if (check.errors.length) return { errors: check.errors }
+  const missing = check.missing.map(k => ({ ...k, ...OFFICIAL_KEYS.find(item => item.path === k.path) }))
+  const unknown = check.unknown
+  const changed = check.changed.map(k => ({ path: k.path, value: SECRET.test(k.path) ? null : JSON.stringify(k.parts.reduce((value, key) => value?.[key], check.data)), def: OFFICIAL.get(k.path)?.value }))
   return { missing, unknown, changed }
 })
 </script>
@@ -48,7 +48,7 @@ const result = computed(() => {
     <p class="cc-privacy">{{ t.privacy }}</p>
 
     <div v-if="result" class="cc-out" aria-live="polite">
-      <p v-if="result.empty" class="cc-msg">{{ t.empty }}</p>
+      <div v-if="result.errors" class="cc-group" role="alert"><h4>{{ LAB_COPY[locale].errors }}</h4><ul><li v-for="(error, i) in result.errors" :key="i"><code v-if="error.path">{{ error.path }}: </code>{{ LAB_COPY[locale][error.kind] }}<span v-if="error.line"> · {{ error.line }}</span></li></ul></div>
       <template v-else>
         <p v-if="!result.missing.length" class="cc-msg cc-good">{{ t.ok(version) }}</p>
 
@@ -81,6 +81,7 @@ const result = computed(() => {
         </details>
       </template>
     </div>
+    <a :href="`/${locale}/lab/config`">{{ LAB_COPY[locale].studio }} →</a>
   </section>
 </template>
 

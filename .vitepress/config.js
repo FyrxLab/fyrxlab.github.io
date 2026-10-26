@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import fyrxCodeTheme from './theme/fyrx-code-theme.json' with { type: 'json' }
 import { PRODUCTS } from './theme/productPalette.js'
 import { pageMeta, renderQueued } from './og.js'
+import { discoveryHead, writeDiscovery, searchTranslations } from './discovery.js'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -539,9 +540,12 @@ export default defineConfig({
   description: 'Official documentation for FyrxLab products',
   cleanUrls: true,
   lastUpdated: true,
+  srcExclude: ['README.md', 'tests/**', 'scripts/**'],
+  vite: { server: { watch: { ignored: ['**/.vitepress/dist/**', '**/.vitepress/.temp/**'] } } },
 
   buildEnd(siteConfig) {
     writeFeeds(siteConfig.srcDir, siteConfig.outDir)
+    writeDiscovery(siteConfig.srcDir, siteConfig.outDir)
     console.log(`Rendered ${renderQueued(siteConfig.outDir)} share previews.`)
   },
   markdown: {
@@ -564,6 +568,7 @@ export default defineConfig({
   transformHead(ctx) {
     const loc = LOCALES.find((l) => ctx.pageData.relativePath.startsWith(`${l}/`)) || 'en'
     return [
+      ...discoveryHead(ctx),
       ['link', { rel: 'alternate', type: 'application/rss+xml', title: FEED_TITLE[loc], href: `/${loc}/feed.xml` }],
       ...pageMeta(ctx)
     ]
@@ -588,6 +593,7 @@ export default defineConfig({
       link: '/es/',
       themeConfig: {
         nav: [
+          { text: 'Lab', link: '/es/lab/' },
           {
             text: 'Productos',
             items: [
@@ -633,6 +639,7 @@ export default defineConfig({
       link: '/it/',
       themeConfig: {
         nav: [
+          { text: 'Lab', link: '/it/lab/' },
           {
             text: 'Prodotti',
             items: [
@@ -678,6 +685,7 @@ export default defineConfig({
       link: '/pt/',
       themeConfig: {
         nav: [
+          { text: 'Lab', link: '/pt/lab/' },
           {
             text: 'Produtos',
             items: [
@@ -724,6 +732,7 @@ export default defineConfig({
     siteTitle: false,
 
     nav: [
+          { text: 'Lab', link: '/en/lab/' },
       {
         text: 'Products',
         items: [
@@ -771,7 +780,16 @@ export default defineConfig({
     },
 
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        locales: searchTranslations,
+        _render(src, env, md) {
+          const html = md.render(src, env)
+          if (env.frontmatter?.search === false) return ''
+          if (!env.frontmatter?.lab) return html
+          return `<h1 id="laboratory">${esc(env.frontmatter.title || 'FyrxLab')}<a class="header-anchor" href="#laboratory">​</a></h1><p>${esc(env.frontmatter.description || '')}</p>`
+        }
+      }
     }
   }
 })

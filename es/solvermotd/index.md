@@ -9,6 +9,9 @@ hero:
     src: /smotd.png
     alt: Logo SolverMOTD
   actions:
+    - theme: alt
+      text: MOTD Studio
+      link: /es/lab/motd
     - theme: brand
       text: Empezar
       link: /es/solvermotd/guide/getting-started

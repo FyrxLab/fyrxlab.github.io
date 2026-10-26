@@ -1,5 +1,5 @@
 import DefaultTheme from 'vitepress/theme'
-import { nextTick } from 'vue'
+import { nextTick, defineAsyncComponent } from 'vue'
 import Layout from './Layout.vue'
 import ProductHighlights from './ProductHighlights.vue'
 import Landing from './Landing.vue'
@@ -57,6 +57,11 @@ export default {
     app.component('CompatMatrix', CompatMatrix)
     app.component('ConfigChecker', ConfigChecker)
     app.component('SolverBadge', SolverBadge)
+    app.component('LabHub', defineAsyncComponent(() => import('./lab/LabHub.vue')))
+    app.component('ServerSetup', defineAsyncComponent(() => import('./lab/ServerSetup.vue')))
+    app.component('ConfigStudio', defineAsyncComponent(() => import('./lab/ConfigStudio.vue')))
+    app.component('SolverDemo', defineAsyncComponent(() => import('./lab/SolverDemo.vue')))
+    app.component('MotdStudio', defineAsyncComponent(() => import('./lab/MotdStudio.vue')))
     setupPageTransitions(router)
   }
 }

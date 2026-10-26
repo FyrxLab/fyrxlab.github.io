@@ -4,6 +4,9 @@ import { useRoute } from 'vitepress'
 import { PRODUCTS, PRODUCT_ORDER } from './productPalette.js'
 import { LANDING_COPY, SCENARIO_TEXT } from './landingCopy.js'
 import { fetchProjects } from './modrinth.js'
+import LabLaunch from './lab/LabLaunch.vue'
+import { useLab } from './lab/useLab.js'
+const { t: labCopy, link: labLink } = useLab()
 
 const route = useRoute()
 const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')
@@ -284,8 +287,8 @@ onUnmounted(() => {
           <h1 class="hero-word">Fyrx<span class="lab">Lab</span></h1>
           <p class="hero-sub">{{ t.heroSub }}</p>
           <div class="hero-actions">
-            <a class="gloss" href="#flagship">{{ t.ctaPrimary }}</a>
-            <a class="gloss glass-btn" href="#portfolio">{{ t.ctaGhost }}</a>
+            <a class="gloss" :href="labLink('setup')">{{ labCopy.prepare }} →</a>
+            <a class="gloss glass-btn" :href="labLink('solver')">{{ labCopy.demo }}</a>
           </div>
         </div>
 
@@ -309,6 +312,8 @@ onUnmounted(() => {
       </a>
     </section>
 
+    <LabLaunch />
+
     <section class="flagship" id="flagship">
       <div class="flagship-head">
         <h2 class="flagship-title">{{ t.flagshipPrefix }}<span>AbsoluteSolver</span></h2>
@@ -321,6 +326,7 @@ onUnmounted(() => {
           <ul class="flagship-list">
             <li v-for="(item, i) in t.flagshipBullets" :key="i"><b>{{ item.b }}</b> &mdash; {{ item.t }}</li>
           </ul>
+          <a class="gloss" :href="labLink('solver')">{{ labCopy.demo }} →</a>
         </div>
 
         <div class="win" data-flagship-terminal>

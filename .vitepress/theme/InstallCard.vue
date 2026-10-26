@@ -1,14 +1,17 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vitepress'
 import { PRODUCTS } from './productPalette.js'
 import { fetchProjects, fetchBestVersion, slugOf } from './modrinth.js'
+import { useServerProfile } from './lab/profile.js'
+import { COPY as LAB_COPY } from './lab/copy.js'
+const { profile } = useServerProfile()
 
 const LABELS = {
-  en: { modrinth: 'Download on Modrinth', github: 'View on GitHub', mc: 'Minecraft', plugin: 'Platforms', mod: 'Loaders', library: 'Runs on', latest: 'Latest', install: 'Install', copy: 'Copy', copied: 'Copied', pick: 'Which file do I need?', yourMc: 'Your Minecraft version', yourPlatform: 'Your platform', loading: 'Asking Modrinth…', none: 'No build for this combination yet.', error: 'Couldn’t reach Modrinth. Use the download button instead.', get: 'Download' },
-  es: { modrinth: 'Descargar en Modrinth', github: 'Ver en GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona con', latest: 'Última versión', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: '¿Qué archivo descargo?', yourMc: 'Tu versión de Minecraft', yourPlatform: 'Tu plataforma', loading: 'Consultando Modrinth…', none: 'Todavía no hay un archivo para esta combinación.', error: 'No se pudo consultar Modrinth. Usa el botón de descarga.', get: 'Descargar' },
-  it: { modrinth: 'Scarica su Modrinth', github: 'Vedi su GitHub', mc: 'Minecraft', plugin: 'Piattaforme', mod: 'Loader', library: 'Funziona con', latest: 'Ultima versione', install: 'Installa', copy: 'Copia', copied: 'Copiato', pick: 'Quale file mi serve?', yourMc: 'La tua versione di Minecraft', yourPlatform: 'La tua piattaforma', loading: 'Interrogo Modrinth…', none: 'Non c’è ancora un file per questa combinazione.', error: 'Modrinth non risponde. Usa il pulsante di download.', get: 'Scarica' },
-  pt: { modrinth: 'Baixar no Modrinth', github: 'Ver no GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona com', latest: 'Última versão', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: 'Qual arquivo eu baixo?', yourMc: 'Sua versão do Minecraft', yourPlatform: 'Sua plataforma', loading: 'Consultando o Modrinth…', none: 'Ainda não há um arquivo para essa combinação.', error: 'Não foi possível consultar o Modrinth. Use o botão de download.', get: 'Baixar' }
+  en: { modrinth: 'Download on Modrinth', github: 'View on GitHub', mc: 'Minecraft', plugin: 'Platforms', mod: 'Loaders', library: 'Runs on', latest: 'Latest', install: 'Install', copy: 'Copy', copied: 'Copied', pick: 'Which file do I need?', yourMc: 'Your Minecraft version', yourPlatform: 'Your platform', loading: 'Asking Modrinth…', none: 'No stable release for this combination yet.', error: 'Couldn’t reach Modrinth. Use the download button instead.', get: 'Download' },
+  es: { modrinth: 'Descargar en Modrinth', github: 'Ver en GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona con', latest: 'Última versión', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: '¿Qué archivo descargo?', yourMc: 'Tu versión de Minecraft', yourPlatform: 'Tu plataforma', loading: 'Consultando Modrinth…', none: 'Todavía no hay una versión estable para esta combinación.', error: 'No se pudo consultar Modrinth. Usa el botón de descarga.', get: 'Descargar' },
+  it: { modrinth: 'Scarica su Modrinth', github: 'Vedi su GitHub', mc: 'Minecraft', plugin: 'Piattaforme', mod: 'Loader', library: 'Funziona con', latest: 'Ultima versione', install: 'Installa', copy: 'Copia', copied: 'Copiato', pick: 'Quale file mi serve?', yourMc: 'La tua versione di Minecraft', yourPlatform: 'La tua piattaforma', loading: 'Interrogo Modrinth…', none: 'Non c’è ancora una versione stabile per questa combinazione.', error: 'Modrinth non risponde. Usa il pulsante di download.', get: 'Scarica' },
+  pt: { modrinth: 'Baixar no Modrinth', github: 'Ver no GitHub', mc: 'Minecraft', plugin: 'Plataformas', mod: 'Loaders', library: 'Funciona com', latest: 'Última versão', install: 'Instalar', copy: 'Copiar', copied: 'Copiado', pick: 'Qual arquivo eu baixo?', yourMc: 'Sua versão do Minecraft', yourPlatform: 'Sua plataforma', loading: 'Consultando o Modrinth…', none: 'Ainda não há uma versão estável para essa combinação.', error: 'Não foi possível consultar o Modrinth. Use o botão de download.', get: 'Baixar' }
 }
 
 const route = useRoute()
@@ -28,30 +31,41 @@ const loaderName = (l) => LOADER_NAMES[l] || l
 // "Which file do I need?" — live from Modrinth, only fetched once opened.
 const productKey = computed(() => route.path.match(/^\/(?:en|es|it|pt)\/([^/]+)/)?.[1])
 const canPick = computed(() => product.value && slugOf(productKey.value))
-const picker = ref({ open: false, state: 'idle', versions: [], loaders: [], mc: '', loader: '', result: null })
+const emptyPicker = () => ({ open: false, state: 'idle', versions: [], loaders: [], mc: '', loader: '', result: null })
+const picker = ref(emptyPicker())
+let revision = 0
+watch(productKey, () => { revision++; picker.value = emptyPicker() })
 async function openPicker() {
+  const requestId = ++revision
+  const key = productKey.value
   picker.value.open = true
   if (picker.value.versions.length) return
   picker.value.state = 'loading'
   try {
-    const proj = (await fetchProjects())[productKey.value]
+    const proj = (await fetchProjects())[key]
+    if (requestId !== revision) return
     picker.value.versions = [...proj.game_versions].reverse()
     picker.value.loaders = proj.loaders
-    picker.value.mc = picker.value.versions[0]
-    picker.value.loader = proj.loaders[0]
+    picker.value.mc = picker.value.versions.includes(profile.minecraft) ? profile.minecraft : picker.value.versions[0]
+    picker.value.loader = proj.loaders.includes(profile.platform) ? profile.platform : proj.loaders[0]
     await pick()
   } catch {
-    picker.value.state = 'error'
+    if (requestId === revision) picker.value.state = 'error'
   }
 }
 async function pick() {
+  const requestId = ++revision
   const p = picker.value
+  profile.minecraft = p.mc
+  profile.platform = p.loader
   p.state = 'loading'
   try {
-    p.result = await fetchBestVersion(productKey.value, p.mc, p.loader)
+    const result = await fetchBestVersion(productKey.value, p.mc, p.loader)
+    if (requestId !== revision) return
+    p.result = result
     p.state = p.result ? 'ok' : 'none'
   } catch {
-    p.state = 'error'
+    if (requestId === revision) p.state = 'error'
   }
 }
 
@@ -105,6 +119,7 @@ async function copyCommand() {
       </a>
 
       <div v-if="canPick" class="ic-pick">
+        <a :href="`/${locale}/lab/setup`" class="ic-pick-open">{{ LAB_COPY[locale].prepare }} →</a>
         <button v-if="!picker.open" type="button" class="ic-pick-open" @click="openPicker">{{ t.pick }}</button>
         <div v-else class="ic-pick-row">
           <label>

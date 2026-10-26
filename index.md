@@ -4,5 +4,9 @@ layout: false
 
 <script setup>
 import { useRouter } from 'vitepress'
-useRouter().go('/en/' + location.search)
+import { onMounted } from 'vue'
+const router = useRouter()
+onMounted(() => router.go('/en/' + window.location.search + window.location.hash))
 </script>
+
+<a href="/en/">Enter FyrxLab →</a>

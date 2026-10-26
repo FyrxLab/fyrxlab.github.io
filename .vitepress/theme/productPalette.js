@@ -29,7 +29,7 @@ export const PRODUCTS = {
     version: '1.2.2',
     changelog: null,
     home: '/solvermotd/',
-    install: { url: 'https://modrinth.com/plugin/solvermotd', mc: '1.8 – 1.21.6', platforms: ['Paper', 'Purpur', 'Spigot', 'Folia', 'Velocity', 'BungeeCord', 'Waterfall'] },
+    install: { url: 'https://modrinth.com/plugin/solvermotd', mc: null, platforms: ['Paper', 'Purpur', 'Spigot', 'Folia', 'Velocity', 'BungeeCord', 'Waterfall'] },
     tagline: {
       en: 'Cross-platform MOTD plugin with MiniMessage and 1.21.9+ Image Banners.',
       es: 'Plugin MOTD multiplataforma con MiniMessage y Banners de Imagen 1.21.9+.',
@@ -77,7 +77,7 @@ export const PRODUCTS = {
     version: '1.3.0',
     changelog: '/noteblock/changelog',
     home: '/noteblock/',
-    install: { url: 'https://modrinth.com/mod/noteblock', mc: '1.12.2 · 1.18 – 26.3', platforms: ['Fabric', 'Forge', 'NeoForge'] },
+    install: { url: 'https://modrinth.com/mod/noteblock', mc: '1.12.2 · 1.18 – 26.3', platforms: ['Fabric', 'Forge', 'NeoForge'], requiredByLoader: { fabric: ['fabric-api'] } },
     tagline: {
       en: '16 new music discs, each song arranged entirely with note blocks. One jar for Fabric, Forge and NeoForge.',
       es: '16 discos de música nuevos, cada canción arreglada con bloques de nota. Un solo jar para Fabric, Forge y NeoForge.',
