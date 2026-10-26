@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Try Solver"
+title: "Guided Solver example"
 description: "Explore crash analysis, tick monitoring and chat moderation through guided examples."
 lab: true
 sidebar: false
