@@ -17,11 +17,9 @@ features:
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-sparkles"></i>'
     title: Instant Endgame Gear
     details: Spawn with an absurdly overpowered sword, bow, and armor — no crafting tables, no resource grinding, no complex mechanics to learn first.
-    link: /en/lazymod/#faq
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-dragon"></i>'
     title: Speedrun-Ready
     details: Built for players who just want to reach the End and see the credits roll — skip the grind and get straight to the fight that matters.
-    link: /en/lazymod/#certificate-of-achievement
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-couch"></i>'
     title: Zero Setup
     details: No configuration screens, no commands to memorize. Install it, load a world, and you're already geared up.

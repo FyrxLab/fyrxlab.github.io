@@ -30,10 +30,10 @@ const rows = [
       ['Read the incident context and check whether other messages change its meaning.', 'Lee el contexto del incidente y comprueba si otros mensajes cambian su significado.', 'Leggi il contesto e verifica se altri messaggi ne cambiano il significato.', 'Leia o contexto e veja se outras mensagens mudam seu significado.'],
       ['Apply the server’s moderation policy and document the decision.', 'Aplica la política de moderación del servidor y documenta la decisión.', 'Applica la politica di moderazione del server e documenta la decisione.', 'Aplique a política de moderação do servidor e documente a decisão.'],
       ['Review false positives before changing thresholds or enabling automatic actions.', 'Revisa los falsos positivos antes de cambiar umbrales o activar acciones automáticas.', 'Valuta i falsi positivi prima di modificare soglie o attivare azioni automatiche.', 'Revise falsos positivos antes de mudar limites ou ativar ações automáticas.']
-    ], page: 'configuration#moderación-de-chat'
+    ], page: 'configuration'
   }
 ]
 export function scenariosFor(locale) {
   const i = ['en', 'es', 'it', 'pt'].indexOf(locale)
-  return rows.map(r => ({ ...r, name: r.name[i], explanation: r.explanation[i], steps: r.steps.map(s => s[i]), page: r.id === 'moderation' ? 'configuration' : r.page }))
+  return rows.map(r => ({ ...r, name: r.name[i], explanation: r.explanation[i], steps: r.steps.map(s => s[i]) }))
 }

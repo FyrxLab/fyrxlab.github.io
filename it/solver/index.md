@@ -9,12 +9,12 @@ hero:
     src: /solver.svg
     alt: AbsoluteSolver
   actions:
-    - theme: alt
-      text: Config Studio
-      link: /it/lab/config
     - theme: brand
       text: Per Iniziare
       link: /it/solver/getting-started
+    - theme: alt
+      text: Config Studio
+      link: /it/lab/config
     - theme: alt
       text: Vedi su Modrinth
       link: https://modrinth.com/plugin/solver

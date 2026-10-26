@@ -46,12 +46,13 @@ export async function fetchBestVersion(key, gameVersion, loader) {
   const [v] = versions.filter(v => v.version_type === 'release').sort((a, b) => new Date(b.date_published) - new Date(a.date_published))
   if (!v) return null
   const file = v.files.find((f) => f.primary) || v.files[0]
-  if (!file?.url || !file?.filename) throw new Error('Release has no downloadable file')
+  // Downloads always go through the Modrinth version page; the CDN URL is never exposed.
+  if (!file?.filename) throw new Error('Release has no downloadable file')
   // Some universal jars omit loader-specific requirements from API metadata.
   // Keep documented requirements in the product catalog as a supplement.
   const required = [...(PRODUCTS[key].install.requiredByLoader?.[loader] || []).map(id => ({ project_id: id, dependency_type: 'required' })), ...v.dependencies.filter(d => d.dependency_type === 'required')]
   const dependencies = [...new Map(required.map(d => [d.project_id || d.version_id || d.file_name, d])).values()]
-  return { number: v.version_number, page: `https://modrinth.com/project/${slugOf(key)}/version/${v.id}`, file: file.filename, url: file.url, dependencies }
+  return { number: v.version_number, page: `https://modrinth.com/project/${slugOf(key)}/version/${v.id}`, file: file.filename, dependencies }
 }
 
 export async function resolveDependencies(dependencies) {

@@ -7,7 +7,7 @@ import { navigationContext, cleanPath } from '../.vitepress/theme/navigation-cor
 import { PHASE2_COPY } from '../.vitepress/theme/lab/phase2-copy.js'
 import { configDiff, configOffset, inspectConfig, readConfig, updateConfig } from '../.vitepress/theme/lab/config-core.js'
 import { configProject, parseConfigProject, motdProject, parseMotdProject, formatSelection } from '../.vitepress/theme/lab/project-core.js'
-import { createSession, drafts, currentRelease, selectRelease, commitConfig, undoConfig, redoConfig, useDrafts } from '../.vitepress/theme/lab/session.js'
+import { createSession, drafts, currentRelease, selectRelease, commitConfig, undoConfig, redoConfig, useDrafts, parseJourney } from '../.vitepress/theme/lab/session.js'
 import { motdTemplates } from '../.vitepress/theme/lab/motd-templates.js'
 import vm from 'node:vm'
 import { outlineGuard } from '../.vitepress/outline-guard.js'
@@ -61,7 +61,7 @@ test('semantic errors can be repaired using guided updates; syntax errors have l
 })
 test('release selection is bound to exact environment, product, and goal', () => {
   const profile = { minecraft:'1.21.1',platform:'paper',goal:'diagnostics',product:'solver' }
-  selectRelease(profile,'solver',{ number:'0.10.2',file:'solver.jar',url:'https://example.test/solver.jar' })
+  selectRelease(profile,'solver',{ number:'0.10.2',file:'solver.jar',page:'https://modrinth.com/plugin/solver/version/x' })
   assert.equal(currentRelease(profile).number,'0.10.2')
   assert.equal(currentRelease({...profile,minecraft:'1.20.1'}),null)
   assert.equal(currentRelease({...profile,platform:'fabric'}),null)
@@ -102,4 +102,13 @@ test('navigation includes every product subpage, localized templates and complet
     assert.notEqual(motdTemplates(locale).survival[1],undefined)
   }
   assert.match(motdTemplates('es').survival[1],/aventura/)
+})
+test('stored journey only accepts Modrinth links and known products', () => {
+  const release = { key: 'solver', number: '0.10.2', file: 'solver.jar', page: 'https://modrinth.com/plugin/solver/version/x', environment: 'e', dependencies: [{ name: 'Vault', url: null }] }
+  assert.equal(parseJourney(JSON.stringify({ release, checklist: [0, 2, 2, 9] })).release.key, 'solver')
+  assert.deepEqual(parseJourney(JSON.stringify({ release, checklist: [0, 2, 2, 9] })).checklist, [0, 2])
+  assert.equal(parseJourney(JSON.stringify({ release: { ...release, page: 'https://cdn.example.test/a.jar' }, checklist: [] })).release, null)
+  assert.equal(parseJourney(JSON.stringify({ release: { ...release, key: 'nope' }, checklist: [] })).release, null)
+  assert.equal(parseJourney(JSON.stringify({ release: { ...release, dependencies: [{ name: 'x', url: 'https://evil.test' }] }, checklist: [] })).release, null)
+  assert.equal(parseJourney('null'), null)
 })

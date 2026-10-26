@@ -10,7 +10,7 @@ const tools = [['setup', 'prepare'], ['config', 'studio'], ['solver', 'demo'], [
 
 <template>
   <main id="laboratory" class="lab-page">
-    <div class="lab-topline"><div class="lab-breadcrumbs"><a :href="`/${locale}/`">FyrxLab</a><span>/</span><a :href="link('')">{{ t.lab }}</a></div><a :href="link('setup')" class="lab-env"><span class="lab-dot" /> {{ profile.platform }} · {{ profile.minecraft }} ↗</a></div>
+    <div class="lab-topline"><div class="lab-breadcrumbs"><a :href="`/${locale}/`">FyrxLab</a><span>/</span><a :href="link('')">{{ t.lab }}</a></div><a :href="link('setup')" class="lab-env"><span class="lab-dot" /> {{ profile.platform }} · {{ profile.minecraft }} →</a></div>
     <nav class="lab-nav" :aria-label="t.lab"><a :href="link('')" :aria-current="!tool ? 'page' : undefined">{{ t.myServer }}</a><a v-for="[slug, key] in tools" :key="slug" :href="link(slug)" :aria-current="tool === slug ? 'page' : undefined">{{ t[key] }}</a></nav>
     <slot />
   </main>

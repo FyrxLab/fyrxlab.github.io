@@ -1,6 +1,6 @@
 import { reactive, onMounted, watch } from 'vue'
 import { PRODUCTS } from '../productPalette.js'
-import { drafts, environmentKey } from './session.js'
+import { drafts, environmentKey, restoreJourney } from './session.js'
 
 export const PLATFORMS = ['paper', 'purpur', 'spigot', 'bukkit', 'folia', 'velocity', 'bungeecord', 'waterfall', 'fabric', 'forge', 'neoforge']
 export const GOALS = ['diagnostics', 'moderation', 'motd', 'mods']
@@ -33,6 +33,7 @@ export function useServerProfile() {
     if (PLATFORMS.includes(platform)) profile.platform = platform
     if (minecraft && /^[\d.\w-]{1,40}$/.test(minecraft)) profile.minecraft = minecraft
     hydrated = true
+    restoreJourney()
     try { localStorage.setItem('fyrx-server-profile', JSON.stringify(profile)) } catch { /* Storage is optional. */ }
   })
   return { profile, reset: () => Object.assign(profile, initial()) }

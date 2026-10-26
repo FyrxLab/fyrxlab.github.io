@@ -69,9 +69,9 @@ function exportMotd() { downloadText('solvermotd-snippet.yml', config.value); st
   <LabShell tool="motd">
     <header class="lab-heading"><p class="lab-kicker">SOLVERMOTD / DESIGN STUDIO</p><h1>{{ t.motd }}</h1><p>{{ t.motdDesc }}</p></header>
     <p class="lab-session-note">◉ {{ t.sessionNote }}</p>
-    <div class="lab-actions"><label class="lab-button lab-secondary lab-file">{{ t.import }}<input type="file" accept=".json,.yml,.yaml" @change="importProject" /></label><button class="lab-button lab-secondary" @click="downloadText('fyrx-motd-project.json', motdProject(state))">{{ t.saveProject }} ↓</button><button class="lab-text-button" @click="keep">{{ t.keepVariant }} +</button><a class="lab-text-button" :href="link('')">{{ t.myServer }} ↗</a></div>
+    <div class="lab-actions"><label class="lab-button lab-secondary lab-file">{{ t.import }}<input type="file" accept=".json,.yml,.yaml" @change="importProject" /></label><button class="lab-button lab-secondary" @click="downloadText('fyrx-motd-project.json', motdProject(state))">{{ t.saveProject }} ↓</button><button class="lab-text-button" @click="keep">{{ t.keepVariant }} +</button><a class="lab-text-button" :href="link('')">{{ t.myServer }} →</a></div>
     <p v-if="error" class="lab-notice lab-error" role="alert">{{ error }}</p>
-    <div class="motd-template-gallery" :aria-label="t.template"><button v-for="(lines,key) in motdTemplates(locale)" :key="key" :aria-pressed="state.template === key" @click="styleTemplate(key)"><span class="motd-template-swatch" :class="key" aria-hidden="true" /><b>{{ t[key] }}</b><span>↗</span></button></div>
+    <div class="motd-template-gallery" :aria-label="t.template"><button v-for="(lines,key) in motdTemplates(locale)" :key="key" :aria-pressed="state.template === key" @click="styleTemplate(key)"><span class="motd-template-swatch" :class="key" aria-hidden="true" /><b>{{ t[key] }}</b><span>→</span></button></div>
     <div class="lab-workspace">
       <section class="lab-panel lab-controls">
         <label>{{ t.serverName }}<input v-model="state.serverName" maxlength="60" /></label><p class="lab-small">{{ t.serverNameHint }}</p>
@@ -83,7 +83,7 @@ function exportMotd() { downloadText('solvermotd-snippet.yml', config.value); st
         <section class="lab-panel lab-motd-preview"><h2>{{ t.livePreview }}</h2><MotdPreview :line1="state.line1" :line2="state.line2" :name="state.serverName" :banner="state.image" :label="t.modern" /><MotdPreview :line1="state.line1" :line2="state.line2" :name="state.serverName" :label="t.legacy" /><p v-if="unsupported" class="lab-notice">{{ t.unsupported }}</p><p class="lab-small">{{ t.motdNote }}</p></section>
         <section v-if="state.comparison" class="lab-panel"><h2>{{ t.compare }}</h2><MotdPreview v-bind="state.comparison" /><button class="lab-text-button" @click="restore">{{ t.restoreVariant }} ↶</button></section>
         <section class="lab-terminal"><div class="lab-terminal-bar"><span>{{ t.snippet }} / YAML</span></div><pre class="lab-log">{{ config }}</pre></section>
-        <div class="lab-panel"><p>{{ t.motdSteps }}</p><div class="lab-actions"><button class="lab-button" @click="exportMotd">{{ t.exportMotd }} ↓</button><a v-if="state.image" :href="state.image" download="banner.png" class="lab-button lab-secondary">banner.png ↓</a><a class="lab-text-button" :href="`/${locale}/solvermotd/features/banner`">{{ t.docs }} ↗</a></div><p class="lab-small">{{ t.imageProjectHint }}</p></div>
+        <div class="lab-panel"><p>{{ t.motdSteps }}</p><div class="lab-actions"><button class="lab-button" @click="exportMotd">{{ t.exportMotd }} ↓</button><a v-if="state.image" :href="state.image" download="banner.png" class="lab-button lab-secondary">banner.png ↓</a><a class="lab-text-button" :href="`/${locale}/solvermotd/features/banner`">{{ t.docs }} →</a></div><p class="lab-small">{{ t.imageProjectHint }}</p></div>
       </div>
     </div>
   </LabShell>

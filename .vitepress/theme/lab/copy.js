@@ -8,7 +8,7 @@ const strings = {
   prepareDesc: ['The right release, dependencies and next steps for your setup.', 'La versión correcta, sus dependencias y los pasos para tu entorno.', 'La versione giusta, le dipendenze e i passi per il tuo ambiente.', 'A versão certa, dependências e passos para seu ambiente.'],
   studio: ['Config Studio', 'Config Studio', 'Config Studio', 'Config Studio'],
   studioDesc: ['Build, check and update your Solver configuration.', 'Crea, revisa y actualiza tu configuración de Solver.', 'Crea, verifica e aggiorna la configurazione di Solver.', 'Crie, confira e atualize sua configuração do Solver.'],
-  demo: ['Try Solver', 'Probar Solver', 'Prova Solver', 'Testar Solver'],
+  demo: ['Guided Solver example', 'Ejemplo guiado de Solver', 'Esempio guidato di Solver', 'Exemplo guiado do Solver'],
   demoDesc: ['Follow an incident from evidence to a practical next step.', 'Sigue un incidente desde la evidencia hasta el siguiente paso.', 'Segui un incidente dalle prove al passo successivo.', 'Acompanhe um incidente das evidências ao próximo passo.'],
   motd: ['MOTD Studio', 'MOTD Studio', 'MOTD Studio', 'MOTD Studio'],
   motdDesc: ['Design your server’s first impression. Preview and export it.', 'Diseña la primera impresión de tu servidor. Visualiza y exporta.', 'Disegna la prima impressione del tuo server. Anteprima ed esportazione.', 'Crie a primeira impressão do seu servidor. Visualize e exporte.'],

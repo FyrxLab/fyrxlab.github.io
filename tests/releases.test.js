@@ -17,6 +17,8 @@ test('release selection filters prereleases, selects newest stable and retains d
     const result = await fetchBestVersion('noteblock', '1.21.1', 'fabric')
     assert.equal(result.file, 'noteblock.jar')
     assert.equal(result.number, '1.3.0')
+    assert.match(result.page, /^https:\/\/modrinth\.com\/project\/noteblock\/version\/new$/)
+    assert.ok(!JSON.stringify(result).includes('cdn.modrinth'), 'downloads must go through the Modrinth page')
     assert.equal(result.dependencies.length, 1)
     assert.deepEqual(JSON.parse(requested.searchParams.get('loaders')), ['fabric'])
     assert.deepEqual(JSON.parse(requested.searchParams.get('game_versions')), ['1.21.1'])

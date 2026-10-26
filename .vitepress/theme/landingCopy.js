@@ -40,9 +40,9 @@ export const LANDING_COPY = {
     factDeveloper: 'developer',
     factActiveProducts: 'active products',
     factLanguages: 'languages in the docs',
-    factSolver: 'Solver + Noteblock:',
+    factSolver: 'Solver:',
     factSolverLicense: 'All Rights Reserved',
-    factMods: 'Other products:',
+    factMods: 'Mods:',
     factModsLicense: 'MIT'
   },
   es: {
@@ -75,9 +75,9 @@ export const LANDING_COPY = {
     factDeveloper: 'desarrollador',
     factActiveProducts: 'productos activos',
     factLanguages: 'idiomas en la documentación',
-    factSolver: 'Solver + Noteblock:',
+    factSolver: 'Solver:',
     factSolverLicense: 'Todos los derechos reservados',
-    factMods: 'Otros productos:',
+    factMods: 'Mods:',
     factModsLicense: 'MIT'
   },
   it: {
@@ -110,9 +110,9 @@ export const LANDING_COPY = {
     factDeveloper: 'sviluppatore',
     factActiveProducts: 'prodotti attivi',
     factLanguages: 'lingue nella documentazione',
-    factSolver: 'Solver + Noteblock:',
+    factSolver: 'Solver:',
     factSolverLicense: 'Tutti i diritti riservati',
-    factMods: 'Altri prodotti:',
+    factMods: 'Mod:',
     factModsLicense: 'MIT'
   },
   pt: {
@@ -145,9 +145,9 @@ export const LANDING_COPY = {
     factDeveloper: 'desenvolvedor',
     factActiveProducts: 'produtos ativos',
     factLanguages: 'idiomas na documentação',
-    factSolver: 'Solver + Noteblock:',
+    factSolver: 'Solver:',
     factSolverLicense: 'Todos os direitos reservados',
-    factMods: 'Outros produtos:',
+    factMods: 'Mods:',
     factModsLicense: 'MIT'
   }
 }

@@ -17,11 +17,9 @@ features:
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-wand-sparkles"></i>'
     title: Equipo de Endgame Instantáneo
     details: Aparece con una espada, arco y armadura absurdamente poderosos — sin mesas de crafteo, sin farmear recursos, sin mecánicas complejas que aprender primero.
-    link: /es/lazymod/#preguntas-frecuentes
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-dragon"></i>'
     title: Listo para Speedrun
     details: Pensado para jugadores que solo quieren llegar al End y ver los créditos — sáltate el grindeo y ve directo a la pelea que importa.
-    link: /es/lazymod/#certificado-de-logro
   - icon: '<svg style="display: none;"></svg><i class="fa-solid fa-couch"></i>'
     title: Cero Configuración
     details: Sin pantallas de configuración, sin comandos que memorizar. Instálalo, carga un mundo, y ya estás equipado.

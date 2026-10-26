@@ -318,14 +318,14 @@ onUnmounted(() => {
     <section class="flagship" id="flagship">
       <div class="flagship-head">
         <h2 class="flagship-title">{{ t.flagshipPrefix }}<span>AbsoluteSolver</span></h2>
-        <a class="flagship-ver" :href="`/${locale}/solver/changelog`">v{{ solver.version }} ↗</a>
+        <a class="flagship-ver" :href="`/${locale}/solver/changelog`">v{{ solver.version }} →</a>
       </div>
 
       <div class="flagship-grid">
         <div class="flagship-copy">
           <p>{{ t.flagshipParagraph }}</p>
           <ul class="flagship-list">
-            <li v-for="(item, i) in t.flagshipBullets" :key="i"><a :href="`/${locale}/solver/${['crash-analysis','tick-monitor','configuration','commands'][i]}`"><b>{{ item.b }} ↗</b> &mdash; {{ item.t }}</a></li>
+            <li v-for="(item, i) in t.flagshipBullets" :key="i"><a :href="`/${locale}/solver/${['crash-analysis','tick-monitor','configuration','commands'][i]}`"><b>{{ item.b }} →</b> &mdash; {{ item.t }}</a></li>
           </ul>
           <a class="gloss" :href="labLink('solver')">{{ labCopy.demo }} →</a>
         </div>

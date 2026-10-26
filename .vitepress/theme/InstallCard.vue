@@ -110,7 +110,7 @@ async function copyCommand() {
         </div>
         <div>
           <dt>{{ t[product.kind] }}</dt>
-          <dd class="ic-chips"><a v-for="p in product.install.platforms" :key="p" class="ic-chip" :href="product.kind === 'library' ? `/${locale}/fyrxai/configuration` : `/${locale}/lab/setup?product=${productKey}&platform=${p.toLowerCase()}`">{{ p }} ↗</a></dd>
+          <dd class="ic-chips"><a v-for="p in product.install.platforms" :key="p" class="ic-chip" :href="product.kind === 'library' ? `/${locale}/fyrxai/configuration` : `/${locale}/lab/setup?product=${productKey}&platform=${p.toLowerCase()}`">{{ p }} →</a></dd>
         </div>
       </dl>
 
@@ -140,7 +140,7 @@ async function copyCommand() {
             <span v-else-if="picker.state === 'error'" class="ic-muted">{{ t.error }}</span>
             <template v-else-if="picker.state === 'ok'">
               <a class="ic-file" :href="picker.result.page" target="_blank" rel="noopener">{{ picker.result.file }}</a>
-              <a class="ic-dl" :href="picker.result.url">{{ t.get }} v{{ picker.result.number }}</a>
+              <a class="ic-dl" :href="picker.result.page" target="_blank" rel="noopener">{{ t.modrinth }} v{{ picker.result.number }} ↗</a>
             </template>
           </div>
         </div>

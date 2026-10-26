@@ -19,6 +19,7 @@ const rows = {
   release: ['Release', 'Versión', 'Versione', 'Versão'],
   configure: ['Prepare files', 'Preparar archivos', 'Prepara file', 'Preparar arquivos'],
   review: ['Review changes', 'Revisar cambios', 'Rivedi modifiche', 'Revisar alterações'],
+  getOnModrinth: ['Download on Modrinth', 'Descargar en Modrinth', 'Scarica su Modrinth', 'Baixar no Modrinth'],
   installation: ['Installation plan', 'Plan de instalación', 'Piano di installazione', 'Plano de instalação'],
   pending: ['To do', 'Pendiente', 'Da fare', 'Pendente'],
   completed: ['Ready', 'Preparado', 'Pronto', 'Pronto'],
