@@ -19,7 +19,7 @@ AbsoluteSolver viene configurato con **Anthropic Claude** di default, ma Google 
 
 **1. Scarica il plugin**
 
-Scarica l'ultimo `Solver-<versione>.jar` da [Modrinth](https://modrinth.com/plugin/solver) o dalla pagina [GitHub Releases](https://github.com/FyrxLab/AbsoluteSolver).
+Scarica l'ultimo `Solver-<versione>.jar` da [Modrinth](https://modrinth.com/plugin/solver).
 
 **2. Inseriscilo nella cartella `plugins`**
 

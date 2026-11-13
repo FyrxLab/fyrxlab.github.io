@@ -11,7 +11,6 @@
 
 export const LANDING_COPY = {
   en: {
-    heroSearching: 'Resolving FyrxLab status...',
     bootLines: [
       'Solver — TickMonitor nominal, Fyrx AI standing by',
       'SolverMOTD, Absolute Furnace, Phosphophyllite — online',
@@ -46,7 +45,6 @@ export const LANDING_COPY = {
     factModsLicense: 'MIT'
   },
   es: {
-    heroSearching: 'Resolviendo el estado de FyrxLab...',
     bootLines: [
       'Solver — TickMonitor nominal, Fyrx AI en espera',
       'SolverMOTD, Absolute Furnace, Phosphophyllite — en línea',
@@ -81,7 +79,6 @@ export const LANDING_COPY = {
     factModsLicense: 'MIT'
   },
   it: {
-    heroSearching: 'Verifica dello stato di FyrxLab...',
     bootLines: [
       'Solver — TickMonitor nominale, Fyrx AI in attesa',
       'SolverMOTD, Absolute Furnace, Phosphophyllite — online',
@@ -116,7 +113,6 @@ export const LANDING_COPY = {
     factModsLicense: 'MIT'
   },
   pt: {
-    heroSearching: 'Verificando o status da FyrxLab...',
     bootLines: [
       'Solver — TickMonitor nominal, Fyrx AI em espera',
       'SolverMOTD, Absolute Furnace, Phosphophyllite — online',

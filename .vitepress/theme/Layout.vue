@@ -10,6 +10,7 @@ import SiteToasts from './SiteToasts.vue'
 import MovedNotice from './MovedNotice.vue'
 import ChangesSince from './ChangesSince.vue'
 import PageNav from './PageNav.vue'
+import ReleaseNote from './ReleaseNote.vue'
 import { enhanceTables, bindTableCopy, bindAnchorCopy } from './docEnhance.js'
 
 const { Layout } = DefaultTheme
@@ -108,6 +109,7 @@ onMounted(() => {
     </template>
     <template #doc-before>
       <PageNav />
+      <ReleaseNote />
       <ChangesSince />
     </template>
     <template #doc-footer-before>

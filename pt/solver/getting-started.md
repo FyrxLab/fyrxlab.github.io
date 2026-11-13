@@ -19,7 +19,7 @@ O AbsoluteSolver vem configurado com **Anthropic Claude** por padrão, mas o Goo
 
 **1. Baixe o plugin**
 
-Baixe o `Solver-<versão>.jar` mais recente no [Modrinth](https://modrinth.com/plugin/solver) ou na página de [GitHub Releases](https://github.com/FyrxLab/AbsoluteSolver).
+Baixe o `Solver-<versão>.jar` mais recente no [Modrinth](https://modrinth.com/plugin/solver).
 
 **2. Coloque-o na pasta `plugins`**
 

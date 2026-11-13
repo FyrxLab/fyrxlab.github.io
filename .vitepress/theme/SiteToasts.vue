@@ -1,17 +1,10 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vitepress'
-import { PRODUCTS } from './productPalette.js'
 
-// Two small glass notices, bottom-right, each shown until dismissed once:
-// - "<Product> vX is out" on a product's pages, once per release
-// - on /en/ pages, an offer to switch to the reader's own language
-const RELEASE = {
-  en: { out: 'is out', more: 'What’s new →', close: 'Dismiss' },
-  es: { out: 'ya disponible', more: 'Ver novedades →', close: 'Cerrar' },
-  it: { out: 'è disponibile', more: 'Novità →', close: 'Chiudi' },
-  pt: { out: 'já disponível', more: 'Ver novidades →', close: 'Fechar' }
-}
+// On /en/ pages, a glass notice (bottom-right) offering the reader's own
+// language, shown until dismissed once. Release news lives inline at the top
+// of doc pages instead (ReleaseNote.vue), so it never sits over the text.
 const LANG = {
   es: { ask: '¿Prefieres leer esto en español?', go: 'Cambiar a español', close: 'Cerrar' },
   it: { ask: 'Preferisci leggere in italiano?', go: 'Passa all’italiano', close: 'Chiudi' },
@@ -28,16 +21,6 @@ const mounted = ref(false)
 const tick = ref(0) // bumped on dismiss so the computeds re-read storage
 const locale = computed(() => ['es', 'it', 'pt'].find((l) => route.path.startsWith(`/${l}/`)) || 'en')
 
-const release = computed(() => {
-  tick.value
-  if (!mounted.value) return null
-  const key = route.path.match(/^\/(?:en|es|it|pt)\/([^/]+)/)?.[1]
-  const p = PRODUCTS[key]
-  if (!p?.version || !p.changelog || route.path.endsWith('/changelog')) return null
-  if (store.get(`fyrx-seen-${key}`) === p.version) return null
-  return { key, name: p.name, version: p.version, color: p.color, link: `/${locale.value}${p.changelog}`, t: RELEASE[locale.value] }
-})
-
 const lang = computed(() => {
   tick.value
   if (!mounted.value || locale.value !== 'en' || store.get('fyrx-lang-offer') === 'no') return null
@@ -47,7 +30,6 @@ const lang = computed(() => {
   return { link: route.path.replace(/^\/en\//, `/${want}/`), t: LANG[want], code: want }
 })
 
-function seeRelease() { store.set(`fyrx-seen-${release.value.key}`, release.value.version); tick.value++ }
 function noLang() { store.set('fyrx-lang-offer', 'no'); tick.value++ }
 
 onMounted(() => (mounted.value = true))
@@ -55,18 +37,12 @@ watch(() => route.path, () => tick.value++)
 </script>
 
 <template>
-  <div v-if="release || lang" class="toasts">
+  <div class="toasts" role="status" aria-live="polite">
     <div v-if="lang" class="toast" :lang="lang.code">
       <span class="t-orb aqua" aria-hidden="true" />
       <p>{{ lang.t.ask }}</p>
       <a class="t-act" :href="lang.link" @click="noLang">{{ lang.t.go }}</a>
       <button type="button" class="t-x" :aria-label="lang.t.close" @click="noLang">×</button>
-    </div>
-    <div v-if="release" class="toast" :style="{ '--c': release.color }">
-      <span class="t-orb" aria-hidden="true" />
-      <p><b>{{ release.name }} v{{ release.version }}</b> {{ release.t.out }}</p>
-      <a class="t-act" :href="release.link" @click="seeRelease">{{ release.t.more }}</a>
-      <button type="button" class="t-x" :aria-label="release.t.close" @click="seeRelease">×</button>
     </div>
   </div>
 </template>
@@ -95,6 +71,7 @@ watch(() => route.path, () => tick.value++)
   box-shadow: 0 3px 8px -2px color-mix(in srgb, var(--c) 70%, transparent);
 }
 .t-orb.aqua { --c: #1aa3dd; }
+.toasts:empty { display: none; }
 .toast p { grid-area: text; margin: 0; font-size: 14px; line-height: 1.4; color: var(--vp-c-text-1); }
 .t-act { grid-area: act; justify-self: start; font-size: 13.5px; font-weight: 600; color: var(--vp-c-brand-1); }
 .t-x {

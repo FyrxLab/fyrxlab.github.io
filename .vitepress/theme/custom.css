@@ -31,7 +31,7 @@ html { scroll-behavior: smooth; }
   --vp-c-border: #c6dbea;
   --vp-c-text-1: #0c2940;
   --vp-c-text-2: #46637b;
-  --vp-c-text-3: #6f8aa0;
+  --vp-c-text-3: #557189;
 
   --vp-button-brand-border: transparent;
   --vp-button-brand-text: #ffffff;
@@ -764,3 +764,6 @@ html[data-vt="theme"]::view-transition-new(root) { animation-duration: 0.6s; ani
   pointer-events: none;
 }
 .vp-doc .header-anchor[data-copied] { opacity: 1; }
+
+/* first section right under the page title: no divider gap to carry */
+.vp-doc h1 + h2 { margin-top: 28px; padding-top: 0; }

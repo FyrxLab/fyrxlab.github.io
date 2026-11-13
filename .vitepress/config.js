@@ -601,7 +601,7 @@ export default defineConfig({
               {
                 text: 'Plugins',
                 items: [
-                  { text: 'Absolute Solver', link: '/es/solver/' },
+                  { text: 'AbsoluteSolver', link: '/es/solver/' },
                   { text: 'SolverMOTD', link: '/es/solvermotd/' }
                 ]
               },
@@ -647,7 +647,7 @@ export default defineConfig({
               {
                 text: 'Plugin',
                 items: [
-                  { text: 'Absolute Solver', link: '/it/solver/' },
+                  { text: 'AbsoluteSolver', link: '/it/solver/' },
                   { text: 'SolverMOTD', link: '/it/solvermotd/' }
                 ]
               },
@@ -693,7 +693,7 @@ export default defineConfig({
               {
                 text: 'Plugins',
                 items: [
-                  { text: 'Absolute Solver', link: '/pt/solver/' },
+                  { text: 'AbsoluteSolver', link: '/pt/solver/' },
                   { text: 'SolverMOTD', link: '/pt/solvermotd/' }
                 ]
               },
@@ -740,7 +740,7 @@ export default defineConfig({
           {
             text: 'Plugins',
             items: [
-              { text: 'Absolute Solver', link: '/en/solver/' },
+              { text: 'AbsoluteSolver', link: '/en/solver/' },
               { text: 'SolverMOTD', link: '/en/solvermotd/' }
             ]
           },

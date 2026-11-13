@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vitepress'
 import { data as pages } from './navigation.data.js'
 import { navigationContext, cleanPath } from './navigation-core.js'
@@ -13,13 +13,19 @@ const product = computed(() => PRODUCTS[context.value.product])
 const productHome = computed(() => `/${context.value.locale}${product.value?.home || '/'}`)
 const sections = computed(() => ['guides', 'features', 'reference'].map(key => ({ key, pages: context.value.siblings.filter(page => page.section === key) })).filter(group => group.pages.length))
 const related = computed(() => context.value.siblings.filter(page => cleanPath(page.url) !== cleanPath(route.path)).slice(0, 3))
+// the page switcher is a dropdown: close it on navigation and on any click outside
+const directory = ref(null)
+const closeDirectory = (e) => { if (directory.value && !directory.value.contains(e?.target)) directory.value.open = false }
+watch(() => route.path, () => closeDirectory())
+onMounted(() => document.addEventListener('click', closeDirectory))
+onUnmounted(() => document.removeEventListener('click', closeDirectory))
 const setup = computed(() => `${link('setup')}?product=${context.value.product}`)
 </script>
 <template>
   <div v-if="product" class="page-compass" :class="`page-compass-${mode}`" :style="{ '--compass-color': product.color }">
     <template v-if="mode === 'trail'">
       <nav class="page-breadcrumbs" :aria-label="t.home"><a :href="`/${context.locale}/`">FyrxLab</a><span aria-hidden="true">/</span><a :href="productHome">{{ product.name }}</a><template v-if="!context.current?.home"><span aria-hidden="true">/</span><a href="#VPContent" aria-current="page">{{ context.current?.title }}</a></template></nav>
-      <details v-if="!context.current?.home" class="page-directory"><summary><span>{{ t.allPages }}</span><span>{{ context.siblings.length }} →</span></summary><nav :aria-label="t.exploreDocs"><a :href="productHome">← {{ t.productHome }}</a><a v-for="page in context.siblings" :key="page.url" :href="page.url" :aria-current="cleanPath(page.url) === cleanPath(route.path) ? 'page' : undefined">{{ page.title }}</a><a v-if="product.kind !== 'library'" :href="setup">{{ t.prepareProduct }} →</a></nav></details>
+      <details v-if="!context.current?.home" ref="directory" class="page-directory"><summary><span>{{ t.allPages }}</span><span>{{ context.siblings.length }} →</span></summary><nav :aria-label="t.exploreDocs"><a :href="productHome">← {{ t.productHome }}</a><a v-for="page in context.siblings" :key="page.url" :href="page.url" :aria-current="cleanPath(page.url) === cleanPath(route.path) ? 'page' : undefined">{{ page.title }}</a><a v-if="product.kind !== 'library'" :href="setup">{{ t.prepareProduct }} →</a></nav></details>
     </template>
     <template v-else-if="mode === 'map'">
       <div class="page-map-heading"><div><p class="page-eyebrow">{{ product.name }} / {{ t.allPages }}</p><h2>{{ t.exploreDocs }}</h2></div><a v-if="product.kind !== 'library'" class="page-action" :href="setup">{{ t.prepareProduct }} →</a></div>

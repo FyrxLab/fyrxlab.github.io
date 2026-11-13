@@ -17,7 +17,7 @@ const solver = PRODUCTS.solver
 const products = reactive(
   PRODUCT_ORDER.map((key) => {
     const p = PRODUCTS[key]
-    return { key, ...p, link: `/${locale.value}${p.home}`, displayVersion: p.version ? '0.0.0' : null, counted: false, updated: '' }
+    return { key, ...p, link: `/${locale.value}${p.home}`, displayVersion: p.version, updated: '' }
   })
 )
 
@@ -45,52 +45,15 @@ function onHeroMouseMove(e) {
 }
 
 /* ---------- hero: boot sequence ---------- */
-const heroSearching = ref(true)
 const heroTyping = ref('')
-const heroLines = ref([])
+const heroLines = computed(() => t.value.bootLines)
 
 async function runHeroBoot() {
-  const bootStatusLines = t.value.bootLines
   const finalLine = t.value.heroFinal(products.length)
-  if (reducedMotion) {
-    heroSearching.value = false
-    heroLines.value = bootStatusLines
-    heroTyping.value = finalLine
-    return
-  }
-  await sleep(300)
-  await typeInto(heroTyping, t.value.heroSearching, 22)
-  await sleep(650)
-  heroSearching.value = false
-  heroTyping.value = ''
-  for (const line of bootStatusLines) {
-    await typeInto(heroTyping, line, 10)
-    heroLines.value.push(line)
-    heroTyping.value = ''
-    await sleep(120)
-  }
-  await typeInto(heroTyping, finalLine, 12)
+  if (reducedMotion) { heroTyping.value = finalLine; return }
+  await sleep(400)
+  await typeInto(heroTyping, finalLine, 14)
 }
-
-/* ---------- portfolio: version odometer on scroll ---------- */
-function spinVersion(product) {
-  if (product.counted || !product.version) return
-  product.counted = true
-  if (reducedMotion) { product.displayVersion = product.version; return }
-  const steps = 16
-  let i = 0
-  const id = setInterval(() => {
-    i++
-    if (i >= steps) {
-      product.displayVersion = product.version
-      clearInterval(id)
-      return
-    }
-    product.displayVersion = `0.${Math.min(9, Math.floor((i * 11) / steps))}.${(i * 7) % 10}`
-  }, 45)
-}
-
-let portfolioObserver
 
 /* ---------- flagship: Solver terminal theatre ---------- */
 const flagshipLines = ref([])
@@ -215,20 +178,6 @@ onMounted(() => {
   runHeroBoot()
   loadUpdated()
 
-  portfolioObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return
-        const key = entry.target.getAttribute('data-version-row')
-        const product = products.find((p) => p.key === key)
-        if (product) spinVersion(product)
-        portfolioObserver.unobserve(entry.target)
-      })
-    },
-    { threshold: 0.4 }
-  )
-  document.querySelectorAll('[data-version-row]').forEach((el) => portfolioObserver.observe(el))
-
   flagshipObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -258,7 +207,6 @@ const bubbles = [
 
 onUnmounted(() => {
   flagshipAlive = false
-  if (portfolioObserver) portfolioObserver.disconnect()
   if (flagshipObserver) flagshipObserver.disconnect()
   if (spinnerTimer) clearInterval(spinnerTimer)
 })
@@ -289,7 +237,7 @@ onUnmounted(() => {
           <div class="hero-actions">
             <a class="gloss" :href="labLink('setup')">{{ labCopy.prepare }} →</a>
             <a class="gloss glass-btn" :href="labLink('solver')">{{ labCopy.demo }}</a>
-            <a class="gloss glass-btn" href="#portfolio">{{ labCopy.products }} ↓</a>
+            <a class="hero-link" href="#portfolio">{{ labCopy.products }} ↓</a>
           </div>
         </div>
 
@@ -299,11 +247,8 @@ onUnmounted(() => {
             <span class="caps" aria-hidden="true"><span class="min" /><span class="max" /><span class="x" /></span>
           </div>
           <div class="screen terminal-body">
-            <div v-if="heroSearching" class="dim">{{ heroTyping }}<span class="caret" /></div>
-            <template v-else>
-              <div v-for="(line, i) in heroLines" :key="i"><span class="tag">[</span><span class="ok">OK</span><span class="tag">]</span> {{ line }}</div>
-              <div class="dim">{{ heroTyping }}<span class="caret" /></div>
-            </template>
+            <div v-for="(line, i) in heroLines" :key="i"><span class="tag">[</span><span class="ok">OK</span><span class="tag">]</span> {{ line }}</div>
+            <div class="dim">{{ heroTyping }}<span class="caret" /></div>
           </div>
         </div>
       </div>
@@ -363,8 +308,7 @@ onUnmounted(() => {
           class="dir-row"
           :style="{ '--row-accent': p.color }"
           :href="p.link"
-          :data-version-row="p.version ? p.key : undefined"
-        >
+                  >
           <span class="orb" />
           <span class="dir-name">{{ p.name }}</span>
           <span class="dir-kind">{{ p.kind }}</span>
@@ -501,7 +445,10 @@ html.dark .bubble { opacity: 0.55; }
 }
 .hero-word .lab { font-weight: 400; }
 .hero-sub { max-width: 42ch; margin: 22px 0 0; font-size: 17.5px; line-height: 1.6; color: var(--l-ink); }
-.hero-actions { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+.hero-actions { display: flex; gap: 12px 18px; margin-top: 30px; flex-wrap: wrap; align-items: center; }
+.hero-link { font-size: 14px; font-weight: 600; color: var(--l-ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+.hero-link:hover { text-decoration-color: currentColor; }
+.hero-link:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; border-radius: 4px; }
 
 /* gloss recipe: base gradient + hard-cut highlight on the top half */
 .gloss {
